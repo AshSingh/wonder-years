@@ -1,0 +1,1 @@
+The purpose of this application is to motivate users to participate in more fitness activities by providing a central fitness organization tool for users. The idea is that if you have scheduled fitness activities you and your subscribers are tracking, then you are more likely to complete these fitness activities.
