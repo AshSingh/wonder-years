@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:UiBinder 
+	xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:webapplication='urn:import:com.cs410.getfit.client'>
+
+	<g:VerticalPanel>
+		<g:HorizontalPanel>
+    		<g:Label>E-mail: </g:Label>
+    		<g:TextBox ui:field="userBox"/>
+  		</g:HorizontalPanel>
+ 
+		<g:HorizontalPanel>
+    		<g:Label>Password: </g:Label>
+    		<g:PasswordTextBox ui:field="pwdBox"/>
+  		</g:HorizontalPanel> 
+  		
+  		<g:Button ui:field="loginBtn">Login</g:Button>	
+  	</g:VerticalPanel>	
+</ui:UiBinder>
