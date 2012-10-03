@@ -4,18 +4,51 @@
 	xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:webapplication='urn:import:com.cs410.getfit.client'>
+  	
+	<g:HTMLPanel>
+	<center>
+		<div class="hero-unit-login-header">
+			<div class="page-header-login">
+				<h1>Get Fit! 
+					<p><small>Anything you can do I can do (better).</small></p>
+				</h1>
+			</div>
+		</div>
+		</center>
+		<center>
+		<div class="hero-unit-login">
+		
+			
+			<form class="form-horizontal">
+				<div class="control-group" align="left">
+					<g:Label styleName="control-label" ui:field="emailLabel">E-mail</g:Label>
+					<div class="controls">	
+						<g:TextBox ui:field="emailBox"/>
+					</div>
+				</div>
+				<div class="control-group" align="left">
+					<g:Label styleName="control-label" ui:field="pwdLabel">Password</g:Label>
+					<div class="controls">
+						<g:PasswordTextBox ui:field="pwdBox"/>
+	       			</div>
+	        	</div>
+	        	<div class="control-group" align="left">
+	        	    <div class="controls">
+	          			<g:Button styleName="btn btn-primary" ui:field="loginBtn">Login</g:Button>
+	          		</div>
+	          	</div>
+		      	<div class="control-group" align="left">
+	        	    <div class="controls">
+	          			<small>
+	        			<g:Label>Don't have an account?</g:Label>
+	        			<a href="">Register now!</a>
+	        			</small>
+	    	    	</div>
+	        	</div>
+        	</form>
 
-	<g:VerticalPanel>
-		<g:HorizontalPanel>
-    		<g:Label>E-mail: </g:Label>
-    		<g:TextBox ui:field="userBox"/>
-  		</g:HorizontalPanel>
- 
-		<g:HorizontalPanel>
-    		<g:Label>Password: </g:Label>
-    		<g:PasswordTextBox ui:field="pwdBox"/>
-  		</g:HorizontalPanel> 
-  		
-  		<g:Button ui:field="loginBtn">Login</g:Button>	
-  	</g:VerticalPanel>	
+        </div>
+        	</center>	
+    </g:HTMLPanel>
+  	
 </ui:UiBinder>
