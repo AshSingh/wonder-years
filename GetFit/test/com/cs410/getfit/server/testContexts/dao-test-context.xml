@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="userDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.shared.User" />
+	</bean>
+	
+	<bean id="tableCreator" class="com.j256.ormlite.spring.TableCreator">
+		<property name="connectionSource" ref="connectionSource" />
+		<property name="configuredDaos">
+			<list>
+				<ref bean="userDao" />
+			</list>
+		</property>
+	</bean>
+</beans>

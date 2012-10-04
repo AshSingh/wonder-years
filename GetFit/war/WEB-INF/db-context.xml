@@ -3,9 +3,8 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<!-- URL used for database, probably should be in properties file -->
+	<!-- URL used for database -->
 	<bean id="databaseUrl" class="java.lang.String">
-		<!-- we are using the in-memory H2 database in this example -->
 		<constructor-arg index="0" value="jdbc:mysql://localhost:3306/GETFITDB" />
 	</bean>
 
@@ -14,7 +13,6 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	class="com.j256.ormlite.jdbc.JdbcConnectionSource"
 	init-method="initialize">
 		<property name="url" ref="databaseUrl" />
-		<!-- probably should use system properties for these too -->
 		<property name="username" value="root" />
 		<property name="password" value="password1" />
 	</bean>

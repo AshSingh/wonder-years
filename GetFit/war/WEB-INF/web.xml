@@ -11,4 +11,45 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<welcome-file-list>
 		<welcome-file>GetFit.html</welcome-file>
 	</welcome-file-list>
+	
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>/WEB-INF/db-context.xml /WEB-INF/dao-context.xml</param-value>
+	</context-param>
+	
+
+	<listener>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+		<!-- Servlets -->
+	<servlet>
+		<servlet-name>UsersServlet</servlet-name>
+			<servlet-class>
+				com.cs410.getfit.server.UsersServlet
+			</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UsersServlet</servlet-name>
+		<url-pattern>/users</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>UsersServlet</servlet-name>
+		<url-pattern>/users/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+			<servlet-class>
+				com.cs410.getfit.server.LoginServlet
+			</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
 </web-app>

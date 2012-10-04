@@ -9,10 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "users")
 public class User implements Serializable {
 
-	@DatabaseField(generatedId = true)
-	private long guid;
-	@DatabaseField(unique = true)
-	private String email;
+	@DatabaseField(id = true)
+	private String username;
 	@DatabaseField
 	private String password;
 	@DatabaseField
@@ -20,14 +18,12 @@ public class User implements Serializable {
 	@DatabaseField
 	private String lastName;
 	
-	public long getGuid() {
-		return guid;
+	
+	public String getUsername() {
+		return username;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

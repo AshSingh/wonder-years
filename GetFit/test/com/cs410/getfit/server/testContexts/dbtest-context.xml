@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- URL used for test database -->
+	<bean id="databaseUrl" class="java.lang.String">
+		<constructor-arg index="0" value="jdbc:mysql://localhost:3306/GETFIT_TEST_DB" />
+	</bean>
+
+	<!-- datasource used by ORMLite to connect to the test database -->
+	<bean id="connectionSource"
+	class="com.j256.ormlite.jdbc.JdbcConnectionSource"
+	init-method="initialize">
+		<property name="url" ref="databaseUrl" />
+		<property name="username" value="root" />
+		<property name="password" value="password1" />
+	</bean>
+</beans>
