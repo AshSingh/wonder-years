@@ -13,9 +13,14 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginView extends Composite implements EntryPoint{
-	@UiField TextBox emailBox;
-	@UiField PasswordTextBox pwdBox;
+public class LoginView extends Composite implements LoginViewInterface{
+	@UiField static TextBox emailBox;
+	@UiField static PasswordTextBox pwdBox;
+	
+	private Presenter presenter;
+	
+	private static String tempUserName;
+	private static String tempPass;
 	
 	@UiTemplate("Login.ui.xml") 
 	interface Binder extends UiBinder<Widget, LoginView> {}
@@ -25,16 +30,26 @@ public class LoginView extends Composite implements EntryPoint{
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
+	@Override
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
+		
+	}
+	
+	public static String getTempUserName(){
+		return tempUserName = emailBox.getText();
+	}
+	
+	public static String getTempPass(){
+		return tempPass = pwdBox.getText();
+	}
+	
 	@UiHandler("loginBtn")
 	void onLoginClicked(ClickEvent event) {
-		 System.out.println("login clicked");
-		 // pass on to presenter
+		 tempUserName = emailBox.getText();
+		 tempPass = pwdBox.getText();
+		 if(presenter != null){
+			 presenter.onLoginButtonClicked();
+		 }
 	}
-
-	@Override
-	public void onModuleLoad() {
-		LoginView loginView = new LoginView();
-		RootPanel.get().add(loginView);
-	}
-
 }
