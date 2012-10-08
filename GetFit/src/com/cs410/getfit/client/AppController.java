@@ -13,7 +13,7 @@ import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.event.LoginEvent;
 import com.cs410.getfit.client.event.LoginEventHandler;
-import com.cs410.getfit.client.LoginView;
+import com.cs410.getfit.client.LoginViewImpl;
 
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
@@ -21,7 +21,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private final HandlerManager eventBus;
 	private final RequestBuilder requestBuilder; 
 	private HasWidgets container;
-	private LoginView loginView = null;
+	private LoginViewImpl loginView = null;
 	
 	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
 	    this.eventBus = eventBus;
@@ -49,7 +49,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if(loginView == null){
-			loginView = new LoginView();
+			loginView = new LoginViewImpl();
 		}
 		new LoginPresenter(eventBus, loginView).go(container);
 		

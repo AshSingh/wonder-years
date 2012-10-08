@@ -4,7 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
 import com.cs410.getfit.client.AppController;
-import com.cs410.getfit.client.LoginView;
+import com.cs410.getfit.client.LoginViewImpl;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.http.client.RequestBuilder;

@@ -8,7 +8,7 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.cs410.getfit.client.LoginView;
+import com.cs410.getfit.client.LoginViewImpl;
 import com.cs410.getfit.client.event.LoginEventHandler;
 import com.cs410.getfit.server.LoginServlet;
 import com.cs410.getfit.server.UsersJSONStringFormat;
@@ -17,8 +17,8 @@ import com.cs410.getfit.server.UsersServlet;
 public class LoginEvent extends GwtEvent<LoginEventHandler>{
 	public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();
 	
-	String username = LoginView.getTempUserName();
-	String pass = LoginView.getTempPass();
+	String username = LoginViewImpl.getTempUserName();
+	String pass = LoginViewImpl.getTempPass();
 	
 	public LoginEvent(){
 		

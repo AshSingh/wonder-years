@@ -21,9 +21,9 @@
 			
 			<form class="form-horizontal">
 				<div class="control-group" align="left">
-					<g:Label styleName="control-label" ui:field="emailLabel">E-mail</g:Label>
+					<g:Label styleName="control-label" ui:field="usernameLabel">Username</g:Label>
 					<div class="controls">	
-						<g:TextBox ui:field="emailBox"/>
+						<g:TextBox ui:field="usernameBox"/>
 					</div>
 				</div>
 				<div class="control-group" align="left">
