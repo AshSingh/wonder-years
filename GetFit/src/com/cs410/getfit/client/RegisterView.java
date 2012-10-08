@@ -2,11 +2,11 @@ package com.cs410.getfit.client;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public interface LoginView {
+public interface RegisterView {
 	
 	public interface Presenter {
-	    void onLoginButtonClicked();
-	    void onRegisterLinkClicked();
+	    void onRegisterButtonClicked();
+	    void onCancelRegisterButtonClicked();
 	  }
 	
 	void setPresenter(Presenter presenter);

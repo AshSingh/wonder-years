@@ -1,8 +1,9 @@
 package com.cs410.getfit.client.presenter;
 
 import com.cs410.getfit.client.LoginView;
-import com.cs410.getfit.client.LoginViewImpl;
+import com.cs410.getfit.client.event.GoToRegisterEvent;
 import com.cs410.getfit.client.event.LoginEvent;
+import com.cs410.getfit.client.event.RegisterEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -23,8 +24,13 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	    container.add(view.asWidget());
 	}
 	
+	@Override
 	public void onLoginButtonClicked(){
 		eventBus.fireEvent(new LoginEvent());
 	}
 	
+	@Override
+	public void onRegisterLinkClicked(){
+		eventBus.fireEvent(new GoToRegisterEvent());
+	}
 }

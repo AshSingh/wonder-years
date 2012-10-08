@@ -16,7 +16,7 @@
 			</div>
 		</center>
 		<center>
-			<div class="hero-unit-login">
+			<div class="hero-unit-register">
 				<form class="form-horizontal">
 					<div class="control-group" align="left">
 						<g:Label styleName="control-label" ui:field="usernameLabel">Username</g:Label>
@@ -31,20 +31,26 @@
 		       			</div>
 		        	</div>
 		        	<div class="control-group" align="left">
+						<g:Label styleName="control-label" ui:field="fNameLabel">First Name</g:Label>
+						<div class="controls">
+							<g:TextBox ui:field="fNameBox"/>
+		       			</div>
+		        	</div>
+		        	<div class="control-group" align="left">
+						<g:Label styleName="control-label" ui:field="lNameLabel">Last Name</g:Label>
+						<div class="controls">
+							<g:TextBox ui:field="lNameBox"/>
+		       			</div>
+		        	</div>
+		        	<div class="control-group" align="left">
 		        	    <div class="controls">
-		          			<g:Button styleName="btn btn-primary" ui:field="loginBtn">Login</g:Button>
+		          			<g:Button styleName="btn btn-primary" ui:field="registerBtn">Register</g:Button>
+		          			<g:Button styleName="btn" ui:field="cancelBtn">Cancel</g:Button>
 		          		</div>
 		          	</div>
-			      	<div class="control-group" align="left">
-		        	    <div class="controls">
-		          			<small>
-		        			<g:Label>Don't have an account?</g:Label>
-		        			<g:Hyperlink ui:field="registerLink">Register now!</g:Hyperlink>
-		        			</small>
-		    	    	</div>
-		        	</div>
 	        	</form>
 	        </div>
-	    </center>	
+		</center>	
     </g:HTMLPanel>
+  	
 </ui:UiBinder>
