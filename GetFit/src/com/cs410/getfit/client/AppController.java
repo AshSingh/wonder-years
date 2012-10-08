@@ -33,23 +33,9 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 
-		eventBus.addHandler(LoginEvent.TYPE,
-				new LoginEventHandler() {
-			public void onLogin(LoginEvent event) {
-				doLogin();
-			}
-		});  
-
 		eventBus.addHandler(GoToRegisterEvent.TYPE,
 				new GoToRegisterEventHandler() {
 			public void onGoToRegister(GoToRegisterEvent event) {
-				doGoToRegister();
-			}
-		});  
-		
-		eventBus.addHandler(RegisterEvent.TYPE,
-				new RegisterEventHandler() {
-			public void onRegister(RegisterEvent event) {
 				doRegister();
 			}
 		});  
@@ -57,7 +43,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		eventBus.addHandler(CancelRegisterEvent.TYPE,
 				new CancelRegisterEventHandler() {
 			public void onCancelRegister(CancelRegisterEvent event) {
-				doCancelRegister();
+				doLogin();
 			}
 		});  
 	}
@@ -65,17 +51,9 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void doLogin() {
 	    History.newItem("login");
 	}
-
-	private void doGoToRegister() {
-	    History.newItem("goToRegister");
-	}
 	
 	private void doRegister() {
 	    History.newItem("register");
-	}
-	
-	private void doCancelRegister() {
-	    History.newItem("cancelRegister");
 	}
 
 	@Override
@@ -83,27 +61,17 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    String token = event.getValue();
 	    
 	    if (token != null) {
-	        /*if (token.equals("login")) {
+	        if (token.equals("login")) {
 				if(loginView == null){
 					loginView = new LoginViewImpl();
 				}
 				new LoginPresenter(eventBus, loginView).go(container);	 
-	        } */   
-	        if (token.equals("goToRegister")) {
+	        }    
+	        else if (token.equals("register")) {
 				if(registerView == null){
 					registerView = new RegisterViewImpl();
 				}
 				new RegisterPresenter(eventBus, registerView).go(container);	 	
-	        }
-	        else if (token.equals("register")) {
-				// TODO: register implementation
-	        	// TODO: redirect to dashboard on success
-	        }
-	        else if (token.equals("cancelRegister")) {
-				if(loginView == null){
-					loginView = new LoginViewImpl();
-				}
-				new LoginPresenter(eventBus, loginView).go(container);	 	        	
 	        }
 	    }		
 	}
