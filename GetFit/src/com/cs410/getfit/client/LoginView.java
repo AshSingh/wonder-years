@@ -10,5 +10,7 @@ public interface LoginView {
 	  }
 	
 	void setPresenter(Presenter presenter);
+	String getUsername();
+	String getPassword();
 	Widget asWidget();
 }

@@ -25,6 +25,7 @@ public class RegisterPresenter implements Presenter, RegisterView.Presenter{
 
 	@Override
 	public void onRegisterButtonClicked() {
+		// TODO: create new user implementation
 		eventBus.fireEvent(new RegisterEvent());
 	}
 

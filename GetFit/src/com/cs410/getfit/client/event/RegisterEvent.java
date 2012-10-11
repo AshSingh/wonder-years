@@ -14,10 +14,6 @@ import com.cs410.getfit.client.event.RegisterEventHandler;
 public class RegisterEvent extends GwtEvent<RegisterEventHandler>{
 	public static Type<RegisterEventHandler> TYPE = new Type<RegisterEventHandler>();
 	
-	public RegisterEvent(){
-		// TODO: implementation
-	}
-
 	@Override
 	public Type<RegisterEventHandler> getAssociatedType() {
 		return TYPE;

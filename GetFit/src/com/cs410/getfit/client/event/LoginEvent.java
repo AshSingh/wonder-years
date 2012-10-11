@@ -13,35 +13,6 @@ import com.cs410.getfit.client.event.LoginEventHandler;
 public class LoginEvent extends GwtEvent<LoginEventHandler>{
 	public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();
 	
-	String username = LoginViewImpl.getTempUserName();
-	String pass = LoginViewImpl.getTempPass();
-	
-	public LoginEvent(){	
-		try {
-            RequestBuilder rb = new RequestBuilder (RequestBuilder.POST, "/login");
-            
-            rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            String body = "{\"username\":\""+username+"\",\"password\":\""+pass+"\"}";
-            
-            Request response = rb.sendRequest(body,  new RequestCallback() {
-                @Override
-                public void onResponseReceived(Request request, Response response) {
-                    Window.alert("Success" + response.getText());
-                    // TODO: redirect to dashboard
-                }
-                @Override
-                public void onError(Request request, Throwable exception) {
-                    Window.alert("Error occurred" + exception.getMessage());
-                    // TODO: stay on login page
-                }
-            });        
-		} 
-		catch (RequestException e) {
-			// TODO catch 403 Forbidden
-			e.printStackTrace();
-		}		
-	}
-
 	@Override
 	public Type<LoginEventHandler> getAssociatedType() {
 		return TYPE;
