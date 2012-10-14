@@ -4,10 +4,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="userDao" class="com.j256.ormlite.spring.DaoFactory"
-	factory-method="createDao">
-		<constructor-arg index="0" ref="connectionSource" />
-		<constructor-arg index="1" value="com.cs410.getfit.shared.UserImpl" />
+	<!-- services -->
+	<bean id="usersServices"
+	class="com.cs410.getfit.server.users.UsersServicesImpl">
+		<property name="userDao" ref="userDao" />
 	</bean>
-	
 </beans>

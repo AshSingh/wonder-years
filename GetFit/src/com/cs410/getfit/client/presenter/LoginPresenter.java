@@ -38,9 +38,10 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 		try {
             RequestBuilder rb = new RequestBuilder (RequestBuilder.POST, "/login");
             
-            rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            String body = "{\"username\":\""+view.getUsername()+"\",\"password\":\""+view.getPassword()+"\"}";
-            
+            rb.setHeader("Content-Type", "application/json");
+            String body = "{\"users\":["+
+        			"{\"username\":\""+view.getUsername()+"\",\"firstname\":\"\",\"lastname\":\"\",\"password\":\""+view.getPassword()+"\"}"+
+        			"]}";
             Request response = rb.sendRequest(body,  new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
