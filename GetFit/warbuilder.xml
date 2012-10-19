@@ -1,0 +1,24 @@
+<project name="GetFit" basedir="." default="default">
+ 
+	<target name="default" depends="clean,buildwar,deploy"></target>
+ 
+    <target name="clean">
+        <delete file="path-to-custom-location-set-in-tomcat/getfit.war"/>
+    	<delete file="path-to-custom-location-set-in-tomcat/getfit.war"/>
+    	<delete dir="path-to-custom-location-set-in-tomcat/getfit"/>
+    </target>
+	
+	<target name="buildwar">
+		<war basedir="war" destfile="getfit.war" webxml="war/WEB-INF/web.xml">
+			<webinf dir="war/WEB-INF/">
+				<include name="**" />
+			</webinf>
+		</war>
+	</target>
+ 
+	<target name="deploy">
+		<copy file="getfit.war" todir="path-to-custom-location-set-in-tomcat/wtpwebapps" />
+		<copy file="getfit.war" todir="path-to-custom-location-set-in-tomcat/webapps" />
+	</target>
+ 
+</project>
