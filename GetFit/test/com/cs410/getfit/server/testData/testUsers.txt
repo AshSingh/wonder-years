@@ -1,2 +1,2 @@
-"Joe001","password1","Joe","Doe"
-"James002","password2","James","Baker"
+Joe001,password1,Joe,Doe
+James002,password2,James,Baker

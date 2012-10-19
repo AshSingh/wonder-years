@@ -9,4 +9,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	class="com.cs410.getfit.server.users.UsersServicesImpl">
 		<property name="userDao" ref="userDao" />
 	</bean>
+	<bean id="challengesServices"
+	class="com.cs410.getfit.server.challenges.ChallengesServicesImpl">
+		<property name="challengeDao" ref="challengeDao" />
+	</bean>
 </beans>
