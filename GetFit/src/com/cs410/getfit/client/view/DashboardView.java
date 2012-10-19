@@ -1,14 +1,15 @@
-package com.cs410.getfit.client;
+package com.cs410.getfit.client.view;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public interface RegisterView {
+public interface DashboardView {
 	
 	public interface Presenter {
-	    void onRegisterButtonClicked();
-	    void onCancelRegisterButtonClicked();
+
 	  }
 	
 	void setPresenter(Presenter presenter);
+	void setMenuBar(MenuBarView menuBar);
+	MenuBarView getMenuBar();
 	Widget asWidget();
 }

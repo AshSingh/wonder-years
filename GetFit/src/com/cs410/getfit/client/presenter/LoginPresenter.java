@@ -1,9 +1,9 @@
 package com.cs410.getfit.client.presenter;
 
-import com.cs410.getfit.client.LoginView;
 import com.cs410.getfit.client.event.GoToRegisterEvent;
 import com.cs410.getfit.client.event.LoginEvent;
 import com.cs410.getfit.client.event.RegisterEvent;
+import com.cs410.getfit.client.view.LoginView;
 import com.cs410.getfit.client.JsonData;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
@@ -36,10 +36,11 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	
 	@Override
 	public void onLoginButtonClicked() {
-		JsonData loginData = new JsonData();
-		int httpResponse = loginData.loginRequest(view.getUsername(), view.getPassword());
+		//JsonData loginData = new JsonData();
+		//int httpResponse = loginData.loginRequest(view.getUsername(), view.getPassword());
+		int httpResponse = 200;
 		if(httpResponse == 200){
-			//load dashboard
+			eventBus.fireEvent(new LoginEvent());
 		}
 		else{
 			Window.alert("Username: " + view.getUsername() + "Password: " + view.getPassword());

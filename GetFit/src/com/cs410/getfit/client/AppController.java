@@ -10,25 +10,30 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
+import com.cs410.getfit.client.presenter.DashboardPresenter;
 import com.cs410.getfit.client.presenter.LoginPresenter;
+import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.presenter.RegisterPresenter;
+import com.cs410.getfit.client.view.DashboardViewImpl;
+import com.cs410.getfit.client.view.LoginViewImpl;
+import com.cs410.getfit.client.view.MenuBarViewImpl;
+import com.cs410.getfit.client.view.RegisterViewImpl;
 import com.cs410.getfit.client.event.*;
-import com.cs410.getfit.client.LoginViewImpl;
 
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
 	
 	private final HandlerManager eventBus;
-	private final RequestBuilder requestBuilder; 
 	private HasWidgets container;
 	
 	private LoginViewImpl loginView = null;
 	private RegisterViewImpl registerView = null;
+	private MenuBarViewImpl menuBarView = null;
+	private DashboardViewImpl dashboardView = null;
 	
 	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
 	    this.eventBus = eventBus;
-	    this.requestBuilder = requestBuilder;
 	    bind();
 	  }
 
@@ -87,7 +92,22 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    
 	    if (token != null) {
 	        if (token.equals("login") || token.equals("register")) {
-				// TODO: go to dashboard view
+	        	GWT.runAsync(new RunAsyncCallback() {
+	        		public void onFailure(Throwable caught) {
+	        		}
+
+	        		public void onSuccess() {
+	        			if (dashboardView == null) {
+	        				dashboardView = new DashboardViewImpl();
+	        			}
+	        			if (menuBarView == null) {
+	        				menuBarView = new MenuBarViewImpl();
+	        			}
+	        			dashboardView.setMenuBar(menuBarView);
+	        			new MenuBarPresenter(eventBus, menuBarView);
+	        			new DashboardPresenter(eventBus, dashboardView).go(container);	 	
+	        		}
+	        	});
 	        }    
 	        else if (token.equals("goToRegister")) {
 	        	GWT.runAsync(new RunAsyncCallback() {

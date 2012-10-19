@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:webapplication='urn:import:com.cs410.getfit.client'>
+
+	<g:HTMLPanel>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<a class="brand" href="">Get Fit!</a>
+				<ul class="nav">
+					<li class="active">
+						<a href="">
+							<g:Hyperlink styleName="menuBarLinkActive" ui:field="homeLink">Home</g:Hyperlink>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<g:Hyperlink styleName="menuBarLink" ui:field="challengeLink">Challenges</g:Hyperlink>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Account
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="">
+									<g:Hyperlink styleName="menuBarDropdownLink"
+										ui:field="profileLink">Profile</g:Hyperlink>
+								</a>
+							</li>
+							<li>
+								<a href="">
+									<g:Hyperlink styleName="menuBarDropdownLink"
+										ui:field="settingsLink">Settings</g:Hyperlink>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="">
+									<g:Hyperlink styleName="menuBarDropdownLink"
+										ui:field="logoutLink">Logout</g:Hyperlink>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Users
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">Challenges</a>
+							</li>
+						</ul>
+					</li>
+					<form class="navbar-search">
+						<input type="text" class="search-query" placeholder="Search" />
+					</form>
+					<li>
+						<a href="">
+							<g:Hyperlink styleName="menuBarLink" ui:field="searchLink">
+								<i class="icon-search icon-white"></i>
+							</g:Hyperlink>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

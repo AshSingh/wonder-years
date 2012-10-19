@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
+
+	<g:HTMLPanel>
+		<div class="hero-unit-login-header">
+			<div class="page-header-login">
+				<h1>
+					Dashboard!
+					<p>
+						<small>Coming soon...</small>
+					</p>
+				</h1>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

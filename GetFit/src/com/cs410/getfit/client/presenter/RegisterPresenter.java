@@ -1,8 +1,8 @@
 package com.cs410.getfit.client.presenter;
 
-import com.cs410.getfit.client.RegisterView;
 import com.cs410.getfit.client.event.CancelRegisterEvent;
 import com.cs410.getfit.client.event.RegisterEvent;
+import com.cs410.getfit.client.view.RegisterView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 

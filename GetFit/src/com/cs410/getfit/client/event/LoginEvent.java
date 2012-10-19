@@ -7,8 +7,8 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.cs410.getfit.client.LoginViewImpl;
 import com.cs410.getfit.client.event.LoginEventHandler;
+import com.cs410.getfit.client.view.LoginViewImpl;
 
 public class LoginEvent extends GwtEvent<LoginEventHandler>{
 	public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();

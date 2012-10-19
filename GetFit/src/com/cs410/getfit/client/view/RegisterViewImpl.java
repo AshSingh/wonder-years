@@ -1,4 +1,4 @@
-package com.cs410.getfit.client;
+package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

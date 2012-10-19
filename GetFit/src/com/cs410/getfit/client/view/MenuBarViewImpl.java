@@ -1,4 +1,4 @@
-package com.cs410.getfit.client;
+package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,46 +13,22 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginViewImpl extends Composite implements LoginView {
-	@UiField static TextBox usernameBox;
-	@UiField static PasswordTextBox pwdBox;
+public class MenuBarViewImpl extends Composite implements MenuBarView {
 	
 	private Presenter presenter;
 	
-	@UiTemplate("Login.ui.xml") 
-	interface Binder extends UiBinder<Widget, LoginViewImpl> {}
+	@UiTemplate("MenuBar.ui.xml") 
+	interface Binder extends UiBinder<Widget, MenuBarViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 	
-	public LoginViewImpl() {
+	public MenuBarViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 	
-	@Override
-	public String getUsername(){
-		return usernameBox.getText();
-	}
-	
-	@Override
-	public String getPassword(){
-		return pwdBox.getText();
-	}
-	
-	@UiHandler("loginBtn")
-	void onLoginClicked(ClickEvent event) {
-		if (presenter != null) {
-			presenter.onLoginButtonClicked();
-		}
-	}
-	
-	@UiHandler("registerLink")
-	void onRegisterClicked(ClickEvent event) {
-		if (presenter != null) {
-			presenter.onRegisterLinkClicked();
-		}	
-	}
+
 }

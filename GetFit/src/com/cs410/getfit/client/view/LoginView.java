@@ -1,4 +1,4 @@
-package com.cs410.getfit.client;
+package com.cs410.getfit.client.view;
 
 import com.google.gwt.user.client.ui.Widget;
 

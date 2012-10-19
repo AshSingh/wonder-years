@@ -703,12 +703,6 @@ h4 small {
   border-bottom: 1px solid #eeeeee;
 }
 
-.page-header-login {
-  padding-bottom: 9px;
-  margin: 0px 0px 30px;
-  border-bottom: 1px solid #eeeeee;
-}
-
 ul,
 ol {
   padding: 0;
@@ -972,7 +966,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 30px;
+  height: 20px;
   padding: 4px 6px;
   margin-bottom: 9px;
   font-size: 14px;
@@ -2155,7 +2149,7 @@ table [class*=span],
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("../img/glyphicons-halflings.png");
+  background-image: url("glyphicons-halflings.png");
   background-position: 14px 14px;
   background-repeat: no-repeat;
 }
@@ -2175,7 +2169,7 @@ table [class*=span],
 .dropdown-menu > li > a:hover > [class*=" icon-"],
 .dropdown-menu > .active > a > [class^="icon-"],
 .dropdown-menu > .active > a > [class*=" icon-"] {
-  background-image: url("../img/glyphicons-halflings-white.png");
+  background-image: url("glyphicons-halflings-white.png");
 }
 
 .icon-glass {
@@ -5749,83 +5743,6 @@ a.badge:hover {
 }
 
 .hero-unit p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
-}
-
-.hero-unit-login-header {
-  padding-left: 0px;
-  padding-top: 50px;
-  margin-bottom: 0px;
-  background-color: #ffffff;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-}
-
-.hero-unit-login-header h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
-}
-
-.hero-unit-login-header p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
-}
-
-.hero-unit-login {
-  padding: 50px;
-  margin-left:0px;
-  height:175px;
-  width:500px;
-  background-color: #eeeeee;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-}
-
-.hero-unit-login h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
-}
-
-.hero-unit-login p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
-}
-
-.hero-unit-register {
-  padding: 50px;
-  margin-left:0px;
-  height:225px;
-  width:500px;
-  background-color: #eeeeee;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-}
-
-.hero-unit-register h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
-}
-
-.hero-unit-register p {
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
