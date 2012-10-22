@@ -40,10 +40,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 
-		eventBus.addHandler(LoginEvent.TYPE,
-				new LoginEventHandler() {
-			public void onLogin(LoginEvent event) {
-				doLogin();
+		eventBus.addHandler(GoToLoginEvent.TYPE,
+				new GoToLoginEventHandler() {
+			public void onGoToLogin(GoToLoginEvent event) {
+				doGoToLogin();
 			}
 		});  
 		
@@ -54,44 +54,45 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			}
 		});  
 		
-		eventBus.addHandler(CancelRegisterEvent.TYPE,
-				new CancelRegisterEventHandler() {
-			public void onCancelRegister(CancelRegisterEvent event) {
-				doCancelRegister();
+		eventBus.addHandler(GoToCreateChallengeEvent.TYPE,
+				new GoToCreateChallengeEventHandler() {
+			public void onGoToCreateChallenge(GoToCreateChallengeEvent event) {
+				doGoToCreateChallenge();
 			}
 		});  
 
-		eventBus.addHandler(RegisterEvent.TYPE,
-				new RegisterEventHandler() {
-			public void onRegister(RegisterEvent event) {
-				doRegister();
+		eventBus.addHandler(GoToDashboardEvent.TYPE,
+				new GoToDashboardEventHandler() {
+			public void onGoToDashboard(GoToDashboardEvent event) {
+				doGoToDashboard();
 			}
 		}); 
 	}
 	
-	private void doLogin() {
-	    History.newItem("login");
+	private void doGoToLogin() {
+	    History.newItem(HistoryValues.LOGIN.toString());
 	}
 	
 	private void doGoToRegister() {
-	    History.newItem("goToRegister");
+	    History.newItem(HistoryValues.REGISTER.toString());
 	}
 	
-	private void doCancelRegister() {
-		History.newItem("cancelRegister");
+	private void doGoToDashboard() {
+		History.newItem(HistoryValues.DASHBOARD.toString());
 	}
 	
-	private void doRegister() {
-		History.newItem("register");
+	private void doGoToCreateChallenge() {
+		History.newItem(HistoryValues.CREATECHALLENGE.toString());
 	}
 
 	
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 	    String token = event.getValue();
+	    System.out.println("'" + token + "'");
 	    
 	    if (token != null) {
-	        if (token.equals("login") || token.equals("register")) {
+	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
 	        		}
@@ -109,7 +110,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 	        	});
 	        }    
-	        else if (token.equals("goToRegister")) {
+	        else if (token.equals(HistoryValues.REGISTER.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
 	        		}
@@ -122,7 +123,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 	        	});
 	        }
-	        else if (token.equals("cancelRegister") || token.equals("goToLogin")) {
+	        else if (token.equals(HistoryValues.LOGIN.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
 	        		}
@@ -142,7 +143,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	public void go(final HasWidgets container) {
 		this.container = container;
 	    if ("".equals(History.getToken())) {
-	    	History.newItem("goToLogin");
+	    	History.newItem(HistoryValues.LOGIN.toString());
 	    }
 	    else {
 	        History.fireCurrentHistoryState();

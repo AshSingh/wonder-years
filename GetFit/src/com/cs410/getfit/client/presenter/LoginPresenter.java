@@ -1,7 +1,7 @@
 package com.cs410.getfit.client.presenter;
 
+import com.cs410.getfit.client.event.GoToDashboardEvent;
 import com.cs410.getfit.client.event.GoToRegisterEvent;
-import com.cs410.getfit.client.event.LoginEvent;
 import com.cs410.getfit.client.view.LoginView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
@@ -30,7 +30,7 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 		//int httpResponse = loginData.loginRequest(view.getUsername(), view.getPassword());
 		int httpResponse = 200;
 		if(httpResponse == 200){
-			eventBus.fireEvent(new LoginEvent());
+			eventBus.fireEvent(new GoToDashboardEvent());
 		}
 		else{
 			Window.alert("Username: " + view.getUsername() + "Password: " + view.getPassword());

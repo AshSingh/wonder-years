@@ -1,7 +1,7 @@
 package com.cs410.getfit.client.presenter;
 
-import com.cs410.getfit.client.event.CancelRegisterEvent;
-import com.cs410.getfit.client.event.RegisterEvent;
+import com.cs410.getfit.client.event.GoToDashboardEvent;
+import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.view.RegisterView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -26,12 +26,12 @@ public class RegisterPresenter implements Presenter, RegisterView.Presenter{
 	@Override
 	public void onRegisterButtonClicked() {
 		// TODO: create new user implementation
-		eventBus.fireEvent(new RegisterEvent());
+		eventBus.fireEvent(new GoToDashboardEvent());
 	}
 
 	@Override
 	public void onCancelRegisterButtonClicked() {
-		eventBus.fireEvent(new CancelRegisterEvent());
+		eventBus.fireEvent(new GoToLoginEvent());
 	}
 	
 }
