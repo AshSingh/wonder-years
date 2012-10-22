@@ -33,6 +33,10 @@ public class ChallengeImpl implements Challenge {
 	public long getGuid() {
 		return guid;
 	}
+	//For testing purposes
+	public void setGuid(long guid) {
+		this.guid = guid;
+	}
 	public String getTitle() {
 		return title;
 	}

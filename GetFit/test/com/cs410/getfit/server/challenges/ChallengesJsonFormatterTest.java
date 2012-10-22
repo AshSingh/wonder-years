@@ -7,28 +7,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.cs410.getfit.shared.Challenge;
+import com.cs410.getfit.shared.ChallengeImpl;
 
-@RunWith(JMock.class)
 public class ChallengesJsonFormatterTest {
 
-	private Mockery context = new Mockery();
 	private String challengesJsonString = "";
 	List <Challenge> challenges;
+	ChallengesJsonFormatter jsonFormatter = new ChallengesJsonFormatter();
 	
 	@Before
 	public void setUp() {
 
 		challenges = new ArrayList<Challenge>();
-		final Challenge challenge1 = context.mock(Challenge.class, "challenge1");
-		final Challenge challenge2 = context.mock(Challenge.class, "challenge2");
 		Calendar cal = Calendar.getInstance();
 		cal.set(1989, Calendar.JANUARY, 01,0,0,0);
 		final Date startDate = cal.getTime();;
@@ -39,35 +33,23 @@ public class ChallengesJsonFormatterTest {
 				"{\"guid\":12345,\"title\":\"Go Pro!\",\"startdate\":"+startDate.getTime()+",\"enddate\":"+endDate.getTime()+",\"location\":\"Vancouver\",\"isprivate\":true},"+
 				"{\"guid\":7897,\"title\":\"Be Fit\",\"startdate\":"+startDate.getTime()+",\"enddate\":"+endDate.getTime()+",\"location\":\"Calgary\",\"isprivate\":false}"+
 				"]}";
-		context.checking(new Expectations() {
-			{
-				allowing(challenge1).getGuid(); will(returnValue(new Long(12345)));
-				allowing(challenge1).getTitle(); will(returnValue("Go Pro!"));
-				allowing(challenge1).getStartDate(); will(returnValue(startDate.getTime()));
-				allowing(challenge1).getEndDate(); will(returnValue(endDate.getTime()));
-				allowing(challenge1).getLocation(); will(returnValue("Vancouver"));
-				allowing(challenge1).isPrivate(); will(returnValue(true));
-
-				allowing(challenge2).getGuid(); will(returnValue(new Long(7897)));
-				allowing(challenge2).getTitle(); will(returnValue("Be Fit"));
-				allowing(challenge2).getStartDate(); will(returnValue(startDate.getTime()));
-				allowing(challenge2).getEndDate(); will(returnValue(endDate.getTime()));
-				allowing(challenge2).getLocation(); will(returnValue("Calgary"));
-				allowing(challenge2).isPrivate(); will(returnValue(false));
-			}
-		});
+		Challenge challenge = new ChallengeImpl("Go Pro!", true, "Vancouver", startDate.getTime(), endDate.getTime());
+		challenge.setGuid(new Long(12345));
+		Challenge challenge1 = new ChallengeImpl("Be Fit", false, "Calgary", startDate.getTime(), endDate.getTime());
+		challenge1.setGuid(new Long(7897));
+		
+		challenges.add(challenge);
 		challenges.add(challenge1);
-		challenges.add(challenge2);
 	}
 	
 	@Test
 	public void testGetJsonFormattedUserArray() {
-		String jsonFormattedUsers = ChallengesJsonFormatter.getJSONFormattedStringOfChallenges(challenges);
+		String jsonFormattedUsers = jsonFormatter.getJSONFormattedStringOfResource(challenges);
 		assertEquals(challengesJsonString,jsonFormattedUsers);
 	}
 	@Test
 	public void testGetUsersFromJsonFormattedString() {
-		List <Challenge> actualChallenges = ChallengesJsonFormatter.getChallengesFromJSONFormattedString(challengesJsonString);
+		List <Challenge> actualChallenges = jsonFormatter.getResourcesFromJSONFormattedString(challengesJsonString);
 		assertEquals(2, actualChallenges.size());
 		Challenge challenge1 = actualChallenges.get(0);
 		Challenge expectedChallenge1 = challenges.get(0);

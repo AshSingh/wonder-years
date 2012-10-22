@@ -4,6 +4,7 @@ package com.cs410.getfit.shared;
 public interface Challenge {
 	
 	public long getGuid();
+	public void setGuid(long guid);
 	public String getTitle();
 	public void setTitle(String title);
 	public boolean isPrivate();
