@@ -5,55 +5,39 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.cs410.getfit.shared.User;
+import com.cs410.getfit.shared.UserImpl;
 
-@RunWith(JMock.class)
 public class UsersJsonFormatterTest {
 
-	private Mockery context = new Mockery();
-	private String usersJsonString = "{\"users\":["+
-			"{\"username\":\"User1_Username\",\"firstname\":\"User1_FirstName\",\"lastname\":\"User1_LastName\",\"password\":\"User1_Password\"},"+
-			"{\"username\":\"User2_username\",\"firstname\":\"User2_Firstname\",\"lastname\":\"User2_Lastname\",\"password\":\"User2_password\"}"+
-			"]}";
+	private String usersJsonString = "{\"users\":" +
+			"[{\"username\":\"User1_Username\",\"password\":\"User1_Password\",\"firstname\":\"User1_FirstName\",\"lastname\":\"User1_LastName\"}," +
+			"{\"username\":\"User2_Username\",\"password\":\"User2_Password\",\"firstname\":\"User2_FirstName\",\"lastname\":\"User2_LastName\"}" +
+					"]}";
+;
 	List <User> users;
+	UsersJsonFormatter formatter = new UsersJsonFormatter();
 	
 	@Before
 	public void setUp() {
 		users = new ArrayList<User>();
-		final User user1 = context.mock(User.class, "user1");
-		final User user2 = context.mock(User.class, "user2");
-		context.checking(new Expectations() {
-			{
-				allowing(user1).getFirstName(); will(returnValue("User1_FirstName"));
-				allowing(user1).getLastName(); will(returnValue("User1_LastName"));
-				allowing(user1).getUsername(); will(returnValue("User1_Username"));
-				allowing(user1).getPassword(); will(returnValue("User1_Password"));
-
-				allowing(user2).getFirstName(); will(returnValue("User2_Firstname"));
-				allowing(user2).getLastName(); will(returnValue("User2_Lastname"));
-				allowing(user2).getPassword(); will(returnValue("User2_password"));
-				allowing(user2).getUsername(); will(returnValue("User2_username"));
-			}
-		});
+		final User user1 = new UserImpl("User1_Username","User1_Password","User1_FirstName","User1_LastName");
+		final User user2 = new UserImpl("User2_Username","User2_Password","User2_FirstName","User2_LastName");
 		users.add(user1);
 		users.add(user2);
 	}
 	
 	@Test
 	public void testGetJsonFormattedUserArray() {
-		String jsonFormattedUsers = UsersJsonFormatter.getJSONFormattedStringOfUsers(users);
+		String jsonFormattedUsers = formatter.getJSONFormattedStringOfResource(users);
 		assertEquals(usersJsonString,jsonFormattedUsers);
 	}
 	@Test
 	public void testGetUsersFromJsonFormattedString() {
-		List <User> actualUsers = UsersJsonFormatter.getUsersFromJSONFormattedString(usersJsonString);
+		List <User> actualUsers = formatter.getResourcesFromJSONFormattedString(usersJsonString);
 		assertEquals(2, actualUsers.size());
 		User user1 = actualUsers.get(0);
 		User expectedUser1 = users.get(0);

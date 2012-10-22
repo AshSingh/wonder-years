@@ -23,6 +23,7 @@ public class UsersServlet extends HttpServlet {
 
 	private WebApplicationContext ctx = null;
 	private UsersServices usersServices = null;
+	private UsersJsonFormatter formatter;
 
 	@Override
 	public void init() throws ServletException {
@@ -30,6 +31,7 @@ public class UsersServlet extends HttpServlet {
 		ServletContext context = getServletContext();
 		ctx = WebApplicationContextUtils.getWebApplicationContext(context);
 		usersServices = (UsersServices) ctx.getBean("usersServices");
+		formatter = new UsersJsonFormatter();
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class UsersServlet extends HttpServlet {
 			users = usersServices.queryForAllUsers();
 	
 			PrintWriter writer = resp.getWriter();
-			writer.write(UsersJsonFormatter.getJSONFormattedStringOfUsers(users));
+			writer.write(formatter.getJSONFormattedStringOfResource(users));
 			writer.flush();
 	
 			// Set the correct status code
@@ -69,7 +71,7 @@ public class UsersServlet extends HttpServlet {
 
 		String body= jb.toString();
 		
-		List <User> users = UsersJsonFormatter.getUsersFromJSONFormattedString(body);
+		List <User> users = formatter.getResourcesFromJSONFormattedString(body);
 		
 		if(users.size() == 1) {
 			User user = users.get(0); // get first user
