@@ -27,6 +27,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 				com.cs410.getfit.server.users.UsersServlet
 			</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ChallengesServlet</servlet-name>
+			<servlet-class>
+				com.cs410.getfit.server.challenges.ChallengesServlet
+			</servlet-class>
+	</servlet>
 
 	
 	<!-- Servlet mappings -->
@@ -38,6 +44,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
 		<url-pattern>/users/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ChallengesServlet</servlet-name>
+		<url-pattern>/challenges</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ChallengesServlet</servlet-name>
+		<url-pattern>/challenges/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>
