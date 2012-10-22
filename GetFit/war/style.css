@@ -1,150 +1,158 @@
 /*
  * modifications of boostrap.css specific to GetFit
  */
- 
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
-  display: inline-block;
-  height: 30px;
-  padding: 4px 6px;
-  margin-bottom: 9px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #555555;
-  -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-          border-radius: 3px;
+select,textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input
+	{
+	display: inline-block;
+	height: 30px;
+	padding: 4px 6px;
+	margin-bottom: 9px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #555555;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .page-header-login {
-  padding-bottom: 9px;
-  margin: 0px 0px 30px;
-  border-bottom: 1px solid #eeeeee;
+	padding-bottom: 9px;
+	margin: 0px 0px 30px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.page-header-createChallenge {
+	padding-bottom: 0px;
+	margin: 0px 0px 0px;
+	border-bottom: 1px solid #eeeeee;
 }
 
 .hero-unit-login-header {
-  padding-left: 0px;
-  padding-top: 50px;
-  margin-bottom: 0px;
-  background-color: #ffffff;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
+	padding-left: 0px;
+	padding-top: 50px;
+	margin-bottom: 0px;
+	background-color: #ffffff;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
 }
 
 .hero-unit-login-header h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
+	margin-bottom: 0;
+	font-size: 60px;
+	line-height: 1;
+	letter-spacing: -1px;
+	color: inherit;
 }
 
 .hero-unit-login-header p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 30px;
+	color: inherit;
 }
 
 .hero-unit-login {
-  padding: 50px;
-  margin-left:0px;
-  height:175px;
-  width:500px;
-  background-color: #eeeeee;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
+	padding: 50px;
+	margin-left: 0px;
+	height: 175px;
+	width: 500px;
+	background-color: #eeeeee;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
 }
 
 .hero-unit-login h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
+	margin-bottom: 0;
+	font-size: 60px;
+	line-height: 1;
+	letter-spacing: -1px;
+	color: inherit;
 }
 
 .hero-unit-login p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 30px;
+	color: inherit;
 }
 
 .hero-unit-register {
-  padding: 50px;
-  margin-left:0px;
-  height:225px;
-  width:500px;
-  background-color: #eeeeee;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
+	padding: 50px;
+	margin-left: 0px;
+	height: 225px;
+	width: 500px;
+	background-color: #eeeeee;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
 }
 
 .hero-unit-register h1 {
-  margin-bottom: 0;
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: inherit;
+	margin-bottom: 0;
+	font-size: 60px;
+	line-height: 1;
+	letter-spacing: -1px;
+	color: inherit;
 }
 
 .hero-unit-register p {
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 30px;
+	color: inherit;
 }
 
 .navbar .brand {
-  margin-left: -10px;
+	margin-left: -10px;
 }
 
 .menuBarLinkActive a {
-  color: #ffffff;
+	color: #ffffff;
 }
 
 .menuBarLink a {
-  color: #999999;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	color: #999999;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
-.menuBarLink a:hover { 
-  color: #ffffff;
-  text-decoration: none;
-} 
+.menuBarLink a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
 
-.menuBarLinkActive a:hover { 
-  color: #ffffff;
-  text-decoration: none;
+.menuBarLinkActive a:hover {
+	color: #ffffff;
+	text-decoration: none;
 }
 
 .menuBarDropdownLink a {
-  margin-right: -15px;
-  margin-left: -20px;
-  text-decoration: none;
-  color: #0088cc;
+	margin-right: -15px;
+	margin-left: -20px;
+	text-decoration: none;
+	color: #0088cc;
 }
 
-.menuBarDropdownLink a:hover { 
-  color: #ffffff;
-  text-decoration: none;
+.menuBarDropdownLink a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.menuBarPadding {
+	padding-top: 50px;
+}
+
+.span3 {
+  width: 250px;
+  min-width: 250px;
+}
+
+.form-horizontal .control-group {
+  margin-bottom: 0px;
+  *zoom: 1;
+}
+
+.activity-label {
+	padding-left: 10px;
 }

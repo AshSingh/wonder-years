@@ -36,9 +36,5 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 			Window.alert("Username: " + view.getUsername() + "Password: " + view.getPassword());
 		}
 	}
-	
-	@Override
-	public void onRegisterLinkClicked(){
-		eventBus.fireEvent(new GoToRegisterEvent());
-	}
+
 }

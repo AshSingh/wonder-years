@@ -6,7 +6,7 @@ public interface DashboardView {
 	
 	public interface Presenter {
 
-	  }
+	}
 	
 	void setPresenter(Presenter presenter);
 	void setMenuBar(MenuBarView menuBar);

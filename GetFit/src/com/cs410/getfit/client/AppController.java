@@ -10,11 +10,13 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
+import com.cs410.getfit.client.presenter.CreateChallengePresenter;
 import com.cs410.getfit.client.presenter.DashboardPresenter;
 import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.presenter.RegisterPresenter;
+import com.cs410.getfit.client.view.CreateChallengeViewImpl;
 import com.cs410.getfit.client.view.DashboardViewImpl;
 import com.cs410.getfit.client.view.LoginViewImpl;
 import com.cs410.getfit.client.view.MenuBarViewImpl;
@@ -31,6 +33,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private RegisterViewImpl registerView = null;
 	private MenuBarViewImpl menuBarView = null;
 	private DashboardViewImpl dashboardView = null;
+	private CreateChallengeViewImpl createChallengeView = null;
+	
 	
 	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
 	    this.eventBus = eventBus;
@@ -89,7 +93,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 	    String token = event.getValue();
-	    System.out.println("'" + token + "'");
 	    
 	    if (token != null) {
 	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
@@ -133,6 +136,24 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        				loginView = new LoginViewImpl();
 	        			}
 	        			new LoginPresenter(eventBus, loginView).go(container);	 
+	        		}
+	        	});
+	        }
+	        else if (token.equals(HistoryValues.CREATECHALLENGE.toString())) {
+	        	GWT.runAsync(new RunAsyncCallback() {
+	        		public void onFailure(Throwable caught) {
+	        		}
+
+	        		public void onSuccess() {
+	        			if (createChallengeView == null) {
+	        				createChallengeView = new CreateChallengeViewImpl();
+	        			}
+	        			if (menuBarView == null) {
+	        				menuBarView = new MenuBarViewImpl();
+	        			}
+	        			createChallengeView.setMenuBar(menuBarView);
+	        			new MenuBarPresenter(eventBus, menuBarView);
+	        			new CreateChallengePresenter(eventBus, createChallengeView).go(container);	 	
 	        		}
 	        	});
 	        }

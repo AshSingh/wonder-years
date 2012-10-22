@@ -2,14 +2,14 @@ package com.cs410.getfit.client.view;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public interface LoginView {
+public interface CreateChallengeView {
 	
 	public interface Presenter {
-	    void onLoginButtonClicked();
+
 	  }
 	
 	void setPresenter(Presenter presenter);
-	String getUsername();
-	String getPassword();
+	void setMenuBar(MenuBarView menuBar);
+	MenuBarView getMenuBar();
 	Widget asWidget();
 }

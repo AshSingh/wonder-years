@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
+
+	<g:HTMLPanel>
+		<div class="menuBarPadding" />
+		<div class="page-header-createChallenge">
+			<h4>
+				Create your challenge:
+			</h4>
+		</div>
+		<div class="row">
+			<div class="span3">
+				<h5>Activities:</h5>
+				<g:ListBox ui:field="activitiesList" visibleItemCount="15" />
+				<div>
+					<g:Button styleName="btn btn-primary" ui:field="addActivity">Add
+					</g:Button>
+				</div>
+			</div>
+			<div class="span8">
+				<form class="form-horizontal">
+					<div class="control-group" align="left">
+						<h4>
+							<g:Label styleName="control-label" ui:field="challengeLabel">Challenge name:</g:Label>
+						</h4>
+						<div class="controls">
+							<g:TextBox ui:field="challengeNameBox" />
+						</div>
+					</div>
+					<div class="control-group" align="left">
+						<h5>
+							<g:Label styleName="control-label" ui:field="startDateLabel">Start Date: </g:Label>
+						</h5>
+						<div class="controls">
+							<div class="input-append date" id="dp3" data-date-format="dd-mm-yyyy">
+								<input class="span2" size="16" type="text"/>
+								<span class="add-on">
+									<i class="icon-th"></i>
+								</span>
+							</div>
+						</div>
+						<h5>
+							<g:Label styleName="control-label" ui:field="endDateLabel">End Date: </g:Label>
+						</h5>
+						<div class="controls">
+							<div class="input-append date" id="dp3" data-date-format="dd-mm-yyyy">
+								<input class="span2" size="16" type="text" />
+								<span class="add-on">
+									<i class="icon-th"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group" align="left">
+						<h5>
+							<g:Label styleName="control-label" ui:field="locationLabel">Location: </g:Label>
+						</h5>
+						<div class="controls">
+							<g:TextBox ui:field="locationBox" />
+						</div>
+					</div>
+				</form>
+				<h4>
+					<g:Label styleName="activity-label" ui:field="activitiesLabel">Activities:</g:Label>
+				</h4>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

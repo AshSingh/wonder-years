@@ -14,6 +14,7 @@
 					</p>
 				</h1>
 			</div>
+			<g:Hyperlink ui:field="createChallengeLink">Create a new challenge</g:Hyperlink>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>
