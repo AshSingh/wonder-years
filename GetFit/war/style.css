@@ -1,6 +1,9 @@
 /*
  * modifications of boostrap.css specific to GetFit
  */
+/*
+ * general use
+ */
 select,textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input
 	{
 	display: inline-block;
@@ -15,15 +18,16 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	border-radius: 3px;
 }
 
+.menuBarPadding {
+	padding-top: 40px;
+}
+
+/*
+ * login/register
+ */
 .page-header-login {
 	padding-bottom: 9px;
 	margin: 0px 0px 30px;
-	border-bottom: 1px solid #eeeeee;
-}
-
-.page-header-createChallenge {
-	padding-bottom: 0px;
-	margin: 0px 0px 0px;
 	border-bottom: 1px solid #eeeeee;
 }
 
@@ -104,55 +108,177 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	color: inherit;
 }
 
+/*
+ * menu bar
+ */
 .navbar .brand {
 	margin-left: -10px;
 }
 
-.menuBarLinkActive a {
+.menuBarLinkActive {
 	color: #ffffff;
+	float: none;
+	padding: 10px 15px 10px;
 }
 
-.menuBarLink a {
+.menuBarLinkActive:hover {
+	cursor: normal;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.menuBarLink {
 	color: #999999;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	padding: 10px 15px 0px;
+	float: none;
 }
 
-.menuBarLink a:hover {
+.menuBarLink:hover {
 	color: #ffffff;
 	text-decoration: none;
+	cursor: pointer;
 }
 
-.menuBarLinkActive a:hover {
+.menuBarDropdownLink {
+	text-decoration: none;
+	padding: 3px 20px;
+	color: #0088cc;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.menuBarDropdownLink:hover {
 	color: #ffffff;
 	text-decoration: none;
+	cursor: pointer;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+	background-color: #0088cc;
 }
 
-.menuBarDropdownLink a {
-	margin-right: -15px;
-	margin-left: -20px;
-	text-decoration: none;
+.navbar-title {
+	display: block;
+	float: left;
+	padding: 10px 20px 10px;
+	font-size: 20px;
+	font-weight: 200;
+	color: #777777;
+}
+
+.searchLabel {
+	color: #999999;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	padding: 10px 15px 0px;
+	float: none;
+}
+
+.transparent-btn {
+	padding-right: 20px;
+	display: block;
+	height: 40px;
+	background: transparent;
+	background-color: transparent;
+	border: activeborder;
+}
+
+.searchList {
+	width: auto;
+	height: 28px;
+	font-size: 12px;
+	color: #555555;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	float: none;
+	margin-top: 5px;
+	margin-bottom: -5px;
+}
+
+.navbar-search {
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+/*
+ * dashboard
+ */
+.hyperlinkLabel {
 	color: #0088cc;
 }
 
-.menuBarDropdownLink a:hover {
-	color: #ffffff;
-	text-decoration: none;
+.hyperlinkLabel:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #555555;
 }
 
-.menuBarPadding {
-	padding-top: 50px;
+/*
+ * create challenge
+ */
+.page-header-createChallenge {
+	padding-bottom: 0px;
+	margin: 0px 10px 0px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.page-header-createChallenge h4 {
+	font-size: 24px;
+	line-height: 28px;
 }
 
 .span3 {
-  width: 250px;
-  min-width: 250px;
+	padding-top: 10px;
+	padding-left: 10px;
+	width: 250px;
+	min-width: 250px;
+}
+
+.span8 {
+	padding-top: 15px;
 }
 
 .form-horizontal .control-group {
-  margin-bottom: 0px;
-  *zoom: 1;
+	margin-bottom: 0px; *
+	zoom: 1;
 }
 
-.activity-label {
+.spaced-label {
 	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.indent {
+	padding-left: 40px;
+}
+
+.activityAdded-label {
+	padding-left: 40px;
+	padding-right: 10px;
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.activityField-label {
+	padding-left: 40px;
+	padding-right: 10px;
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: normal;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.form-inline h5,.form-inline h4 {
+	display: inline-block;
+}
+
+.freqList {
+  width: 115px;	
 }

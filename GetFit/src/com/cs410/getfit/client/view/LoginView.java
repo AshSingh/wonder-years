@@ -6,7 +6,7 @@ public interface LoginView {
 	
 	public interface Presenter {
 	    void onLoginButtonClicked();
-	  }
+	}
 	
 	void setPresenter(Presenter presenter);
 	String getUsername();

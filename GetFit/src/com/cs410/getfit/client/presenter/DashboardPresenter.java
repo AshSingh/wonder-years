@@ -1,5 +1,6 @@
 package com.cs410.getfit.client.presenter;
 
+import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
 import com.cs410.getfit.client.view.DashboardView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -20,6 +21,11 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
 	    container.add(view.asWidget());
+	}
+
+	@Override
+	public void onCreateChallengeLinkClicked() {
+		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}
 	
 }

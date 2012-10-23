@@ -7,17 +7,15 @@
 	<g:HTMLPanel>
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<a class="brand" href="">Get Fit!</a>
+				<g:Label styleName="navbar-title">Get Fit!</g:Label>
 				<ul class="nav">
 					<li class="active">
-						<a href="">
-							<g:Hyperlink styleName="menuBarLinkActive" ui:field="homeLink">Home</g:Hyperlink>
-						</a>
+						<g:Label styleName="menuBarLinkActive" ui:field="homeLink">Home
+						</g:Label>
 					</li>
 					<li>
-						<a href="">
-							<g:Hyperlink styleName="menuBarLink" ui:field="challengeLink">Challenges</g:Hyperlink>
-						</a>
+						<g:Label styleName="menuBarLink" ui:field="challengeLink">Challenges
+						</g:Label>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -26,48 +24,39 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="">
-									<g:Hyperlink styleName="menuBarDropdownLink"
-										ui:field="profileLink">Profile</g:Hyperlink>
-								</a>
+								<g:Label styleName="menuBarDropdownLink" ui:field="profileLink">Profile</g:Label>
 							</li>
 							<li>
-								<a href="">
-									<g:Hyperlink styleName="menuBarDropdownLink"
-										ui:field="settingsLink">Settings</g:Hyperlink>
-								</a>
+								<g:Label styleName="menuBarDropdownLink" ui:field="settingsLink">Settings</g:Label>
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="">
-									<g:Hyperlink styleName="menuBarDropdownLink"
-										ui:field="logoutLink">Logout</g:Hyperlink>
-								</a>
+								<g:Label styleName="menuBarDropdownLink" ui:field="logoutLink">Logout</g:Label>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="nav pull-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							Users
-							<b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="#">Challenges</a>
-							</li>
-						</ul>
+					<li>
+						<g:Label styleName="searchLabel">Search</g:Label>
+					</li>
+					<li>
+						<g:ListBox styleName="searchList" ui:field="searchList">
+							<g:item value='users'>
+								Users
+							</g:item>
+							<g:item value='challenges'>
+								Challenges
+							</g:item>
+						</g:ListBox>
 					</li>
 					<form class="navbar-search">
-						<input type="text" class="search-query" placeholder="Search" />
+						<input type="text" class="search-query"/>
 					</form>
 					<li>
-						<a href="">
-							<g:Hyperlink styleName="menuBarLink" ui:field="searchLink">
-								<i class="icon-search icon-white"></i>
-							</g:Hyperlink>
-						</a>
+						<button class="transparent-btn" ui:field="searchBtn">
+							<i class="icon-search icon-white"></i>
+						</button>
 					</li>
 				</ul>
 			</div>

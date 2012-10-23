@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:dp="urn:import:com.google.gwt.user.datepicker.client"
 	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
 
 	<g:HTMLPanel>
@@ -16,56 +16,40 @@
 				<h5>Activities:</h5>
 				<g:ListBox ui:field="activitiesList" visibleItemCount="15" />
 				<div>
-					<g:Button styleName="btn btn-primary" ui:field="addActivity">Add
-					</g:Button>
+					<g:Button styleName="btn btn-primary" ui:field="addActivityBtn">Add</g:Button>
 				</div>
 			</div>
 			<div class="span8">
-				<form class="form-horizontal">
-					<div class="control-group" align="left">
-						<h4>
-							<g:Label styleName="control-label" ui:field="challengeLabel">Challenge name:</g:Label>
-						</h4>
-						<div class="controls">
-							<g:TextBox ui:field="challengeNameBox" />
-						</div>
-					</div>
-					<div class="control-group" align="left">
-						<h5>
-							<g:Label styleName="control-label" ui:field="startDateLabel">Start Date: </g:Label>
-						</h5>
-						<div class="controls">
-							<div class="input-append date" id="dp3" data-date-format="dd-mm-yyyy">
-								<input class="span2" size="16" type="text"/>
-								<span class="add-on">
-									<i class="icon-th"></i>
-								</span>
-							</div>
-						</div>
-						<h5>
-							<g:Label styleName="control-label" ui:field="endDateLabel">End Date: </g:Label>
-						</h5>
-						<div class="controls">
-							<div class="input-append date" id="dp3" data-date-format="dd-mm-yyyy">
-								<input class="span2" size="16" type="text" />
-								<span class="add-on">
-									<i class="icon-th"></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group" align="left">
-						<h5>
-							<g:Label styleName="control-label" ui:field="locationLabel">Location: </g:Label>
-						</h5>
-						<div class="controls">
-							<g:TextBox ui:field="locationBox" />
-						</div>
-					</div>
+				<form class="form-inline">
+					<h4>
+						<g:Label styleName="spaced-label" ui:field="challengeLabel">Challenge Name:</g:Label>
+					</h4>
+					<g:TextBox ui:field="challengeNameBox" />
 				</form>
+				<form class="form-inline">
+					<h5>
+						<g:Label styleName="spaced-label indent" ui:field="startDateLabel">Start Date:
+						</g:Label>
+					</h5>
+					<dp:DateBox styleName="span2" ui:field="startDateBox" />
+					<h5>
+						<g:Label styleName="spaced-label indent" ui:field="endDateLabel">End Date:
+						</g:Label>
+					</h5>
+					<dp:DateBox styleName="span2" ui:field="endDateBox" />
+				</form>
+				<div>
+					<form class="form-inline">
+						<h5>
+							<g:Label styleName="spaced-label indent" ui:field="locationLabel">Location: </g:Label>
+						</h5>
+						<g:TextBox styleName="spaced-label" ui:field="locationBox" />
+					</form>
+				</div>
 				<h4>
-					<g:Label styleName="activity-label" ui:field="activitiesLabel">Activities:</g:Label>
+					<g:Label styleName="spaced-label" ui:field="activitiesLabel">Activities:</g:Label>
 				</h4>
+				<g:VerticalPanel ui:field="activitiesPanel"/>
 			</div>
 		</div>
 	</g:HTMLPanel>
