@@ -50,14 +50,18 @@ public class ChallengeServicesImpl implements ChallengeResourceServices {
 		Challenge challenge;
 		try {
 			challenge = challengeDao.queryForId(challengeId);
-			List <ChallengeUser> participants = challengeUserDao.queryForEq("challenge", challenge.getGuid());
-			challenge.setParticipants(participants);
-			if(challenge != null)
+			System.out.println(challenge);
+			List <ChallengeUser> participants = challengeUserDao.queryForEq("challenge_id", challenge.getGuid());
+			if(challenge != null) {
+				if(participants != null) {
+					challenge.setParticipants(participants);
+				}
 				challenges.add(challenge);
+			}
 		} catch (SQLException e) {
 			return new ArrayList<Challenge>();
 		}
-		return new ArrayList<Challenge>();
+		return challenges;
 	}
 
 	@Override //TODO GET OBJECT FIRST>> COMPARE WITH TO FIND DIFFERENCE> UPDATE DIFFERENCE!!

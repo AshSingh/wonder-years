@@ -77,7 +77,7 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 		try {
 			List<Challenge> challenges = challengeDao.queryForAll();
 			for(Challenge challenge: challenges) {
-				List<ChallengeUser> participants = challengeUserDao.queryForEq("challenge", challenge.getGuid());
+				List<ChallengeUser> participants = challengeUserDao.queryForEq("challenge_id", challenge.getGuid());
 				challenge.setParticipants(participants);
 			}
 			return challenges;

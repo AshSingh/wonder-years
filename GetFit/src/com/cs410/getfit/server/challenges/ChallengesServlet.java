@@ -41,7 +41,7 @@ public class ChallengesServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		/*String pathURI = req.getRequestURI();
+		String pathURI = req.getRequestURI();
 		challengeServices = getChallengeServices(pathURI);
 		formatter = getJsonFormatter(pathURI);
 
@@ -49,8 +49,7 @@ public class ChallengesServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		writer.write(formatter.getJSONFormattedStringOfResource(challenges));
 		writer.flush();
-		resp.setStatus(200);*/
-		//TODO: finish implementation
+		resp.setStatus(200);
 	}
 
 	@Override
