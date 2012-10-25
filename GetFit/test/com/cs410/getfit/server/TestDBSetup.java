@@ -14,12 +14,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import com.cs410.getfit.shared.Challenge;
-import com.cs410.getfit.shared.ChallengeImpl;
-import com.cs410.getfit.shared.ChallengeUsers;
-import com.cs410.getfit.shared.ChallengeUsersImpl;
-import com.cs410.getfit.shared.User;
-import com.cs410.getfit.shared.UserImpl;
+import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeImpl;
+import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.ChallengeUserImpl;
+import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.server.models.UserImpl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.spring.TableCreator;
 
@@ -65,7 +65,7 @@ public class TestDBSetup {
 
 	private void addUsersToChallenges() {
 		ctx = new ClassPathXmlApplicationContext(configNames);
-		Dao<ChallengeUsers, Long> challengeUsersDao = (Dao<ChallengeUsers, Long>) ctx.getBean("challengeUsersDao");
+		Dao<ChallengeUser, Long> challengeUsersDao = (Dao<ChallengeUser, Long>) ctx.getBean("challengeUsersDao");
 		Dao<Challenge, Long> challengeDao = (Dao<Challenge, Long>) ctx.getBean("challengeDao");
 		Dao<User, String> userDao = (Dao<User, String>) ctx.getBean("userDao");
 		
@@ -88,7 +88,7 @@ public class TestDBSetup {
 				UserImpl user = (UserImpl) userDao.queryForId(username);		
 				ChallengeImpl challenge = (ChallengeImpl) challengeDao.queryForEq("title", challengeTitle).get(0);
 				
-				ChallengeUsers challengeUser = new ChallengeUsersImpl(user, challenge, isAdmin, isSubscribed, creationDate);
+				ChallengeUser challengeUser = new ChallengeUserImpl(user, challenge, isAdmin, isSubscribed, creationDate);
 				challengeUsersDao.create(challengeUser);
 			}
 			
@@ -156,7 +156,7 @@ public class TestDBSetup {
 				Long startDate = Long.decode(challengeProperties.get(3));
 				Long endDate = Long.decode(challengeProperties.get(4));
 				
-				Challenge challenge = new ChallengeImpl(title, isPrivate, location, startDate, endDate);
+				Challenge challenge = new ChallengeImpl(title, isPrivate, location, startDate, endDate, null);
 
 				challengesDao.create(challenge);
 			}

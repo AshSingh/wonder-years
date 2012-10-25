@@ -1,10 +1,10 @@
-package com.cs410.getfit.shared;
+package com.cs410.getfit.server.models;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "challengeUsers")
-public class ChallengeUsersImpl implements ChallengeUsers {
+public class ChallengeUserImpl implements ChallengeUser {
 
 	@DatabaseField(generatedId = true)
 	private long guid;
@@ -17,34 +17,36 @@ public class ChallengeUsersImpl implements ChallengeUsers {
 	@DatabaseField(canBeNull = false,defaultValue = "true")
 	private boolean isSubscribed;
 	@DatabaseField
-	private long creationDate;
+	private long dateJoined;
 	
-	public ChallengeUsersImpl() {
+	public ChallengeUserImpl() {
 		//for bean def
 	}
 	
-	public ChallengeUsersImpl(UserImpl user, ChallengeImpl challenge, boolean isAdmin, boolean isSubscribed, long creationDate) {
+	public ChallengeUserImpl(User user, Challenge challenge, boolean isAdmin, boolean isSubscribed, long creationDate) {
 		setUser(user);
 		setChallenge(challenge);
 		setAdmin(isAdmin);
 		setSubscribed(isSubscribed);
-		setCreationDate(creationDate);
+		setDateJoined(creationDate);
 	}
 	@Override
 	public UserImpl getUser() {
 		return user;
 	}
 	@Override
-	public void setUser(UserImpl user) {
-		this.user = user;
+	public void setUser(User user) {
+		if(user instanceof UserImpl)
+			this.user = (UserImpl) user;
 	}
 	@Override
 	public ChallengeImpl getChallenge() {
 		return challenge;
 	}
 	@Override
-	public void setChallenge(ChallengeImpl challenge) {
-		this.challenge = challenge;
+	public void setChallenge(Challenge challenge) {
+		if(challenge instanceof ChallengeImpl)
+			this.challenge = (ChallengeImpl) challenge;
 	}
 	@Override
 	public boolean isAdmin() {
@@ -63,15 +65,20 @@ public class ChallengeUsersImpl implements ChallengeUsers {
 		this.isSubscribed = isSubscribed;
 	}
 	@Override
-	public long getCreationDate() {
-		return creationDate;
+	public long getDateJoined() {
+		return dateJoined;
 	}
 	@Override
-	public void setCreationDate(long creationDate) {
-		this.creationDate = creationDate;
+	public void setDateJoined(long creationDate) {
+		this.dateJoined = creationDate;
 	}
 	@Override
 	public long getGuid() {
 		return guid;
+	}
+
+	@Override //for testing purposes only
+	public void setGuid(Long guid) {
+		this.guid= guid;
 	}
 }

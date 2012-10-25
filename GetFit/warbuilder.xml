@@ -3,9 +3,9 @@
 	<target name="default" depends="clean,buildwar,deploy"></target>
  
     <target name="clean">
-        <delete file="path-to-custom-location-set-in-tomcat/getfit.war"/>
-    	<delete file="path-to-custom-location-set-in-tomcat/getfit.war"/>
-    	<delete dir="path-to-custom-location-set-in-tomcat/getfit"/>
+        <delete file="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/wtpwebapps/getfit.war"/>
+    	<delete file="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps/getfit.war"/>
+    	<delete dir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps/getfit"/>
     </target>
 	
 	<target name="buildwar">
@@ -17,8 +17,8 @@
 	</target>
  
 	<target name="deploy">
-		<copy file="getfit.war" todir="path-to-custom-location-set-in-tomcat/wtpwebapps" />
-		<copy file="getfit.war" todir="path-to-custom-location-set-in-tomcat/webapps" />
+		<copy file="getfit.war" todir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/wtpwebapps" />
+		<copy file="getfit.war" todir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps" />
 	</target>
  
 </project>

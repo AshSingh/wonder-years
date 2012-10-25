@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.cs410.getfit.shared.User;
+import com.cs410.getfit.server.models.User;
 
 public class UsersServlet extends HttpServlet {
 

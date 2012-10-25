@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.http.MethodNotSupportedException;
 
-import com.cs410.getfit.shared.Challenge;
+import com.cs410.getfit.server.models.Challenge;
 
 public interface ChallengeResourceServices {
 
@@ -15,7 +15,7 @@ public interface ChallengeResourceServices {
 	 * @throws MethodNotSupportedException
 	 * @throws SQLException 
 	 */
-	boolean create(List<Challenge> challenges) throws MethodNotSupportedException;
+	List<Challenge> create(List<Challenge> challenges);
 
 	/**
 	 * returns a list of challenges determined by the service

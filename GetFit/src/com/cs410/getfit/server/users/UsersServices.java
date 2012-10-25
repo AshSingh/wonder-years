@@ -2,7 +2,7 @@ package com.cs410.getfit.server.users;
 
 import java.util.List;
 
-import com.cs410.getfit.shared.User;
+import com.cs410.getfit.server.models.User;
 
 /**
  * Represents the services offered by the Users resource

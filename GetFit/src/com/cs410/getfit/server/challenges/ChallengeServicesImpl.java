@@ -3,27 +3,45 @@ package com.cs410.getfit.server.challenges;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import org.apache.http.MethodNotSupportedException;
-
-import com.cs410.getfit.shared.Challenge;
+import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeUser;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.misc.TransactionManager;
 
 public class ChallengeServicesImpl implements ChallengeResourceServices {
 
 	Dao<Challenge, Long> challengeDao;
-	
+	Dao<ChallengeUser, Long> challengeUserDao;
+	TransactionManager manager;
+
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
 	}
 
 	public void setChallengeDao(Dao<Challenge, Long> challengeDao) {
-		this.challengeDao = challengeDao;		
+		this.challengeDao = challengeDao;
+	}
+	
+	public Dao<ChallengeUser, Long> getChallengeUserDao() {
+		return challengeUserDao;
+	}
+	
+	public void setChallengeUserDao(Dao<ChallengeUser, Long> challengeUserDao) {
+		this.challengeUserDao = challengeUserDao;
+	}
+	
+	public TransactionManager getTransactionManager() {
+		return manager;
 	}
 
+	public void setTransactionManager(TransactionManager manager) {
+		this.manager = manager;
+	}
 	@Override
-	public boolean create(List<Challenge> challenges) throws MethodNotSupportedException {
-		throw new MethodNotSupportedException("Cannot create challenge in challengeService.");
+	public List<Challenge> create(List<Challenge> challenges) {
+		return null;
 	}
 
 	@Override
@@ -32,26 +50,37 @@ public class ChallengeServicesImpl implements ChallengeResourceServices {
 		Challenge challenge;
 		try {
 			challenge = challengeDao.queryForId(challengeId);
+			List <ChallengeUser> participants = challengeUserDao.queryForEq("challenge", challenge.getGuid());
+			challenge.setParticipants(participants);
 			if(challenge != null)
 				challenges.add(challenge);
 		} catch (SQLException e) {
-			return challenges; //hmmmm...maybe not
+			return new ArrayList<Challenge>();
 		}
-		return challenges;
+		return new ArrayList<Challenge>();
 	}
 
-	@Override
-	public boolean update(List<Challenge> challenges, long challengeId) {
+	@Override //TODO GET OBJECT FIRST>> COMPARE WITH TO FIND DIFFERENCE> UPDATE DIFFERENCE!!
+	public boolean update(final List<Challenge> challenges, long challengeId) {
 		if(challenges.size() == 1) {
 			try {
 				if(challengeDao.queryForId(challengeId) != null){
-					challengeDao.update(challenges.get(0));
+					manager.callInTransaction(new Callable<Void>() {
+								public Void call() throws Exception {
+										challengeDao.update(challenges.get(0));
+										for(ChallengeUser participant: challenges.get(0).getParticipants()) {
+											challengeUserDao.update(participant);
+										}
+									return null;
+								}
+							});
 					return true;
 				}
+				return false;
 			} catch (SQLException e) {
 				return false;
 			}
-		}
+		} 
 		return false;
 	}
 

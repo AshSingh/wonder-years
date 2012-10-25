@@ -1,11 +1,6 @@
 package com.cs410.getfit.client;
 
-import java.lang.reflect.Type;
-
-import com.cs410.getfit.client.event.GoToLoginEvent;
-import com.cs410.getfit.shared.User;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;

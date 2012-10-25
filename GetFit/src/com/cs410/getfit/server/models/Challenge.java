@@ -1,10 +1,12 @@
-package com.cs410.getfit.shared;
+package com.cs410.getfit.server.models;
+
+import java.util.List;
 
 
 public interface Challenge {
 	
 	public long getGuid();
-	public void setGuid(long guid);
+	public void setGuid(Long guid);
 	public String getTitle();
 	public void setTitle(String title);
 	public boolean isPrivate();
@@ -15,4 +17,6 @@ public interface Challenge {
 	public void setStartDate(long startDate);
 	public long getEndDate();
 	public void setEndDate(long endDate);
+	public List <ChallengeUser> getParticipants();
+	public void setParticipants(List <ChallengeUser> participants);
 }

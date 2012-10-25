@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.shared.User;
+import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 
 public class UsersServicesImpl implements UsersServices {

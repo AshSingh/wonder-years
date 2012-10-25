@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.shared.User;
-import com.cs410.getfit.shared.UserImpl;
+import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.server.models.UserImpl;
 
 public class UsersJsonFormatterTest {
 

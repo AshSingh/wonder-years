@@ -12,10 +12,13 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="challengesService"
 	class="com.cs410.getfit.server.challenges.ChallengesServicesImpl">
 		<property name="challengeDao" ref="challengeDao" />
-		<property name="connectionSource" ref="connectionSource" />
+		<property name="challengeUserDao" ref="challengeUserDao" />
+		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	<bean id="challengeService"
 	class="com.cs410.getfit.server.challenges.ChallengeServicesImpl">
 		<property name="challengeDao" ref="challengeDao" />
+		<property name="challengeUserDao" ref="challengeUserDao" />
+		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 </beans>

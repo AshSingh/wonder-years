@@ -7,11 +7,19 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="userDao" class="com.j256.ormlite.spring.DaoFactory"
 	factory-method="createDao">
 		<constructor-arg index="0" ref="connectionSource" />
-		<constructor-arg index="1" value="com.cs410.getfit.shared.UserImpl" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.UserImpl" />
 	</bean>
 	<bean id="challengeDao" class="com.j256.ormlite.spring.DaoFactory"
 	factory-method="createDao">
 		<constructor-arg index="0" ref="connectionSource" />
-		<constructor-arg index="1" value="com.cs410.getfit.shared.ChallengeImpl" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.ChallengeImpl" />
 	</bean>
+	<bean id="challengeUserDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.ChallengeUserImpl" />
+	</bean>
+	 <bean id="transactionManager" class="com.j256.ormlite.misc.TransactionManager" init-method="initialize">
+        <property name="connectionSource" ref="connectionSource" />
+ </bean>
 </beans>

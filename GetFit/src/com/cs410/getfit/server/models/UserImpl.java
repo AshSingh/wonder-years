@@ -1,4 +1,4 @@
-package com.cs410.getfit.shared;
+package com.cs410.getfit.server.models;
 
 import java.io.Serializable;
 

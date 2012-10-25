@@ -1,0 +1,30 @@
+package com.cs410.getfit.server.models;
+
+
+public interface ChallengeUser {
+
+	public abstract User getUser();
+
+	public abstract void setUser(User user);
+
+	public abstract Challenge getChallenge();
+
+	public abstract void setChallenge(Challenge challenge);
+
+	public abstract boolean isAdmin();
+
+	public abstract void setAdmin(boolean isAdmin);
+
+	public abstract boolean isSubscribed();
+
+	public abstract void setSubscribed(boolean isSubscribed);
+
+	public abstract long getDateJoined();
+
+	public abstract void setDateJoined(long dateJoined);
+
+	public abstract long getGuid();
+
+	public abstract void setGuid(Long guid);
+
+}
