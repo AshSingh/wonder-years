@@ -3,8 +3,6 @@ package com.cs410.getfit.server.challenges.json;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.jmock.Expectations;
@@ -22,26 +20,29 @@ import com.cs410.getfit.server.models.User;
 @RunWith(JMock.class)
 public class ChallengesJsonFormatterTest {
 
+	JUnit4Mockery context = new JUnit4Mockery();
+	
 	private String challengesIncomingJsonString;
 	private String challengesOutgoingJsonString;
 	List <Challenge> challenges;
-	List <ChallengeUser> chUsers;
-	JUnit4Mockery context = new JUnit4Mockery();
+
 	ChallengesJsonFormatter jsonFormatter = new ChallengesJsonFormatter();
+	
+	final Long USERID = new Long(123);
+	final Long USERID2 = new Long(456);
+	final long CHGUID1 = new Long(123);
+	final long CHGUID2 = new Long(456);
+	final long CHALLENGEGUID = new Long(456);
+	final String CHALLENGE_TITLE = "title1";
+	final String CHALLENGE_LOC = "Vancouver";
+	final long CHALLENGE2GUID = new Long(1234);
+	final String CHALLENGE2_TITLE = "title2";
+	final String CHALLENGE2_LOC = "Calgary";
+	long START_TIME = System.currentTimeMillis();
+	long END_TIME = System.currentTimeMillis();
 	
 	@Before
 	public void setUp() {
-		final String USERNAME = "username1";
-		final String USERNAME2 = "username2";
-		final Long CHGUID1 = new Long(123);
-		final Long CHGUID2 = new Long(456);
-		final Long CHALLENGEGUID = new Long(456);
-		final String CHALLENGE_TITLE = "title1";
-		final String CHALLENGE_LOC = "Vancouver";
-		final Long CHALLENGE2GUID = new Long(1234);
-		final String CHALLENGE2_TITLE = "title2";
-		final String CHALLENGE2_LOC = "Calgary";
-
 		final ChallengeUser chUser1 = context.mock(ChallengeUser.class,"chUser1");
 		final ChallengeUser chUser2 = context.mock(ChallengeUser.class,"chUser2");
 		final User user = context.mock(User.class, "user");
@@ -49,36 +50,23 @@ public class ChallengesJsonFormatterTest {
 		final Challenge challenge = context.mock(Challenge.class, "challenge1");
 		final Challenge challenge1 = context.mock(Challenge.class, "challenge2");
 		
-		chUsers = new ArrayList<ChallengeUser>();
+		final List <ChallengeUser> chUsers = new ArrayList<ChallengeUser>();
 		chUsers.add(chUser1);
 		chUsers.add(chUser2);
 		challenges = new ArrayList<Challenge>();
 		challenges.add(challenge);
 		challenges.add(challenge1);
 		
-		Calendar cal = Calendar.getInstance();
-		cal.set(2012, Calendar.JANUARY, 01,0,0,0);
-		final Date startDate = cal.getTime();;
-		cal.set(2013, Calendar.DECEMBER, 01,0,0,0);
-		final Date endDate = cal.getTime();
-
-		final Long START_TIME = startDate.getTime();
-		final Long END_TIME = endDate.getTime();
-		
 		context.checking(new Expectations() {
 			{
-				allowing(user).getUsername(); will(returnValue(USERNAME));
-				allowing(user2).getUsername(); will(returnValue(USERNAME2));
+				allowing(user).getGuid(); will(returnValue(USERID));
+				allowing(user2).getGuid(); will(returnValue(USERID2));
 				
 				allowing(chUser1).getGuid(); will(returnValue(CHGUID1));
 				allowing(chUser1).getUser(); will(returnValue(user));
-				allowing(chUser1).isAdmin(); will(returnValue(true));
-				allowing(chUser1).isSubscribed(); will(returnValue(true));
 
 				allowing(chUser2).getGuid(); will(returnValue(CHGUID2));
 				allowing(chUser2).getUser(); will(returnValue(user2));
-				allowing(chUser2).isAdmin(); will(returnValue(false));
-				allowing(chUser2).isSubscribed(); will(returnValue(false));
 				
 				allowing(challenge).getGuid(); will(returnValue(CHALLENGEGUID));
 				allowing(challenge).getParticipants(); will(returnValue(chUsers));
@@ -104,13 +92,13 @@ public class ChallengesJsonFormatterTest {
 				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
 				"\"isprivate\":true}," +
-				"\"admin\": \""+USERNAME+"\"},"+
+				"\"admin\": \""+USERID+"\"},"+
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
 				"\"startdate\":"+START_TIME+"," +
 				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
 				"\"isprivate\":false}," +
-				"\"admin\": \""+USERNAME2+"\"}"+
+				"\"admin\": \""+USERID2+"\"}"+
 				"]}";
 		
 		challengesOutgoingJsonString = "{\"challenges\":["+
@@ -134,38 +122,35 @@ public class ChallengesJsonFormatterTest {
 	}
 	
 	@Test
-	public void testGetJsonFormattedUserArray() {
+	public void testGetJsonFormattedChallengesArray() {
 		String jsonFormattedChallenges = jsonFormatter.getJSONFormattedStringOfResource(challenges);
 		assertEquals(challengesOutgoingJsonString,jsonFormattedChallenges);
 	}
 	@Test
 	public void testGetChallengesFromJsonFormattedString() {
 		List <Challenge> actualChallenges = jsonFormatter.getResourcesFromJSONFormattedString(challengesIncomingJsonString);
+		
 		assertEquals(2, actualChallenges.size());
+		
 		Challenge challenge1 = actualChallenges.get(0);
-		Challenge expectedChallenge1 = challenges.get(0);
 		assertEquals(0, challenge1.getGuid());
-		assertEquals(expectedChallenge1.getTitle(), challenge1.getTitle());
-		assertEquals(expectedChallenge1.getStartDate(), challenge1.getStartDate());
-		assertEquals(expectedChallenge1.getEndDate(), challenge1.getEndDate());
-		assertEquals(expectedChallenge1.getLocation(), challenge1.getLocation());
-		assertEquals(expectedChallenge1.isPrivate(), challenge1.isPrivate());
+		assertEquals(CHALLENGE_TITLE, challenge1.getTitle());
+		assertEquals(START_TIME, challenge1.getStartDate());
+		assertEquals(END_TIME, challenge1.getEndDate());
+		assertEquals(CHALLENGE_LOC, challenge1.getLocation());
+		assertEquals(true, challenge1.isPrivate());
 		assertEquals(1,challenge1.getParticipants().size());
-		assertEquals(true, challenge1.getParticipants().get(0).isAdmin());
-		assertEquals(true, challenge1.getParticipants().get(0).isSubscribed());
-		//assert that expected challenge admin is the admin we get back
+		assertEquals(USERID, challenge1.getParticipants().get(0).getUser().getGuid());
 		
 		Challenge challenge2 = actualChallenges.get(1);
-		Challenge expectedChallenge2 = challenges.get(1);
 		assertEquals(0, challenge2.getGuid());
-		assertEquals(expectedChallenge2.getTitle(), challenge2.getTitle());
-		assertEquals(expectedChallenge2.getStartDate(), challenge2.getStartDate());
-		assertEquals(expectedChallenge2.getEndDate(), challenge2.getEndDate());
-		assertEquals(expectedChallenge2.getLocation(), challenge2.getLocation());
-		assertEquals(expectedChallenge2.isPrivate(), challenge2.isPrivate());
+		assertEquals(CHALLENGE2_TITLE, challenge2.getTitle());
+		assertEquals(START_TIME, challenge2.getStartDate());
+		assertEquals(END_TIME, challenge2.getEndDate());
+		assertEquals(CHALLENGE2_LOC, challenge2.getLocation());
+		assertEquals(false, challenge2.isPrivate());
 		assertEquals(1,challenge2.getParticipants().size());
-		assertEquals(true, challenge2.getParticipants().get(0).isAdmin());
-		assertEquals(true, challenge2.getParticipants().get(0).isSubscribed());
+		assertEquals(USERID2, challenge2.getParticipants().get(0).getUser().getGuid());
 	}
 	
 	

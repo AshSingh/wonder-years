@@ -11,13 +11,13 @@ public interface ChallengeUser {
 
 	public abstract void setChallenge(Challenge challenge);
 
-	public abstract boolean isAdmin();
+	public abstract Boolean isAdmin();
 
-	public abstract void setAdmin(boolean isAdmin);
+	public abstract void setAdmin(Boolean isAdmin);
 
-	public abstract boolean isSubscribed();
+	public abstract Boolean isSubscribed();
 
-	public abstract void setSubscribed(boolean isSubscribed);
+	public abstract void setSubscribed(Boolean isSubscribed);
 
 	public abstract long getDateJoined();
 

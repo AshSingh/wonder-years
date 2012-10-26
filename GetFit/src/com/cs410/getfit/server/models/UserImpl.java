@@ -9,7 +9,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "users")
 public class UserImpl implements Serializable, User {
 
-	@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
+	private long guid;
+	@DatabaseField
 	private String username;
 	@DatabaseField
 	private String password;
@@ -58,5 +60,13 @@ public class UserImpl implements Serializable, User {
 	@Override
 	public void setLastName(String lastName) {
 		this.lastname = lastName;
+	}
+	@Override
+	public void setGuid(Long guid) {
+		this.guid = guid;	
+	}
+	@Override
+	public Long getGuid() {
+		return guid;
 	}	
 }

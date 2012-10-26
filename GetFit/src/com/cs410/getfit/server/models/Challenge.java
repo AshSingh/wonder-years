@@ -9,8 +9,8 @@ public interface Challenge {
 	public void setGuid(Long guid);
 	public String getTitle();
 	public void setTitle(String title);
-	public boolean isPrivate();
-	public void setIsPrivate(boolean isPrivate);
+	public Boolean isPrivate();
+	public void setIsPrivate(Boolean isPrivate);
 	public String getLocation();
 	public void setLocation(String location);
 	public long getStartDate();

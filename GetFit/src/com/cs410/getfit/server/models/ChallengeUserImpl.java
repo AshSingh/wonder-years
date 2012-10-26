@@ -8,14 +8,16 @@ public class ChallengeUserImpl implements ChallengeUser {
 
 	@DatabaseField(generatedId = true)
 	private long guid;
-	@DatabaseField(canBeNull = false, foreign = true)
+	@DatabaseField(columnDefinition = " bigint(20), FOREIGN KEY (user_id) "+
+				"REFERENCES Users(guid)",canBeNull = true, foreign = true)
 	private UserImpl user;
-	@DatabaseField(canBeNull = false, foreign = true)
+	@DatabaseField(columnDefinition = " bigint(20), FOREIGN KEY (challenge_id) "+
+			"REFERENCES Challenges(guid)",canBeNull = true, foreign = true)
 	private ChallengeImpl challenge;
 	@DatabaseField(canBeNull = false, defaultValue="false")
-	private boolean isAdmin;
+	private Boolean isAdmin;
 	@DatabaseField(canBeNull = false,defaultValue = "true")
-	private boolean isSubscribed;
+	private Boolean isSubscribed;
 	@DatabaseField
 	private long dateJoined;
 	
@@ -23,7 +25,7 @@ public class ChallengeUserImpl implements ChallengeUser {
 		//for bean def
 	}
 	
-	public ChallengeUserImpl(User user, Challenge challenge, boolean isAdmin, boolean isSubscribed, long creationDate) {
+	public ChallengeUserImpl(User user, Challenge challenge, Boolean isAdmin, Boolean isSubscribed, long creationDate) {
 		setUser(user);
 		setChallenge(challenge);
 		setAdmin(isAdmin);
@@ -49,19 +51,19 @@ public class ChallengeUserImpl implements ChallengeUser {
 			this.challenge = (ChallengeImpl) challenge;
 	}
 	@Override
-	public boolean isAdmin() {
+	public Boolean isAdmin() {
 		return isAdmin;
 	}
 	@Override
-	public void setAdmin(boolean isAdmin) {
+	public void setAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 	@Override
-	public boolean isSubscribed() {
+	public Boolean isSubscribed() {
 		return isSubscribed;
 	}
 	@Override
-	public void setSubscribed(boolean isSubscribed) {
+	public void setSubscribed(Boolean isSubscribed) {
 		this.isSubscribed = isSubscribed;
 	}
 	@Override

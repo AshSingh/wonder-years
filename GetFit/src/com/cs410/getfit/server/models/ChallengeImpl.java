@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class ChallengeImpl implements Challenge {
 	@DatabaseField(generatedId = true)
 	private long guid;
-	@DatabaseField(unique = true)
+	@DatabaseField
 	private String title;
 	@DatabaseField
 	private long startdate;
@@ -19,12 +19,12 @@ public class ChallengeImpl implements Challenge {
 	@DatabaseField
 	private String location;
 	@DatabaseField
-	private boolean isprivate;
-	private List <ChallengeUser> participants;
+	private Boolean isprivate;
+	private List <ChallengeUser> participants = new ArrayList<ChallengeUser>();
 	//private Set <Activity> activities;
 	
 	
-	public ChallengeImpl(String title, boolean isPrivate, String location,
+	public ChallengeImpl(String title, Boolean isPrivate, String location,
 			long startDate, long endDate, List<ChallengeUser> participants) {
 		setTitle(title);
 		setIsPrivate(isPrivate);
@@ -49,11 +49,11 @@ public class ChallengeImpl implements Challenge {
 		this.title = title;
 	}
 	@Override
-	public boolean isPrivate() {
+	public Boolean isPrivate() {
 		return isprivate;
 	}
 	@Override
-	public void setIsPrivate(boolean isPrivate) {
+	public void setIsPrivate(Boolean isPrivate) {
 		this.isprivate = isPrivate;
 	}
 	@Override
@@ -82,8 +82,6 @@ public class ChallengeImpl implements Challenge {
 	}
 	@Override
 	public List <ChallengeUser> getParticipants() {
-		if(participants == null) 
-			participants = new ArrayList<ChallengeUser>();
 		return participants;
 	}
 	@Override

@@ -18,16 +18,16 @@ public class JSONModelToChallengeConverter {
 		List<Challenge> challenges = new ArrayList<Challenge>();
 		for (IncomingChallengeJsonModel model : jsonModels) {
 			String title = model.getTitle();
-			boolean isPrivate = model.isIsprivate();
+			Boolean isPrivate = model.setIsprivate();
 			String location = model.getLocation();
 			Long startDate = model.getStartdate();
 			Long endDate = model.getEnddate();
-			String admin = model.getAdminId();
+			Long admin = model.getAdminId();
 			List<ChallengeUser> participants = new ArrayList<ChallengeUser>();
 			if (admin != null) {
 				ChallengeUser challengeUser = new ChallengeUserImpl();
 				User user = new UserImpl();
-				user.setUsername(admin);
+				user.setGuid(admin);
 				challengeUser.setUser(user);
 				participants.add(challengeUser);
 			}

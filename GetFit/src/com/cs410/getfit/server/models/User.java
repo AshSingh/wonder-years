@@ -41,5 +41,8 @@ public interface User {
 	 * @param users last name
 	 */
 	public abstract void setLastName(String lastName);
+	
+	public abstract void setGuid(Long guid);
+	public abstract Long getGuid();
 
 }

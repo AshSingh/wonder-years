@@ -5,7 +5,8 @@ public class ChallengeInfoJsonModel {
 	private long startdate;
 	private long enddate;
 	private String location;
-	private boolean isprivate;
+	private Boolean isprivate;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -30,7 +31,7 @@ public class ChallengeInfoJsonModel {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public boolean isIsprivate() {
+	public Boolean setIsprivate() {
 		return isprivate;
 	}
 	public void setIsprivate(boolean isprivate) {

@@ -94,25 +94,9 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 		}
 	}
 
-	@Override //TODO GET OBJECTS FIRST>> COMPARE WITH TO FIND DIFFERENCE> UPDATE DIFFERENCE!!
+	@Override 
 	public boolean update(final List<Challenge> challenges, long challengeId){
-		try {
-			manager.callInTransaction(
-					new Callable<Void>() {
-						public Void call() throws Exception {
-							for (Challenge challenge : challenges) {
-								challengeDao.update(challenge);
-								for(ChallengeUser participant: challenge.getParticipants()) {
-									challengeUserDao.update(participant);
-								}
-							}
-							return null;
-						}
-					});
-			return true;
-		} catch (SQLException e) {
-			return false;
-		}
+		return false; //For now no bulk updates
 	}
 
 }

@@ -75,7 +75,7 @@ public class ChallengesServlet extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
-		/*String pathURI = request.getRequestURI();
+		String pathURI = request.getRequestURI();
 		challengeServices = getChallengeServices(pathURI);
 		formatter = getJsonFormatter(pathURI);
 		String requestBody = getRequestBody(request);
@@ -86,8 +86,7 @@ public class ChallengesServlet extends HttpServlet {
 			resp.setStatus(200);
 		} else {
 			resp.setStatus(500);
-		}*/
-		//TODO: finish implementation
+		}
 	}
 
 	@Override

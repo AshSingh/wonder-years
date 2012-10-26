@@ -3,7 +3,7 @@ package com.cs410.getfit.server.challenges.json;
 
 public class IncomingChallengeJsonModel {
 	private ChallengeInfoJsonModel info;
-	private String admin;
+	private Long admin;
 	
 	public String getTitle() {
 		return info.getTitle();
@@ -17,10 +17,10 @@ public class IncomingChallengeJsonModel {
 	public String getLocation() {
 		return info.getLocation();
 	}
-	public boolean isIsprivate() {
-		return info.isIsprivate();
+	public Boolean setIsprivate() {
+		return info.setIsprivate();
 	}
-	public String getAdminId() {
+	public Long getAdminId() {
 		return admin;
 	}
 }
