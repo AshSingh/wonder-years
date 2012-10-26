@@ -66,9 +66,9 @@ public class ChallengesServlet extends HttpServlet {
 			PrintWriter writer = resp.getWriter();
 			writer.write(formatter.getJSONFormattedStringOfResource(created));
 			writer.flush();
-			resp.setStatus(201); //created
+			resp.setStatus(201); //replace with error json
 		} else {
-			resp.setStatus(500); //internal server error for now. we can do better than this
+			resp.setStatus(500); //replace with error json
 		}
 	}
 

@@ -12,28 +12,24 @@ import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
 
 public class JSONModelToChallengeConverter {
-	
-	public static List <Challenge> convertToChallenges(List <IncomingChallengeJsonModel> jsonModels) {
-		List <Challenge> challenges = new ArrayList<Challenge>();
-		for(IncomingChallengeJsonModel model: jsonModels) {
+
+	public static List<Challenge> convertToChallenges(
+			List<IncomingChallengeJsonModel> jsonModels) {
+		List<Challenge> challenges = new ArrayList<Challenge>();
+		for (IncomingChallengeJsonModel model : jsonModels) {
 			String title = model.getTitle();
 			boolean isPrivate = model.isIsprivate();
 			String location = model.getLocation();
 			Long startDate = model.getStartdate();
 			Long endDate = model.getEnddate();
-			List<ChallengeUserJsonModel> participantsModel = model.getParticipants();
-			List <ChallengeUser> participants = new ArrayList<ChallengeUser>();
-			if(participantsModel.size() > 0) {
-				for(ChallengeUserJsonModel participantModel: participantsModel) {
-					
-					ChallengeUser challengeUser = new ChallengeUserImpl();
-					challengeUser.setAdmin(participantModel.isAdmin());
-					challengeUser.setSubscribed(participantModel.isSubscribed());
-					User user = new UserImpl();
-					user.setUsername(participantModel.getUsername());
-					challengeUser.setUser(user);
-					participants.add(challengeUser);
-				}
+			String admin = model.getAdminId();
+			List<ChallengeUser> participants = new ArrayList<ChallengeUser>();
+			if (admin != null) {
+				ChallengeUser challengeUser = new ChallengeUserImpl();
+				User user = new UserImpl();
+				user.setUsername(admin);
+				challengeUser.setUser(user);
+				participants.add(challengeUser);
 			}
 			Challenge challenge = new ChallengeImpl(title, isPrivate, location,
 					startDate, endDate, participants);
@@ -41,24 +37,27 @@ public class JSONModelToChallengeConverter {
 		}
 		return challenges;
 	}
-	public static List<OutgoingChallengeJsonModel> convertToOutgoingChallengeJsonModel(List <Challenge> challenges) {
+
+	public static List<OutgoingChallengeJsonModel> convertToOutgoingChallengeJsonModel(
+			List<Challenge> challenges) {
 		List<OutgoingChallengeJsonModel> outgoingModels = new ArrayList<OutgoingChallengeJsonModel>();
-		for(Challenge challenge: challenges) {
+		for (Challenge challenge : challenges) {
 			ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
 			info.setTitle(challenge.getTitle());
 			info.setStartdate(challenge.getStartDate());
 			info.setEnddate(challenge.getEndDate());
 			info.setIsprivate(challenge.isPrivate());
 			info.setLocation(challenge.getLocation());
-			
-			//add links for each resource here. 
+
+			// add links for each resource here.
 			List<ResourceLink> links = new ArrayList<ResourceLink>();
 			Long challengeGuid = challenge.getGuid();
 			links.add(new ChallengeLink(challengeGuid));
 			links.add(new ChallengeParticipantsLink(challengeGuid));
-			for(ChallengeUser participant: challenge.getParticipants()) {
-				links.add(new ChallengeParticipantLink(challengeGuid, participant.getGuid()));
-			}
+			/**for (ChallengeUser participant : challenge.getParticipants()) {
+				links.add(new ChallengeParticipantLink(challengeGuid,
+						participant.getGuid()));
+			}**/
 			OutgoingChallengeJsonModel model = new OutgoingChallengeJsonModel();
 			model.setInfo(info);
 			model.setLinks(links);

@@ -1,11 +1,9 @@
 package com.cs410.getfit.server.challenges.json;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class IncomingChallengeJsonModel {
 	private ChallengeInfoJsonModel info;
-	private List <ChallengeUserJsonModel> participants = new ArrayList<ChallengeUserJsonModel>();
+	private String admin;
 	
 	public String getTitle() {
 		return info.getTitle();
@@ -22,7 +20,7 @@ public class IncomingChallengeJsonModel {
 	public boolean isIsprivate() {
 		return info.isIsprivate();
 	}
-	public List<ChallengeUserJsonModel> getParticipants() {
-		return participants;
+	public String getAdminId() {
+		return admin;
 	}
 }

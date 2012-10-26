@@ -51,12 +51,20 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 							
 							for (Challenge challenge : challenges) {
 								Challenge dbChallenge = challengeDao.createIfNotExists(challenge);
-								
-								for(ChallengeUser participant: challenge.getParticipants()) {
+								if(challenge.getParticipants().size() ==1 ) {
+									ChallengeUser participant = challenge
+											.getParticipants().get(0);
+									participant.setAdmin(true);
+									participant.setSubscribed(true);
 									participant.setChallenge(dbChallenge);
-									participant.setDateJoined(Calendar.getInstance().getTimeInMillis());
-									ChallengeUser participant_created = challengeUserDao.createIfNotExists(participant);
-									participantsCreated.add(participant_created);
+									participant.setDateJoined(Calendar
+											.getInstance().getTimeInMillis());
+									ChallengeUser participant_created = challengeUserDao
+											.createIfNotExists(participant);
+									participantsCreated
+											.add(participant_created);
+								} else {
+									return null; //replace with error message handling
 								}
 								
 								dbChallenge.setParticipants(participantsCreated);
@@ -67,7 +75,7 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 					});
 		} catch (SQLException e) {
 			e.printStackTrace(); 
-			return null;
+			return null; // replace with error message handling
 		}
 		return challengesCreated;
 	}

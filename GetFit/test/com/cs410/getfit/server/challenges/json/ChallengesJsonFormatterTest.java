@@ -1,4 +1,4 @@
-package com.cs410.getfit.server.challenges;
+package com.cs410.getfit.server.challenges.json;
 
 import static org.junit.Assert.assertEquals;
 
@@ -104,14 +104,13 @@ public class ChallengesJsonFormatterTest {
 				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
 				"\"isprivate\":true}," +
-				"\"participants\": [{\"username\":\""+USERNAME+"\",\"isAdmin\":true,\"isSubscribed\":true}," +
-									"{\"username\":\""+USERNAME2+"\",\"isAdmin\":false,\"isSubscribed\":false}" +
-									"]},"+
+				"\"admin\": \""+USERNAME+"\"},"+
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
 				"\"startdate\":"+START_TIME+"," +
 				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
-				"\"isprivate\":false}}"+
+				"\"isprivate\":false}," +
+				"\"admin\": \""+USERNAME2+"\"}"+
 				"]}";
 		
 		challengesOutgoingJsonString = "{\"challenges\":["+
@@ -121,9 +120,7 @@ public class ChallengesJsonFormatterTest {
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
 				"\"isprivate\":true}," +
 				"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+CHALLENGEGUID+"\",\"type\":\"challenge\"}," +
-							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}," +
-							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants/"+CHGUID1+"\",\"type\":\"participant\"}," +
-							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants/"+CHGUID2+"\",\"type\":\"participant\"}" +
+							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}" +
 							"]}," +
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
 				"\"startdate\":"+START_TIME+"," +
@@ -153,7 +150,10 @@ public class ChallengesJsonFormatterTest {
 		assertEquals(expectedChallenge1.getEndDate(), challenge1.getEndDate());
 		assertEquals(expectedChallenge1.getLocation(), challenge1.getLocation());
 		assertEquals(expectedChallenge1.isPrivate(), challenge1.isPrivate());
-		assertEquals(2,challenge1.getParticipants().size());
+		assertEquals(1,challenge1.getParticipants().size());
+		assertEquals(true, challenge1.getParticipants().get(0).isAdmin());
+		assertEquals(true, challenge1.getParticipants().get(0).isSubscribed());
+		//assert that expected challenge admin is the admin we get back
 		
 		Challenge challenge2 = actualChallenges.get(1);
 		Challenge expectedChallenge2 = challenges.get(1);
@@ -163,7 +163,9 @@ public class ChallengesJsonFormatterTest {
 		assertEquals(expectedChallenge2.getEndDate(), challenge2.getEndDate());
 		assertEquals(expectedChallenge2.getLocation(), challenge2.getLocation());
 		assertEquals(expectedChallenge2.isPrivate(), challenge2.isPrivate());
-		assertEquals(0,challenge2.getParticipants().size());
+		assertEquals(1,challenge2.getParticipants().size());
+		assertEquals(true, challenge2.getParticipants().get(0).isAdmin());
+		assertEquals(true, challenge2.getParticipants().get(0).isSubscribed());
 	}
 	
 	
