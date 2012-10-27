@@ -12,9 +12,9 @@ import com.j256.ormlite.misc.TransactionManager;
 
 public class ChallengeServicesImpl implements ChallengeResourceServices {
 
-	Dao<Challenge, Long> challengeDao;
-	Dao<ChallengeUser, Long> challengeUserDao;
-	TransactionManager manager;
+	private Dao<Challenge, Long> challengeDao;
+	private Dao<ChallengeUser, Long> challengeUserDao;
+	private TransactionManager manager;
 
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
@@ -67,51 +67,41 @@ public class ChallengeServicesImpl implements ChallengeResourceServices {
 	}
 
 	@Override
-	public boolean update(final List<Challenge> challenges, long challengeId) {
+	public boolean update(final List<Challenge> challenges, long challengeId) throws SQLException {
 		if (challenges != null && challenges.size() == 1) {
 			final Challenge updatedChallenge = challenges.get(0);
 			updatedChallenge.setGuid(challengeId);
-				Challenge oldChallenge = null;
-				try {
-					oldChallenge = challengeDao.queryForId(challengeId);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					return false;
+			Challenge oldChallenge = null;
+			Integer rowsUpdated = 0;
+			oldChallenge = challengeDao.queryForId(challengeId);
+
+			// when we implement the updates we should add an update for
+			// some changes
+			if (oldChallenge != null) {
+				if (updatedChallenge.getLocation() == null) {
+					updatedChallenge.setLocation(oldChallenge.getLocation());
 				}
-				// when we implement the updates we should add an update for
-				// some changes
-				if (oldChallenge != null) {
-					if (updatedChallenge.getLocation() == null) {
-						updatedChallenge.setLocation(oldChallenge.getLocation());
-					}
-					if (updatedChallenge.getTitle() == null) {
-						updatedChallenge.setTitle(oldChallenge.getTitle());
-					}
-					if (updatedChallenge.getStartDate() == 0) {
-						updatedChallenge.setStartDate(oldChallenge
-								.getStartDate());
-					} 
-					if (updatedChallenge.getEndDate() == 0) {
-						updatedChallenge.setEndDate(oldChallenge.getEndDate());
-					} 
-					if (updatedChallenge.isPrivate() == null) {
-						updatedChallenge.setIsPrivate(oldChallenge.isPrivate());
-					}
-					try {
-						    manager.callInTransaction(new Callable<Void>() {
-							public Void call() throws Exception {
-								challengeDao.update(updatedChallenge);
-								return null;
+				if (updatedChallenge.getTitle() == null) {
+					updatedChallenge.setTitle(oldChallenge.getTitle());
+				}
+				if (updatedChallenge.getStartDate() == 0) {
+					updatedChallenge.setStartDate(oldChallenge.getStartDate());
+				}
+				if (updatedChallenge.getEndDate() == 0) {
+					updatedChallenge.setEndDate(oldChallenge.getEndDate());
+				}
+				if (updatedChallenge.isPrivate() == null) {
+					updatedChallenge.setIsPrivate(oldChallenge.isPrivate());
+				}
+				rowsUpdated = manager
+						.callInTransaction(new Callable<Integer>() {
+							public Integer call() throws Exception {
+								return challengeDao.update(updatedChallenge);
 							}
 						});
-					} catch (SQLException e) {
-						e.printStackTrace();
-						return false;
-					}
-					return true;
-				}	
+				return rowsUpdated == 1;
+			}
 		}
 		return false;
 	}
-
 }

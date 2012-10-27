@@ -31,7 +31,7 @@ public class ChallengeServicesTest {
 	Dao<ChallengeUser, Long> challengeUserDao = context.mock(Dao.class,"challengeUserDao");
 	TransactionManager manager = new TransactionManager() {
 		public <T> T callInTransaction(Callable<T> callable) throws SQLException {
-			return null; //stub this method out
+			return (T) new Integer(1); //stub this method out
 		}
 	};
 	

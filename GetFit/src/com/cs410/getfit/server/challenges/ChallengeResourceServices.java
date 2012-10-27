@@ -15,7 +15,7 @@ public interface ChallengeResourceServices {
 	 * @throws MethodNotSupportedException
 	 * @throws SQLException 
 	 */
-	List<Challenge> create(List<Challenge> challenges);
+	List<Challenge> create(List<Challenge> challenges) throws SQLException;
 
 	/**
 	 * returns a list of challenges determined by the service
@@ -23,7 +23,7 @@ public interface ChallengeResourceServices {
 	 * @return
 	 * @throws SQLException 
 	 */
-	List<Challenge> get(long challengeId);
+	List<Challenge> get(long challengeId) throws SQLException;
 
-	boolean update(List<Challenge> challenges, long challengeId);
+	boolean update(List<Challenge> challenges, long challengeId) throws SQLException;
 }

@@ -3,6 +3,7 @@ package com.cs410.getfit.server.challenges;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,11 +46,21 @@ public class ChallengesServlet extends HttpServlet {
 		challengeServices = getChallengeServices(pathURI);
 		formatter = getJsonFormatter(pathURI);
 
-		List<Challenge> challenges = challengeServices.get(challengeId);
-		PrintWriter writer = resp.getWriter();
-		writer.write(formatter.getJSONFormattedStringOfResource(challenges));
-		writer.flush();
-		resp.setStatus(200);
+		List<Challenge> challenges;
+		try {
+			challenges = challengeServices.get(challengeId);
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}
+		resp.setHeader("Content-Type", "application/json");
+		if(challenges != null && challenges.size() >0) {
+			PrintWriter writer = resp.getWriter();
+			writer.write(formatter.getJSONFormattedStringOfResource(challenges));
+			writer.flush();
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(404); //resource not found
+		}
 	}
 
 	@Override
@@ -61,14 +72,20 @@ public class ChallengesServlet extends HttpServlet {
 		String requestBody = getRequestBody(request);
 		final List<Challenge> challenges = formatter
 				.getResourcesFromJSONFormattedString(requestBody);
-		List <Challenge> created = challengeServices.create(challenges);
-		if(created != null) {
+		List<Challenge> created;
+		try {
+			created = challengeServices.create(challenges);
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}
+		if (created != null && created.size() > 0) {
 			PrintWriter writer = resp.getWriter();
 			writer.write(formatter.getJSONFormattedStringOfResource(created));
 			writer.flush();
-			resp.setStatus(201); //replace with error json
+			resp.setStatus(201); 
+			resp.setHeader("Content-Type", "application/json");
 		} else {
-			resp.setStatus(500); //replace with error json
+			resp.setStatus(200); // not created
 		}
 	}
 
@@ -81,29 +98,35 @@ public class ChallengesServlet extends HttpServlet {
 		String requestBody = getRequestBody(request);
 		final List<Challenge> challenges = formatter
 				.getResourcesFromJSONFormattedString(requestBody);
+		boolean updated = false;
+		try {
+			updated= challengeServices.update(challenges, challengeId);
 
-		if (challengeServices.update(challenges, challengeId)) {
-			resp.setStatus(200);
-		} else {
-			resp.setStatus(500);
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}
+		resp.setHeader("Content-Type", "application/json");
+		if(updated){
+		resp.setStatus(200);
+	} else {
+		resp.setStatus(404); // resource not updated because it doesnt exist
 		}
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.setStatus(501); //method not implemented
+		resp.setStatus(501); // method not implemented
 	}
 
 	private ChallengesJsonFormatter getJsonFormatter(String pathURI) {
-		//do the same thing as the services 
+		// do the same thing as the services
 		return new ChallengesJsonFormatter();
 	}
 
 	private ChallengeResourceServices getChallengeServices(String pathURI)
 			throws ServletException {
 		Matcher matcher;
-		System.out.println(pathURI);
 
 		matcher = challengesIdPattern.matcher(pathURI);
 		if (matcher.find()) {
