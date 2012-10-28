@@ -15,10 +15,6 @@ public interface ChallengeUser {
 
 	public abstract void setAdmin(Boolean isAdmin);
 
-	public abstract Boolean isSubscribed();
-
-	public abstract void setSubscribed(Boolean isSubscribed);
-
 	public abstract long getDateJoined();
 
 	public abstract void setDateJoined(long dateJoined);

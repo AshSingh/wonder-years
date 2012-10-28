@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -17,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.ExpectedException;
 
+import com.cs410.getfit.server.challenges.services.ChallengeIdServices;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
@@ -40,7 +39,7 @@ public class ChallengeServicesTest {
 	final ChallengeUser chUser1 = context.mock(ChallengeUser.class,"chUser1");
 	final ChallengeUser chUser2 = context.mock(ChallengeUser.class,"chUser2");
 	
-	ChallengeServicesImpl service = new ChallengeServicesImpl();
+	ChallengeIdServices service = new ChallengeIdServices();
 	
 	final long CHGUID1 = new Long(123);
 	final long CHGUID2 = new Long(456);
@@ -77,7 +76,8 @@ public class ChallengeServicesTest {
 				oneOf(challenge).setParticipants(chUsers);
 			}
 		});
-		List<Challenge>challenges = service.get(CHALLENGEGUID);
+		service.setChallengeId(CHALLENGEGUID);
+		List<Challenge> challenges = service.get();
 		assertEquals("only 1 challenge should be created",1 ,challenges.size());
 		Challenge actualchallenge = challenges.get(0);
 		assertEquals("challenge should have challenge guid passed in", CHALLENGEGUID, actualchallenge.getGuid());
@@ -95,7 +95,8 @@ public class ChallengeServicesTest {
 				oneOf(challengeDao).queryForId(CHALLENGEGUID); will(throwException(new SQLException()));
 			}
 		});
-		List<Challenge>challenges = service.get(CHALLENGEGUID);
+		service.setChallengeId(CHALLENGEGUID);
+		List<Challenge> challenges = service.get();
 		assertEquals("no challenge should be retrieved", 0, challenges.size());
 	}
 	
@@ -110,7 +111,8 @@ public class ChallengeServicesTest {
 				
 			}
 		});
-		List<Challenge>challenges = service.get(CHALLENGEGUID);
+		service.setChallengeId(CHALLENGEGUID);
+		List<Challenge> challenges = service.get();
 		assertEquals("no challenge should be retrieved", 0, challenges.size());
 	}
 	@Test
@@ -121,7 +123,8 @@ public class ChallengeServicesTest {
 				
 			}
 		});
-		List<Challenge>challenges = service.get(CHALLENGEGUID);
+		service.setChallengeId(CHALLENGEGUID);
+		List<Challenge> challenges = service.get();
 		assertEquals("no challenge should be retrieved", 0, challenges.size());
 	}
 	@Test
@@ -135,7 +138,8 @@ public class ChallengeServicesTest {
 				
 			}
 		});
-		List<Challenge>challenges = service.get(CHALLENGEGUID);
+		service.setChallengeId(CHALLENGEGUID);
+		List<Challenge> challenges = service.get();
 		assertEquals("challenge should be retrieved", 1, challenges.size());
 		assertEquals("correct challenge should be retrieved", CHALLENGEGUID, challenges.get(0).getGuid());
 		assertEquals("challenge should have no participants", 0, challenges.get(0).getParticipants().size());
@@ -155,9 +159,9 @@ public class ChallengeServicesTest {
 				oneOf(challengeDao).queryForId(CHALLENGE2GUID); will(returnValue(challenge));	
 			}
 		});
-		List<Challenge> challenges = new ArrayList<Challenge>();
-		challenges.add(challenge2);
-		boolean updated = service.update(challenges , CHALLENGE2GUID);
+		service.setChallenge(challenge2);
+		service.setChallengeId(CHALLENGE2GUID);
+		boolean updated = service.update();
 		assertEquals("should return true on update", true, updated);
 	}
 	@Test
@@ -174,11 +178,11 @@ public class ChallengeServicesTest {
 				oneOf(challengeDao).queryForId(CHALLENGEGUID); will(returnValue(challenge));	
 			}
 		});
-		List<Challenge> challenges = new ArrayList<Challenge>();
-		challenges.add(emptyChallenge);
-		boolean updated = service.update(challenges , CHALLENGEGUID);
+		service.setChallenge(emptyChallenge);
+		service.setChallengeId(CHALLENGEGUID);
+		boolean updated = service.update();
 		assertEquals("should return true on update", true, updated);
-		Challenge expectedChallenge = challenges.get(0);
+		Challenge expectedChallenge = emptyChallenge;
 		assertEquals("empty object should have set location", LOCATION, expectedChallenge.getLocation());
 		assertEquals("empty object should have set isprivate", true, expectedChallenge.isPrivate());
 		assertEquals("empty object should have set start date", START_TIME, expectedChallenge.getStartDate());

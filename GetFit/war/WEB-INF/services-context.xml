@@ -10,13 +10,25 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="challengesService"
-	class="com.cs410.getfit.server.challenges.ChallengesServicesImpl">
+	class="com.cs410.getfit.server.challenges.services.ChallengesServices">
 		<property name="challengeDao" ref="challengeDao" />
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
+	<bean id="participantsServices"
+	class="com.cs410.getfit.server.challenges.services.ParticipantsServices">
+		<property name="challengeUserDao" ref="challengeUserDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="participantIdServices"
+	class="com.cs410.getfit.server.challenges.services.ParticipantIdServices">
+		<property name="challengeUserDao" ref="challengeUserDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
 	<bean id="challengeService"
-	class="com.cs410.getfit.server.challenges.ChallengeServicesImpl">
+	class="com.cs410.getfit.server.challenges.services.ChallengeIdServices">
 		<property name="challengeDao" ref="challengeDao" />
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="transactionManager" ref="transactionManager" />

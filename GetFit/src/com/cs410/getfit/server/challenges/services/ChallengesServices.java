@@ -1,4 +1,4 @@
-package com.cs410.getfit.server.challenges;
+package com.cs410.getfit.server.challenges.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,10 +11,11 @@ import com.ibm.icu.util.Calendar;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
-public class ChallengesServicesImpl implements ChallengeResourceServices {
+public class ChallengesServices implements ChallengeResourceServices {
 	private Dao<Challenge, Long> challengeDao;
 	private Dao<ChallengeUser, Long> challengeUserDao;
 	private TransactionManager manager;
+	private List<Challenge> challenges;
 
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
@@ -41,34 +42,35 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 	}
 
 	@Override
-	public List<Challenge> create(final List<Challenge> challenges) throws SQLException {
+	public List<Challenge> create() throws SQLException {
 		List<Challenge> challengesCreated = new ArrayList<Challenge>();
 		challengesCreated = manager
 				.callInTransaction(new Callable<List<Challenge>>() {
 					public List<Challenge> call() throws Exception {
 						List<Challenge> created = new ArrayList<Challenge>();
 						List<ChallengeUser> participantsCreated = new ArrayList<ChallengeUser>();
-
 						for (Challenge challenge : challenges) {
-							Challenge dbChallenge = challengeDao
+							if (challenge.getParticipants().size() != 1) { 
+								return null;// dont create any if one has no admin/more than one
+							}
+						}
+						for (Challenge challenge : challenges) {
+							if (challenge.getParticipants().size() == 1) { 
+								Challenge dbChallenge = challengeDao
 									.createIfNotExists(challenge);
-							if (challenge.getParticipants().size() == 1) {
 								ChallengeUser participant = challenge
 										.getParticipants().get(0);
 								participant.setAdmin(true);
-								participant.setSubscribed(true);
 								participant.setChallenge(dbChallenge);
 								participant.setDateJoined(Calendar
 										.getInstance().getTimeInMillis());
 								ChallengeUser participant_created = challengeUserDao
 										.createIfNotExists(participant);
 								participantsCreated.add(participant_created);
-							} else {
-								return null;
-							}
 
-							dbChallenge.setParticipants(participantsCreated);
-							created.add(dbChallenge);
+								dbChallenge.setParticipants(participantsCreated);
+								created.add(dbChallenge);
+							} 
 						}
 						return created;
 					}
@@ -77,7 +79,7 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 	}
 
 	@Override
-	public List<Challenge> get(long challengeId) throws SQLException {
+	public List<Challenge> get() throws SQLException {
 			List<Challenge> challenges = challengeDao.queryForAll();
 			for (Challenge challenge : challenges) {
 				List<ChallengeUser> participants = challengeUserDao.queryForEq(
@@ -88,7 +90,11 @@ public class ChallengesServicesImpl implements ChallengeResourceServices {
 	}
 
 	@Override
-	public boolean update(final List<Challenge> challenges, long challengeId) {
+	public boolean update() {
 		return false; // For now no bulk updates
+	}
+
+	public void setChallenges(List<Challenge> challenges) {
+		this.challenges = challenges;
 	}
 }

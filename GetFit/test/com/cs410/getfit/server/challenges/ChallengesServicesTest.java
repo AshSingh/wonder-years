@@ -12,6 +12,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cs410.getfit.server.challenges.services.ChallengesServices;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.j256.ormlite.dao.Dao;
@@ -33,7 +34,7 @@ public class ChallengesServicesTest {
 	final ChallengeUser chUser1 = context.mock(ChallengeUser.class,"chUser1");
 	final ChallengeUser chUser2 = context.mock(ChallengeUser.class,"chUser2");
 	
-	ChallengesServicesImpl service = new ChallengesServicesImpl();
+	ChallengesServices service = new ChallengesServices();
 	
 	final long CHGUID1 = new Long(123);
 	final long CHALLENGEGUID= new Long(456);
@@ -75,7 +76,7 @@ public class ChallengesServicesTest {
 				oneOf(challenge2).setParticipants(null);
 			}
 		});
-		List <Challenge> returnedChallenges = service.get(-1);
+		List<Challenge> returnedChallenges = service.get();
 		assertEquals("two challenges should be returned", 2, returnedChallenges.size());
 	}
 	

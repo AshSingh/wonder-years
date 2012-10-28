@@ -9,16 +9,14 @@ public class ChallengeUserImpl implements ChallengeUser {
 	@DatabaseField(generatedId = true)
 	private long guid;
 	@DatabaseField(columnDefinition = " bigint(20), FOREIGN KEY (user_id) "+
-				"REFERENCES Users(guid)",canBeNull = true, foreign = true)
+				"REFERENCES Users(guid)",canBeNull = false, foreign = true)
 	private UserImpl user;
 	@DatabaseField(columnDefinition = " bigint(20), FOREIGN KEY (challenge_id) "+
-			"REFERENCES Challenges(guid)",canBeNull = true, foreign = true)
+			"REFERENCES Challenges(guid)",canBeNull = false, foreign = true)
 	private ChallengeImpl challenge;
 	@DatabaseField(canBeNull = false, defaultValue="false")
 	private Boolean isAdmin;
-	@DatabaseField(canBeNull = false,defaultValue = "true")
-	private Boolean isSubscribed;
-	@DatabaseField
+	@DatabaseField(canBeNull = false)
 	private long dateJoined;
 	
 	public ChallengeUserImpl() {
@@ -29,7 +27,6 @@ public class ChallengeUserImpl implements ChallengeUser {
 		setUser(user);
 		setChallenge(challenge);
 		setAdmin(isAdmin);
-		setSubscribed(isSubscribed);
 		setDateJoined(creationDate);
 	}
 	@Override
@@ -58,14 +55,7 @@ public class ChallengeUserImpl implements ChallengeUser {
 	public void setAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	@Override
-	public Boolean isSubscribed() {
-		return isSubscribed;
-	}
-	@Override
-	public void setSubscribed(Boolean isSubscribed) {
-		this.isSubscribed = isSubscribed;
-	}
+
 	@Override
 	public long getDateJoined() {
 		return dateJoined;
