@@ -2,12 +2,12 @@ package com.cs410.getfit.server.challenges.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeUser;
-import com.ibm.icu.util.Calendar;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
