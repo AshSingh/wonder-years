@@ -16,7 +16,8 @@
 				<h5>Activities:</h5>
 				<g:ListBox ui:field="activitiesList" visibleItemCount="15" />
 				<div>
-					<g:Button styleName="btn btn-primary" ui:field="addActivityBtn">Add</g:Button>
+					<g:Button styleName="btn btn-primary" ui:field="addActivityBtn">Add
+					</g:Button>
 				</div>
 			</div>
 			<div class="span8">
@@ -28,12 +29,14 @@
 				</form>
 				<form class="form-inline">
 					<h5>
-						<g:Label styleName="spaced-label indent" ui:field="startDateLabel">Start Date:
+						<g:Label styleName="spaced-label indent" ui:field="startDateLabel">Start
+							Date:
 						</g:Label>
 					</h5>
 					<dp:DateBox styleName="span2" ui:field="startDateBox" />
 					<h5>
-						<g:Label styleName="spaced-label indent" ui:field="endDateLabel">End Date:
+						<g:Label styleName="spaced-label indent" ui:field="endDateLabel">End
+							Date:
 						</g:Label>
 					</h5>
 					<dp:DateBox styleName="span2" ui:field="endDateBox" />
@@ -46,10 +49,30 @@
 						<g:TextBox styleName="spaced-label" ui:field="locationBox" />
 					</form>
 				</div>
+				<div>
+					<form class="form-inline">
+						<h5>
+							<g:Label styleName="spaced-label indent" ui:field="privacyLabel">Privacy Setting: </g:Label>
+						</h5>
+						<g:RadioButton styleName="spaced-radio" ui:field="privacyPublic" name="privacy" checked="true"/>
+						<h5>
+							<g:Label styleName="radio-label">Public</g:Label>
+						</h5>
+						<g:RadioButton styleName="spaced-radio" ui:field="privacyPrivate" name="privacy"/>
+						<h5>
+							<g:Label styleName="radio-label">Private</g:Label>
+						</h5>
+					</form>				
+				</div>
 				<h4>
 					<g:Label styleName="spaced-label" ui:field="activitiesLabel">Activities:</g:Label>
 				</h4>
-				<g:VerticalPanel ui:field="activitiesPanel"/>
+				<g:VerticalPanel ui:field="activitiesPanel" />
+				<div class="createBtnPadding"/>
+				<div>
+					<g:Button styleName="btn btn-primary" ui:field="createChallengeBtn">Create Challenge
+					</g:Button>
+				</div>
 			</div>
 		</div>
 	</g:HTMLPanel>

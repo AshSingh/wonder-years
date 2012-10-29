@@ -3,9 +3,9 @@
 	<target name="default" depends="clean,buildwar,deploy"></target>
  
     <target name="clean">
-        <delete file="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/wtpwebapps/getfit.war"/>
-    	<delete file="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps/getfit.war"/>
-    	<delete dir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps/getfit"/>
+        <delete file="/Users/Alysha/Documents/UBC/Year 4/CPSC 410/MSKserver/wtpwebapps/getfit.war"/>
+    	<delete file="/Users/Alysha/Documents/UBC/Year 4/CPSC 410/MSKserver/webapps/getfit.war"/>
+    	<delete dir="/Users/Alysha/Documents/UBC/Year 4/CPSC 410/MSKserver/webapps/getfit"/>
     </target>
 	
 	<target name="buildwar">
@@ -17,8 +17,8 @@
 	</target>
  
 	<target name="deploy">
-		<copy file="getfit.war" todir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/wtpwebapps" />
-		<copy file="getfit.war" todir="/Users/kiramccoan/Documents/ubc_school/cs410/MSK_Servers/webapps" />
+		<copy file="getfit.war" todir="/Users/Alysha/Documents/UBC/Year 4/CPSC 410/MSKserver/wtpwebapps" />
+		<copy file="getfit.war" todir="/Users/Alysha/Documents/UBC/Year 4/CPSC 410/MSKserver/webapps" />
 	</target>
  
 </project>

@@ -193,8 +193,8 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .navbar-search {
-  padding-left: 10px;
-  padding-right: 5px;
+	padding-left: 10px;
+	padding-right: 5px;
 }
 
 /*
@@ -275,10 +275,24 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	line-height: 20px;
 }
 
-.form-inline h5,.form-inline h4 {
+.form-inline h5,.form-inline h4{
 	display: inline-block;
+	vertical-align: middle; 
+}
+
+.radio-label {
+	color: #000000;
+	font-weight: normal;
+	padding-left: 5px;
+	padding-right: 20px;
+	font-size: 14px;
+	vertical-align: middle;
 }
 
 .freqList {
-  width: 115px;	
+	width: 115px;
+}
+
+.createBtnPadding {
+	padding-top: 40px;
 }

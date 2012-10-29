@@ -7,6 +7,7 @@ public interface CreateChallengeView {
 	
 	public interface Presenter {
 		void onAddActivityButtonClicked(String activity);
+		void onCreateChallengeButtonClicked();
 	}
 	
 	void setPresenter(Presenter presenter);
@@ -15,4 +16,9 @@ public interface CreateChallengeView {
 	MenuBarView getMenuBar();
 	Widget asWidget();
 	String getDateFormat();
+	String getChallengeName();
+	Long getStartDate();
+	Long getEndDate();
+	String getLocation();
+	boolean isPrivate();
 }

@@ -6,7 +6,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<!-- URL used for test database -->
 	<bean id="databaseUrl" class="java.lang.String">
-		<constructor-arg index="0" value="jdbc:mysql://localhost:3306/GETFIT_TEST_DB" />
+		<constructor-arg index="0" value="jdbc:mysql://localhost:3306/GETFITDB" />
 	</bean>
 
 	<!-- datasource used by ORMLite to connect to the test database -->

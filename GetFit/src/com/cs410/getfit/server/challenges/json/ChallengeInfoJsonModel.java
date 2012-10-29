@@ -31,7 +31,7 @@ public class ChallengeInfoJsonModel {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Boolean setIsprivate() {
+	public Boolean getIsprivate() {
 		return isprivate;
 	}
 	public void setIsprivate(boolean isprivate) {

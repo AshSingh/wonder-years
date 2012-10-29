@@ -17,8 +17,8 @@ public class IncomingChallengeJsonModel {
 	public String getLocation() {
 		return info.getLocation();
 	}
-	public Boolean setIsprivate() {
-		return info.setIsprivate();
+	public Boolean getIsprivate() {
+		return info.getIsprivate();
 	}
 	public Long getAdminId() {
 		return admin;

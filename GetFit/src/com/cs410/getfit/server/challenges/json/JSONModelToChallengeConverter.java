@@ -20,7 +20,7 @@ public class JSONModelToChallengeConverter {
 		List<Challenge> challenges = new ArrayList<Challenge>();
 		for (IncomingChallengeJsonModel model : jsonModels) {
 			String title = model.getTitle();
-			Boolean isPrivate = model.setIsprivate();
+			Boolean isPrivate = model.getIsprivate();
 			String location = model.getLocation();
 			Long startDate = model.getStartdate();
 			Long endDate = model.getEnddate();

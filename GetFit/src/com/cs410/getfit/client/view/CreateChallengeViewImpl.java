@@ -13,13 +13,18 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 public class CreateChallengeViewImpl extends Composite implements CreateChallengeView {
+	@UiField static TextBox challengeNameBox;
 	@UiField static DateBox startDateBox;
 	@UiField static DateBox endDateBox;
+	@UiField static TextBox locationBox;
+	@UiField static RadioButton privacyPrivate;
 	@UiField static Button addActivityBtn;
 	@UiField static ListBox activitiesList;
 	@UiField static VerticalPanel activitiesPanel;
@@ -85,4 +90,41 @@ public class CreateChallengeViewImpl extends Composite implements CreateChalleng
 			presenter.onAddActivityButtonClicked(activitiesList.getValue(index));
 		}
 	}
+	
+	@UiHandler("createChallengeBtn")
+	void onCreateChallengeClicked(ClickEvent event) {
+		if (presenter != null) {
+			presenter.onCreateChallengeButtonClicked();			
+		}
+	}
+
+	@Override
+	public String getChallengeName() {
+		return challengeNameBox.getText().toString();
+	}
+
+	@Override
+	public Long getStartDate() {
+		String startStr = startDateBox.getTextBox().getText().toString();
+		Date startDate = DateTimeFormat.getFormat(dateFormat).parse(startStr);
+		return startDate.getTime();
+	}
+
+	@Override
+	public Long getEndDate() {
+		String endStr = endDateBox.getTextBox().getText().toString();
+		Date endDate = DateTimeFormat.getFormat(dateFormat).parse(endStr);
+		return endDate.getTime();
+	}
+
+	@Override
+	public String getLocation() {
+		return locationBox.getText().toString();
+	}
+
+	@Override
+	public boolean isPrivate() {
+		return privacyPrivate.getValue();
+	}
+	
 }
