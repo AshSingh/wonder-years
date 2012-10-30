@@ -47,12 +47,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/challenges</url-pattern>
+		<url-pattern>/getfit/challenges</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/challenges/*</url-pattern>
+		<url-pattern>/getfit/challenges/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>
