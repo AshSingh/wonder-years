@@ -2,10 +2,10 @@ package com.cs410.getfit.server.users;
 
 public enum UserJsonFields {
 	USERS,
-	USERNAME,
-	PASSWORD,
+	FB_ID,
 	FIRSTNAME,
-	LASTNAME;
+	LASTNAME,
+	ISPRIVATE;
 	
 	 @Override 
 	 public String toString() {

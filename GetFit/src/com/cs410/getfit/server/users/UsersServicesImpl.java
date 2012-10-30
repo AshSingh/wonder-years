@@ -29,8 +29,7 @@ public class UsersServicesImpl implements UsersServices {
 	}
 
 	public void createUser(User user) {
-		if (user.getUsername() != null && !user.getUsername().equals("")
-				&& user.getPassword() != null && !user.getPassword().equals("")) {
+		if (user.getFB_ID() != null && !user.getFB_ID().equals("")) {
 			try {
 				userDao.create(user);
 			} catch (SQLException e) {

@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="testUsersFilePath" class="java.lang.String">
-		<constructor-arg value="com/cs410/getfit/server/testData/testUsers.txt"/>
-	</bean>
-	<bean id="testChallengesFilePath" class="java.lang.String">
-		<constructor-arg value="com/cs410/getfit/server/testData/testChallenges.txt"/>
-	</bean>
-	<bean id="testChallengesUsersFilePath" class="java.lang.String">
-		<constructor-arg value="com/cs410/getfit/server/testData/testChallengeUsers.txt"/>
-	</bean>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+
+    <bean
+        id="testUsersFilePath"
+        class="java.lang.String" >
+
+        <constructor-arg value="com/cs410/getfit/server/testData/testUsers.txt" />
+    </bean>
+
+    <bean
+        id="testChallengesFilePath"
+        class="java.lang.String" >
+
+        <constructor-arg value="com/cs410/getfit/server/testData/testChallenges.txt" />
+    </bean>
+
+    <bean
+        id="testChallengesUsersFilePath"
+        class="java.lang.String" >
+
+        <constructor-arg value="com/cs410/getfit/server/testData/testChallengeUsers.txt" />
+    </bean>
+
 </beans>
