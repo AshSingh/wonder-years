@@ -18,7 +18,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	border-radius: 3px;
 }
 
-.menuBarPadding {
+.menu-bar-padding {
 	padding-top: 40px;
 }
 
@@ -115,39 +115,39 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	margin-left: -10px;
 }
 
-.menuBarLinkActive {
+.menubar-link-active {
 	color: #ffffff;
 	float: none;
 	padding: 10px 15px 10px;
 }
 
-.menuBarLinkActive:hover {
+.menu-bar-link-active:hover {
 	cursor: normal;
 	color: #ffffff;
 	text-decoration: none;
 }
 
-.menuBarLink {
+.menubar-link {
 	color: #999999;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	padding: 10px 15px 0px;
 	float: none;
 }
 
-.menuBarLink:hover {
+.menubar-link:hover {
 	color: #ffffff;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.menuBarDropdownLink {
+.menubar-dropdown-link {
 	text-decoration: none;
 	padding: 3px 20px;
 	color: #0088cc;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.menuBarDropdownLink:hover {
+.menubar-dropdown-link:hover {
 	color: #ffffff;
 	text-decoration: none;
 	cursor: pointer;
@@ -164,7 +164,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	color: #777777;
 }
 
-.searchLabel {
+.search-label {
 	color: #999999;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	padding: 10px 15px 0px;
@@ -180,7 +180,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	border: activeborder;
 }
 
-.searchList {
+.search-list {
 	width: auto;
 	height: 28px;
 	font-size: 12px;
@@ -200,11 +200,11 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 /*
  * dashboard
  */
-.hyperlinkLabel {
+.hyperlink-label {
 	color: #0088cc;
 }
 
-.hyperlinkLabel:hover {
+.hyperlink-label:hover {
 	text-decoration: underline;
 	cursor: pointer;
 	color: #555555;
@@ -213,26 +213,20 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 /*
  * create challenge
  */
-.page-header-createChallenge {
+.page-header-create-challenge {
 	padding-bottom: 0px;
 	margin: 0px 10px 0px;
 	border-bottom: 1px solid #eeeeee;
 }
 
-.page-header-createChallenge h4 {
+.page-header-create-challenge h4 {
 	font-size: 24px;
 	line-height: 28px;
 }
 
-.span3 {
-	padding-top: 10px;
-	padding-left: 10px;
-	width: 250px;
-	min-width: 250px;
-}
-
-.span8 {
+.main-panel {
 	padding-top: 15px;
+	padding-left: 50px;
 }
 
 .form-horizontal .control-group {
@@ -241,38 +235,12 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .spaced-label {
-	padding-left: 10px;
+	color: #000000;
 	padding-right: 10px;
 }
 
 .indent {
 	padding-left: 40px;
-}
-
-.activityAdded-label {
-	padding-left: 40px;
-	padding-right: 10px;
-	margin: 10px 0;
-	font-family: inherit;
-	font-weight: bold;
-	line-height: 1;
-	color: inherit;
-	text-rendering: optimizelegibility;
-	font-size: 14px;
-	line-height: 20px;
-}
-
-.activityField-label {
-	padding-left: 40px;
-	padding-right: 10px;
-	margin: 10px 0;
-	font-family: inherit;
-	font-weight: normal;
-	line-height: 1;
-	color: inherit;
-	text-rendering: optimizelegibility;
-	font-size: 14px;
-	line-height: 20px;
 }
 
 .form-inline h5,.form-inline h4{
@@ -289,10 +257,21 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	vertical-align: middle;
 }
 
-.freqList {
-	width: 115px;
+.description-box {
+	margin-left: 40px;
+	width: 600px;
+	height: 100px;
 }
 
-.createBtnPadding {
+.create-btn-padding {
 	padding-top: 40px;
+}
+
+.error-label {
+	color: #b94a48;
+}
+
+.error-popup {
+	border: 3px solid #b94a48;
+	padding: 5px 5px 5px 5px;
 }

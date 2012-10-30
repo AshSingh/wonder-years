@@ -1,7 +1,6 @@
 package com.cs410.getfit.client.presenter;
 
 import com.cs410.getfit.client.event.GoToDashboardEvent;
-import com.cs410.getfit.client.event.GoToRegisterEvent;
 import com.cs410.getfit.client.view.LoginView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;

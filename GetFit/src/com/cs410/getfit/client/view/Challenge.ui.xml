@@ -8,13 +8,12 @@
 		<div class="hero-unit-login-header">
 			<div class="page-header-login">
 				<h1>
-					Dashboard!
+					Challenge!
 					<p>
 						<small>Coming soon...</small>
 					</p>
 				</h1>
 			</div>
-			<g:Label styleName="hyperlink-label" ui:field="createChallengeLink">Create a new challenge</g:Label>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>

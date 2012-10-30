@@ -10,11 +10,11 @@
 				<g:Label styleName="navbar-title">Get Fit!</g:Label>
 				<ul class="nav">
 					<li class="active">
-						<g:Label styleName="menuBarLinkActive" ui:field="homeLink">Home
+						<g:Label styleName="menubar-link-active" ui:field="homeLink">Home
 						</g:Label>
 					</li>
 					<li>
-						<g:Label styleName="menuBarLink" ui:field="challengeLink">Challenges
+						<g:Label styleName="menubar-link" ui:field="challengeLink">Challenges
 						</g:Label>
 					</li>
 					<li class="dropdown">
@@ -24,24 +24,24 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<g:Label styleName="menuBarDropdownLink" ui:field="profileLink">Profile</g:Label>
+								<g:Label styleName="menubar-dropdown-link" ui:field="profileLink">Profile</g:Label>
 							</li>
 							<li>
-								<g:Label styleName="menuBarDropdownLink" ui:field="settingsLink">Settings</g:Label>
+								<g:Label styleName="menubar-dropdown-link" ui:field="settingsLink">Settings</g:Label>
 							</li>
 							<li class="divider"></li>
 							<li>
-								<g:Label styleName="menuBarDropdownLink" ui:field="logoutLink">Logout</g:Label>
+								<g:Label styleName="menubar-dropdown-link" ui:field="logoutLink">Logout</g:Label>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="nav pull-right">
 					<li>
-						<g:Label styleName="searchLabel">Search</g:Label>
+						<g:Label styleName="search-label">Search</g:Label>
 					</li>
 					<li>
-						<g:ListBox styleName="searchList" ui:field="searchList">
+						<g:ListBox styleName="search-list" ui:field="searchList">
 							<g:item value='users'>
 								Users
 							</g:item>
