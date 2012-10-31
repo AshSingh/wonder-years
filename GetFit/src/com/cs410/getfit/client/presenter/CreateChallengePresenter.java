@@ -87,9 +87,9 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 				builder.sendRequest(requestJson, new RequestCallback() {
 					@Override
 					public void onResponseReceived(Request request, Response response) {
-						if (true) {//response.getStatusCode() == 201) {
-							System.out.println(response.getText());
+						if (response.getStatusCode() == 200) {
 							ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
+							Window.alert("Challenge created");
 						} else {
 							Window.alert("Response " + response.getStatusCode());
 						}
