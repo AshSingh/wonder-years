@@ -84,11 +84,8 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 			if (challenge.getTitle() == null) {
 				challenge.setTitle(oldChallenge.getTitle());
 			}
-			if (challenge.getStartDate() == 0) {
-				challenge.setStartDate(oldChallenge.getStartDate());
-			}
-			if (challenge.getEndDate() == 0) {
-				challenge.setEndDate(oldChallenge.getEndDate());
+			if (challenge.getDescription() == null) {
+				challenge.setDescription(oldChallenge.getDescription());
 			}
 			if (challenge.isPrivate() == null) {
 				challenge.setIsPrivate(oldChallenge.isPrivate());

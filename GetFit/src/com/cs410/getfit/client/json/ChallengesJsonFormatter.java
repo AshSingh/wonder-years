@@ -20,8 +20,7 @@ public class ChallengesJsonFormatter {
 		CHALLENGES,
 		INFO,
 		TITLE,
-		STARTDATE,
-		ENDDATE,
+		DESCRIPTION,
 		ISPRIVATE,
 		LOCATION,
 		ADMIN,
@@ -43,8 +42,7 @@ public class ChallengesJsonFormatter {
 	
 			// challenge info
 			info.put(ChallengeJsonFields.TITLE.toString(), new JSONString(model.getTitle()));
-			info.put(ChallengeJsonFields.STARTDATE.toString(), new JSONNumber(model.getStartdate()));
-			info.put(ChallengeJsonFields.ENDDATE.toString(), new JSONNumber(model.getEnddate()));
+			info.put(ChallengeJsonFields.DESCRIPTION.toString(), new JSONString(model.getDescription()));
 			info.put(ChallengeJsonFields.ISPRIVATE.toString(), JSONBoolean.getInstance(model.getIsprivate()));
 			info.put(ChallengeJsonFields.LOCATION.toString(), new JSONString(model.getLocation())); 
 			

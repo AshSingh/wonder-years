@@ -69,6 +69,7 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 			info.setTitle(view.getChallengeName());
 			info.setIsprivate(view.isPrivate());
 			info.setLocation(view.getLocation());
+			info.setDescription(view.getDescription());
 			// TODO: description for info
 
 			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();

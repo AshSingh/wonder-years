@@ -153,10 +153,9 @@ public class TestDBSetup {
 				String title = challengeProperties.get(0);
 				boolean isPrivate = Boolean.valueOf(challengeProperties.get(1));
 				String location = challengeProperties.get(2);
-				Long startDate = Long.decode(challengeProperties.get(3));
-				Long endDate = Long.decode(challengeProperties.get(4));
+				String description = challengeProperties.get(3);
 				
-				Challenge challenge = new ChallengeImpl(title, isPrivate, location, startDate, endDate, null);
+				Challenge challenge = new ChallengeImpl(title, isPrivate, location,description, null);
 
 				challengesDao.create(challenge);
 			}

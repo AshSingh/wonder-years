@@ -8,11 +8,8 @@ public class IncomingChallengeJsonModel {
 	public String getTitle() {
 		return info.getTitle();
 	}
-	public long getStartdate() {
-		return info.getStartdate();
-	}
-	public long getEnddate() {
-		return info.getEnddate();
+	public String getDescription() {
+		return info.getDescription();
 	}
 	public String getLocation() {
 		return info.getLocation();
