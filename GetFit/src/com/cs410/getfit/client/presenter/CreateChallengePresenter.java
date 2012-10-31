@@ -7,6 +7,7 @@ import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.view.CreateChallengeView;
 import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingChallengeJsonModel;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -70,21 +71,25 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 			info.setLocation(view.getLocation());
 			// TODO: description for info
 
-			List<ChallengeInfoJsonModel> models = new ArrayList<ChallengeInfoJsonModel>();
-			models.add(info);
-
-			// get formatted challenge json
+			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
 			// TODO: retrive current user's ID
 			// temp hard-coded value
-			int admin = 1;
-			String requestJson = ChallengesJsonFormatter.formatChallengeJsonInfo(models, admin);
+			model.setChallengeJsonModel(info);
+			model.setAdminId((long) 1);
+			
+			List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
+			models.add(model);
+			
+			// get formatted challenge json
+			String requestJson = ChallengesJsonFormatter.formatChallengeJsonInfo(models);
 
 			try {
 				builder.sendRequest(requestJson, new RequestCallback() {
 					@Override
 					public void onResponseReceived(Request request, Response response) {
-						if (response.getStatusCode() == 201) {
-							Window.alert("Response 201 - challenge created");
+						if (true) {//response.getStatusCode() == 201) {
+							System.out.println(response.getText());
+							ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
 						} else {
 							Window.alert("Response " + response.getStatusCode());
 						}

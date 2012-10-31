@@ -1,12 +1,19 @@
 package com.cs410.getfit.client.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingChallengeJsonModel;
+import com.cs410.getfit.server.challenges.json.OutgoingChallengeJsonModel;
+import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
 public class ChallengesJsonFormatter {
 	public enum ChallengeJsonFields {
@@ -17,18 +24,20 @@ public class ChallengesJsonFormatter {
 		ENDDATE,
 		ISPRIVATE,
 		LOCATION,
-		ADMIN;
+		ADMIN,
+		LINKS;
 
 		@Override public String toString() {
 			// return lower case string
 			return super.toString().toLowerCase();
 		}
 	}
-
-	public static String formatChallengeJsonInfo(List<ChallengeInfoJsonModel> models, int admin) {
+	
+	public static String formatChallengeJsonInfo(List<IncomingChallengeJsonModel> models) {
 		JSONArray challengesJson = new JSONArray();
 		// create array of individual challenge json
-		for(ChallengeInfoJsonModel model: models) {
+		for(IncomingChallengeJsonModel model: models) {
+		
 			JSONObject challengeJson = new JSONObject();
 			JSONObject info = new JSONObject();
 	
@@ -36,12 +45,12 @@ public class ChallengesJsonFormatter {
 			info.put(ChallengeJsonFields.TITLE.toString(), new JSONString(model.getTitle()));
 			info.put(ChallengeJsonFields.STARTDATE.toString(), new JSONNumber(model.getStartdate()));
 			info.put(ChallengeJsonFields.ENDDATE.toString(), new JSONNumber(model.getEnddate()));
-			info.put(ChallengeJsonFields.ISPRIVATE.toString(), new JSONString(Boolean.toString(model.getIsprivate())));
+			info.put(ChallengeJsonFields.ISPRIVATE.toString(), JSONBoolean.getInstance(model.getIsprivate()));
 			info.put(ChallengeJsonFields.LOCATION.toString(), new JSONString(model.getLocation())); 
 			
 			challengeJson.put(ChallengeJsonFields.INFO.toString(), info);
 
-			challengeJson.put(ChallengeJsonFields.ADMIN.toString(), new JSONNumber(admin));
+			challengeJson.put(ChallengeJsonFields.ADMIN.toString(), new JSONNumber(model.getAdminId()));
 			
 			challengesJson.set(challengesJson.size(), challengeJson);
 		}
@@ -51,5 +60,39 @@ public class ChallengesJsonFormatter {
 		requestJson.put(ChallengeJsonFields.CHALLENGES.toString(), challengesJson);
 		
 		return requestJson.toString();
+	}
+	
+	public static List<OutgoingChallengeJsonModel> parseChallengeJsonInfo(String json) {
+		List<OutgoingChallengeJsonModel> models = new ArrayList<OutgoingChallengeJsonModel>();
+		// entire json string
+		JSONValue value = JSONParser.parseLenient(json);
+		// json string as a value (superclass)
+		JSONObject challenges = value.isObject();
+		// json array of challenges
+		JSONArray challengesArray = challenges.get(ChallengeJsonFields.CHALLENGES.toString()).isArray();
+
+		for (int i=0; i < challengesArray.size(); i++) {
+			OutgoingChallengeJsonModel model = new OutgoingChallengeJsonModel();
+			ChallengeInfoJsonModel infoModel = new ChallengeInfoJsonModel();
+			
+			// get single challenge from json
+			JSONObject challenge = challengesArray.get(i).isObject();
+			// get info related to challenge
+			JSONObject info = challenge.get(ChallengeJsonFields.INFO.toString()).isObject();
+			// set infoModel with challenge info
+			infoModel.setTitle(info.get(ChallengeJsonFields.TITLE.toString()).isString().stringValue());
+			infoModel.setLocation(info.get(ChallengeJsonFields.LOCATION.toString()).isString().stringValue());
+			infoModel.setIsprivate(info.get(ChallengeJsonFields.ISPRIVATE.toString()).isBoolean().booleanValue());
+			// TODO: add description to info
+			
+			JSONArray linksArray = challenge.get(ChallengeJsonFields.LINKS.toString()).isArray(); 
+			List<ResourceLink> links = LinksJsonParser.getLinks(linksArray);
+			
+			model.setInfo(infoModel);
+			model.setLinks(links);
+			
+			models.add(model);
+		}
+		return models;
 	}
 }

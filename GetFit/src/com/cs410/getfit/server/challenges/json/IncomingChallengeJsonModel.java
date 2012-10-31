@@ -23,4 +23,12 @@ public class IncomingChallengeJsonModel {
 	public Long getAdminId() {
 		return admin;
 	}
+	
+	// for client side json
+	public void setChallengeJsonModel(ChallengeInfoJsonModel info) {
+		this.info = info;
+	}
+	public void setAdminId(Long admin) {
+		this.admin = admin;
+	}
 }

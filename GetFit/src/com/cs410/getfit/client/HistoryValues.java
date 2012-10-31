@@ -1,4 +1,4 @@
-package com.cs410.getfit.client.event;
+package com.cs410.getfit.client;
 
 public enum HistoryValues {
 	LOGIN,

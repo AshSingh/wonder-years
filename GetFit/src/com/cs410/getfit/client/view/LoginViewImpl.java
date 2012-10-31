@@ -1,6 +1,6 @@
 package com.cs410.getfit.client.view;
 
-import com.cs410.getfit.client.event.HistoryValues;
+import com.cs410.getfit.client.HistoryValues;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;

@@ -30,5 +30,6 @@
   <source path='presenter'/>
   <source path='shared'/>
   <source path='server/challenges/json'/>
+  <source path='server/json'/>
   
 </module>

@@ -9,4 +9,14 @@ public class ResourceLink {
 		this.uri = uri;
 		this.type = type;
 	}
+	// for client
+	public String getRel(){
+		return rel;
+	}
+	public String getUri(){
+		return uri;
+	}
+	public String getType(){
+		return type;
+	}
 }

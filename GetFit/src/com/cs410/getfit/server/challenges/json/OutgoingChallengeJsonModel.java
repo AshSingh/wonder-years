@@ -13,6 +13,12 @@ public class OutgoingChallengeJsonModel {
 	public void setLinks(List<ResourceLink> links) {
 		this.links = links;
 	}
-	
+	// for client side
+	public ChallengeInfoJsonModel getInfo(){
+		return info;
+	}
+	public List<ResourceLink> getLinks(){
+		return links;
+	}
 	
 }
