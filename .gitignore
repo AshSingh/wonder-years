@@ -1,4 +1,4 @@
-ompiled source #
+#Compiled source #
 ###################
 *.com
 *.class
@@ -42,3 +42,13 @@ Thumbs.db
 .classpath
 .project
 .settings
+.metadata
+
+
+
+GetFit/gwt-unitCache/
+GetFit/war/WEB-INF/appengine-web.xml
+GetFit/war/WEB-INF/classes/
+GetFit/war/WEB-INF/deploy/
+GetFit/war/WEB-INF/logging.properties
+GetFit/war/getfit/
