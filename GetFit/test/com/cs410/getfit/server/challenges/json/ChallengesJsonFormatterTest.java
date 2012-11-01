@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.cs410.getfit.server.challenges.json.ChallengesJsonFormatter;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
@@ -38,8 +37,9 @@ public class ChallengesJsonFormatterTest {
 	final long CHALLENGE2GUID = new Long(1234);
 	final String CHALLENGE2_TITLE = "title2";
 	final String CHALLENGE2_LOC = "Calgary";
-	long START_TIME = System.currentTimeMillis();
-	long END_TIME = System.currentTimeMillis();
+	final String DESCRIPTION = "some desc";
+	final String DESCRIPTION2 = "some desc2";
+	
 	
 	@Before
 	public void setUp() {
@@ -72,15 +72,13 @@ public class ChallengesJsonFormatterTest {
 				allowing(challenge).getParticipants(); will(returnValue(chUsers));
 				allowing(challenge).getTitle(); will(returnValue(CHALLENGE_TITLE));
 				allowing(challenge).getLocation(); will(returnValue(CHALLENGE_LOC));
-				allowing(challenge).getStartDate(); will(returnValue(START_TIME));
-				allowing(challenge).getEndDate(); will(returnValue(END_TIME));
+				allowing(challenge).getDescription(); will(returnValue(DESCRIPTION));
 				allowing(challenge).isPrivate(); will(returnValue(true));
 				
 				allowing(challenge1).getGuid(); will(returnValue(CHALLENGE2GUID));
 				allowing(challenge1).getTitle(); will(returnValue(CHALLENGE2_TITLE));
 				allowing(challenge1).getLocation(); will(returnValue(CHALLENGE2_LOC));
-				allowing(challenge1).getStartDate(); will(returnValue(START_TIME));
-				allowing(challenge1).getEndDate(); will(returnValue(END_TIME));
+				allowing(challenge1).getDescription(); will(returnValue(DESCRIPTION2));
 				allowing(challenge1).isPrivate(); will(returnValue(false));
 				allowing(challenge1).getParticipants(); will(returnValue(new ArrayList<ChallengeUser>()));
 			}
@@ -88,33 +86,29 @@ public class ChallengesJsonFormatterTest {
 
 		challengesIncomingJsonString = "{\"challenges\":["+
 				"{\"info\":{\"title\":\""+CHALLENGE_TITLE+"\"," +
-				"\"startdate\":"+START_TIME+"," +
-				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
-				"\"isprivate\":true}," +
+				"\"isprivate\":true," +
+				"\"description\":\""+DESCRIPTION+"\"}," +
 				"\"admin\": \""+USERID+"\"},"+
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
-				"\"startdate\":"+START_TIME+"," +
-				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
-				"\"isprivate\":false}," +
+				"\"isprivate\":false," +
+				"\"description\":\""+DESCRIPTION2+"\"}," +
 				"\"admin\": \""+USERID2+"\"}"+
 				"]}";
 		
 		challengesOutgoingJsonString = "{\"challenges\":["+
 				"{\"info\":{\"title\":\""+CHALLENGE_TITLE+"\"," +
-				"\"startdate\":"+START_TIME+"," +
-				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
-				"\"isprivate\":true}," +
+				"\"isprivate\":true," +
+				"\"description\":\""+DESCRIPTION+"\"}," +
 				"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+CHALLENGEGUID+"\",\"type\":\"challenge\"}," +
 							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}" +
 							"]}," +
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
-				"\"startdate\":"+START_TIME+"," +
-				"\"enddate\":"+END_TIME+"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
-				"\"isprivate\":false},"+
+				"\"isprivate\":false," +
+				"\"description\":\""+DESCRIPTION2+"\"}," +
 				"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+CHALLENGE2GUID+"\",\"type\":\"challenge\"}," +
 							"{\"rel\":\"/challenges/"+CHALLENGE2GUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}" +
 							"]}" +
@@ -135,8 +129,7 @@ public class ChallengesJsonFormatterTest {
 		Challenge challenge1 = actualChallenges.get(0);
 		assertEquals(0, challenge1.getGuid());
 		assertEquals(CHALLENGE_TITLE, challenge1.getTitle());
-		assertEquals(START_TIME, challenge1.getStartDate());
-		assertEquals(END_TIME, challenge1.getEndDate());
+		assertEquals(DESCRIPTION, challenge1.getDescription());
 		assertEquals(CHALLENGE_LOC, challenge1.getLocation());
 		assertEquals(true, challenge1.isPrivate());
 		assertEquals(1,challenge1.getParticipants().size());
@@ -145,8 +138,7 @@ public class ChallengesJsonFormatterTest {
 		Challenge challenge2 = actualChallenges.get(1);
 		assertEquals(0, challenge2.getGuid());
 		assertEquals(CHALLENGE2_TITLE, challenge2.getTitle());
-		assertEquals(START_TIME, challenge2.getStartDate());
-		assertEquals(END_TIME, challenge2.getEndDate());
+		assertEquals(DESCRIPTION2, challenge2.getDescription());
 		assertEquals(CHALLENGE2_LOC, challenge2.getLocation());
 		assertEquals(false, challenge2.isPrivate());
 		assertEquals(1,challenge2.getParticipants().size());

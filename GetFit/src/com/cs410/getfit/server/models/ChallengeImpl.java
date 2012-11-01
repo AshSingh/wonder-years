@@ -13,25 +13,21 @@ public class ChallengeImpl implements Challenge {
 	@DatabaseField
 	private String title;
 	@DatabaseField
-	private long startdate;
-	@DatabaseField
-	private long enddate;
-	@DatabaseField
 	private String location;
 	@DatabaseField
 	private Boolean isprivate;
+	@DatabaseField
+	private String description;
 	private List <ChallengeUser> participants = new ArrayList<ChallengeUser>();
 	//private Set <Activity> activities;
 	
 	
-	public ChallengeImpl(String title, Boolean isPrivate, String location,
-			long startDate, long endDate, List<ChallengeUser> participants) {
-		setTitle(title);
-		setIsPrivate(isPrivate);
-		setLocation(location);
-		setStartDate(startDate);
-		setEndDate(endDate);
-		setParticipants(participants);
+	public ChallengeImpl(String title, Boolean isPrivate, String location, String description, List<ChallengeUser> participants) {
+		this.title = title;
+		this.isprivate = isPrivate;
+		this.location = location;
+		this.participants = participants;
+		this.description = description;
 	}
 	public ChallengeImpl() {
 		//for bean definition
@@ -64,22 +60,7 @@ public class ChallengeImpl implements Challenge {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	@Override
-	public long getStartDate() {
-		return startdate;
-	}
-	@Override
-	public void setStartDate(long startDate) {
-		this.startdate = startDate;
-	}
-	@Override
-	public long getEndDate() {
-		return enddate;
-	}
-	@Override
-	public void setEndDate(long endDate) {
-		this.enddate = endDate;
-	}
+	
 	@Override
 	public List <ChallengeUser> getParticipants() {
 		return participants;
@@ -92,5 +73,13 @@ public class ChallengeImpl implements Challenge {
 	public void setGuid(Long guid) {
 		this.guid = guid;
 		
+	}
+	@Override
+	public String getDescription() {
+		return description;
+	}
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

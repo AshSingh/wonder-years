@@ -12,54 +12,54 @@ public class UserImpl implements Serializable, User {
 	@DatabaseField(generatedId = true)
 	private long guid;
 	@DatabaseField
-	private String username;
+	private String FB_ID;
 	@DatabaseField
-	private String password;
+	private String firstName;
 	@DatabaseField
-	private String firstname;
+	private String lastName;
 	@DatabaseField
-	private String lastname;
+	private boolean isPrivate;
 	
 	public UserImpl() {
 		//for bean definition
 	}
-	public UserImpl(String username, String password, String firstname, String lastname) {
-		setUsername(username);
-		setPassword(password);
+	public UserImpl(String FB_ID, String firstname, String lastname, boolean isPrivate) {
+		setFB_ID(FB_ID);
 		setFirstName(firstname);
 		setLastName(lastname);
+		setIsPrivate(isPrivate);
 	}
 	@Override
-	public String getUsername() {
-		return username;
+	public String getFB_ID() {
+		return FB_ID;
 	}
 	@Override
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	@Override
-	public String getPassword() {
-		return password;
-	}
-	@Override
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFB_ID(String FB_ID) {
+		this.FB_ID = FB_ID;
 	}
 	@Override
 	public String getFirstName() {
-		return firstname;
+		return firstName;
 	}
 	@Override
-	public void setFirstName(String firstName) {
-		this.firstname = firstName;
+	public void setFirstName(String firstName){
+		this.firstName = firstName;
 	}
 	@Override
 	public String getLastName() {
-		return lastname;
+		return lastName;
 	}
 	@Override
-	public void setLastName(String lastName) {
-		this.lastname = lastName;
+	public void setLastName(String lastName){
+		this.lastName = lastName;
+	}
+	@Override
+	public boolean getIsPrivate() {
+		return isPrivate;
+	}
+	@Override
+	public void setIsPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
 	}
 	@Override
 	public void setGuid(Long guid) {

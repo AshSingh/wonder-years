@@ -49,8 +49,8 @@ public class ChallengeServicesTest {
 	final long CHALLENGE2GUID = new Long(1234);
 	final String TITLE2 = "title2";
 	final String LOCATION2 = "Calgary";
-	long START_TIME = System.currentTimeMillis();
-	long END_TIME = System.currentTimeMillis();
+	final String DESCRIPTION = "some description";
+	final String DESCRIPTION2 = "some description take 2!";
 	
 	final List <ChallengeUser> chUsers = new ArrayList<ChallengeUser>();
 	
@@ -153,8 +153,7 @@ public class ChallengeServicesTest {
 				allowing(challenge2).setGuid(CHALLENGE2GUID);
 				allowing(challenge2).getLocation(); will(returnValue(LOCATION2));
 				allowing(challenge2).isPrivate(); will(returnValue(true));
-				allowing(challenge2).getStartDate(); will(returnValue(START_TIME));
-				allowing(challenge2).getEndDate(); will(returnValue(END_TIME));
+				allowing(challenge2).getDescription(); will(returnValue(DESCRIPTION2));
 				allowing(challenge2).getTitle(); will(returnValue(TITLE2));
 				oneOf(challengeDao).queryForId(CHALLENGE2GUID); will(returnValue(challenge));	
 			}
@@ -172,8 +171,7 @@ public class ChallengeServicesTest {
 				allowing(challenge).getGuid(); will(returnValue(CHALLENGEGUID));
 				allowing(challenge).getLocation(); will(returnValue(LOCATION));
 				allowing(challenge).isPrivate(); will(returnValue(true));
-				allowing(challenge).getStartDate(); will(returnValue(START_TIME));
-				allowing(challenge).getEndDate(); will(returnValue(END_TIME));
+				allowing(challenge).getDescription(); will(returnValue(DESCRIPTION));
 				allowing(challenge).getTitle(); will(returnValue(TITLE));
 				oneOf(challengeDao).queryForId(CHALLENGEGUID); will(returnValue(challenge));	
 			}
@@ -185,8 +183,7 @@ public class ChallengeServicesTest {
 		Challenge expectedChallenge = emptyChallenge;
 		assertEquals("empty object should have set location", LOCATION, expectedChallenge.getLocation());
 		assertEquals("empty object should have set isprivate", true, expectedChallenge.isPrivate());
-		assertEquals("empty object should have set start date", START_TIME, expectedChallenge.getStartDate());
-		assertEquals("empty object should have set end date", END_TIME, expectedChallenge.getEndDate());
+		assertEquals("empty object should have a description", DESCRIPTION, expectedChallenge.getDescription());
 		assertEquals("empty object should have set title", TITLE, expectedChallenge.getTitle());
 	}
 }

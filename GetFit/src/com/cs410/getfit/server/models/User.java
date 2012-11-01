@@ -3,32 +3,32 @@ package com.cs410.getfit.server.models;
 public interface User {
 
 	/**
-	 * @return username
+	 * @return FB ID
 	 */
-	public abstract String getUsername();
+	public abstract String getFB_ID();
+	
+	/**
+	 * @return FB ID
+	 */
+	public abstract void setFB_ID(String FB_ID);
 
 	/**
-	 * @param username
+	 * @return users boolean isPrivate privacy setting
 	 */
-	public abstract void setUsername(String username);
+	public abstract boolean getIsPrivate();
 
 	/**
-	 * @return users password
+	 * @param set users boolean isPrivate privacy setting
 	 */
-	public abstract String getPassword();
-
-	/**
-	 * @param users password
-	 */
-	public abstract void setPassword(String password);
+	public abstract void setIsPrivate(boolean isPrivate);
 
 	/**
 	 * @return users first name
 	 */
 	public abstract String getFirstName();
-
+	
 	/**
-	 * @param users first name
+	 * @return users first name
 	 */
 	public abstract void setFirstName(String firstName);
 
@@ -36,9 +36,9 @@ public interface User {
 	 * @return users last name
 	 */
 	public abstract String getLastName();
-
+	
 	/**
-	 * @param users last name
+	 * @return users last name
 	 */
 	public abstract void setLastName(String lastName);
 	

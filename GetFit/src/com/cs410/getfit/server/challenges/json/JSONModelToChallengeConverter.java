@@ -22,8 +22,7 @@ public class JSONModelToChallengeConverter {
 			String title = model.getTitle();
 			Boolean isPrivate = model.getIsprivate();
 			String location = model.getLocation();
-			Long startDate = model.getStartdate();
-			Long endDate = model.getEnddate();
+			String description = model.getDescription();
 			Long admin = model.getAdminId();
 			List<ChallengeUser> participants = new ArrayList<ChallengeUser>();
 			if (admin != null) {
@@ -34,7 +33,7 @@ public class JSONModelToChallengeConverter {
 				participants.add(challengeUser);
 			}
 			Challenge challenge = new ChallengeImpl(title, isPrivate, location,
-					startDate, endDate, participants);
+					description, participants);
 			challenges.add(challenge);
 		}
 		return challenges;
@@ -46,8 +45,7 @@ public class JSONModelToChallengeConverter {
 		for (Challenge challenge : challenges) {
 			ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
 			info.setTitle(challenge.getTitle());
-			info.setStartdate(challenge.getStartDate());
-			info.setEnddate(challenge.getEndDate());
+			info.setDescription(challenge.getDescription());
 			info.setIsprivate(challenge.isPrivate());
 			info.setLocation(challenge.getLocation());
 

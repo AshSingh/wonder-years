@@ -1,2 +1,2 @@
-Joe001,password1,Joe,Doe
-James002,password2,James,Baker
+r234s,Joe,Doe,true
+s3456f,James,Baker,false

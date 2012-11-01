@@ -116,13 +116,13 @@ public class TestDBSetup {
 
 			while ((strLine = br.readLine()) != null) {
 
-				ArrayList<String> userProperties = new ArrayList<String>();
+				ArrayList<Object> userProperties = new ArrayList<Object>();
 				userProperties.addAll(Arrays.asList(strLine.split(",")));
-				String username = userProperties.get(0);
-				String password = userProperties.get(1);
-				String firstname = userProperties.get(2);
-				String lastname = userProperties.get(3);
-				User user = new UserImpl(username, password, firstname, lastname);
+				String FB_ID = (String) userProperties.get(0);
+				String firstname = (String) userProperties.get(1);
+				String lastname = (String) userProperties.get(2);
+				boolean isPrivate = (Boolean) userProperties.get(3);
+				User user = new UserImpl(FB_ID, firstname, lastname, isPrivate);
 				userDao.create(user);
 			}
 
@@ -153,10 +153,9 @@ public class TestDBSetup {
 				String title = challengeProperties.get(0);
 				boolean isPrivate = Boolean.valueOf(challengeProperties.get(1));
 				String location = challengeProperties.get(2);
-				Long startDate = Long.decode(challengeProperties.get(3));
-				Long endDate = Long.decode(challengeProperties.get(4));
+				String description = challengeProperties.get(3);
 				
-				Challenge challenge = new ChallengeImpl(title, isPrivate, location, startDate, endDate, null);
+				Challenge challenge = new ChallengeImpl(title, isPrivate, location,description, null);
 
 				challengesDao.create(challenge);
 			}
