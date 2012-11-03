@@ -22,5 +22,11 @@ public interface UsersServices {
 	 */
 	
 	void createUser(User user);
+	
+	/**
+	 * get a user in data storage
+	 * @param fb_id
+	 */
+	User getUser(String fb_id);
 
 }

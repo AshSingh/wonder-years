@@ -16,6 +16,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.server.models.UserImpl;
+import com.cs410.getfit.server.users.UsersJsonFormatter;
+import com.google.gson.*;
 
 public class UsersServlet extends HttpServlet {
 
@@ -69,23 +72,51 @@ public class UsersServlet extends HttpServlet {
 			  /*report an error*/ 
 			  }
 
-		String body= jb.toString();
+		String body= jb.toString();		
+		System.out.println(body);
 		
-		List <User> users = formatter.getResourcesFromJSONFormattedString(body);
+		JsonParser parser = new JsonParser();
+		JsonObject jObjBody = (JsonObject)parser.parse(body);
 		
-		if(users.size() == 1) {
-			User user = users.get(0); // get first user
-			usersServices.createUser(user);
-
-		} else {
-			//return an error that you cant create more than one user one post.
+		if (request.getRequestURI().equals("/login")){
+			login(jObjBody, resp);
 		}
+		
+//		List <User> users = formatter.getResourcesFromJSONFormattedString(body);
+//		
+//		if(users.size() == 1) {
+//			User user = users.get(0); // get first user
+//			usersServices.createUser(user);
+//
+//		} else {
+//			//return an error that you cant create more than one user one post.
+//		}
+//
+//		PrintWriter writer = resp.getWriter();
+//		writer.write("Created");
+//		writer.flush();
+//		resp.setStatus(201);
 
+	}
+	
+	public void login(JsonObject body, HttpServletResponse resp) throws IOException {		
+		String fb_id = body.get("id").getAsString();
+		User user = usersServices.getUser(fb_id);
+		if(user == null) {
+			// String username = body.get("username").getAsString();
+			String firstname = body.get("first_name").getAsString();
+			String lastname = body.get("last_name").getAsString();
+			// TODO: Get rid of the username
+			user = new UserImpl(fb_id, firstname, lastname, false);
+			usersServices.createUser(user);
+		}
+		
+		Gson gson = new Gson();
+		String jsonUser =  gson.toJson(user);
 		PrintWriter writer = resp.getWriter();
-		writer.write("Created");
+		writer.write(jsonUser);
 		writer.flush();
-		resp.setStatus(201);
-
+		resp.setStatus(200);
 	}
 
 }

@@ -40,4 +40,14 @@ public class UsersServicesImpl implements UsersServices {
 			//TODO: something meaningful here
 		}
 	}
+	
+	public User getUser(String fb_id) {
+		User user = null;
+		try {
+			user = userDao.queryForId(fb_id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 }

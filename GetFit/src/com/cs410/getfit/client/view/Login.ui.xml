@@ -18,31 +18,11 @@
 		<center>
 			<div class="hero-unit-login">
 				<form class="form-horizontal">
-					<div class="control-group" align="left">
-						<g:Label styleName="control-label" ui:field="usernameLabel">Username</g:Label>
-						<div class="controls">	
-							<g:TextBox ui:field="usernameBox"/>
-						</div>
-					</div>
-					<div class="control-group" align="left">
-						<g:Label styleName="control-label" ui:field="pwdLabel">Password</g:Label>
-						<div class="controls">
-							<g:PasswordTextBox ui:field="pwdBox"/>
-		       			</div>
-		        	</div>
 		        	<div class="control-group" align="left">
 		        	    <div class="controls">
 		          			<g:Button styleName="btn btn-primary" ui:field="loginBtn">Login</g:Button>
 		          		</div>
 		          	</div>
-			      	<div class="control-group" align="left">
-		        	    <div class="controls">
-		          			<small>
-		        			<g:Label>Don't have an account?</g:Label>
-		        			<g:Hyperlink ui:field="registerLink">Register now!</g:Hyperlink>
-		        			</small>
-		    	    	</div>
-		        	</div>
 	        	</form>
 	        </div>
 	    </center>	
