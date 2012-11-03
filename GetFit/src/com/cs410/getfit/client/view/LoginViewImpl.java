@@ -14,9 +14,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class LoginViewImpl extends Composite implements LoginView {
-	@UiField static TextBox usernameBox;
-	@UiField static PasswordTextBox pwdBox;
-	@UiField static Hyperlink registerLink;
 	
 	private Presenter presenter;
 	
@@ -26,23 +23,11 @@ public class LoginViewImpl extends Composite implements LoginView {
 	
 	public LoginViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		// set hyperlink target for history and navigation
-		registerLink.setTargetHistoryToken(HistoryValues.REGISTER.toString());
 	}
 	
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
-	}
-	
-	@Override
-	public String getUsername(){
-		return usernameBox.getText();
-	}
-	
-	@Override
-	public String getPassword(){
-		return pwdBox.getText();
 	}
 	
 	@UiHandler("loginBtn")

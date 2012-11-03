@@ -108,6 +108,7 @@ public class UsersServlet extends HttpServlet {
 			String lastname = body.get("last_name").getAsString();
 			// TODO: Get rid of the username
 			user = new UserImpl(fb_id, firstname, lastname, false);
+			System.out.println(user.toString());
 			usersServices.createUser(user);
 		}
 		

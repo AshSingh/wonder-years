@@ -11,12 +11,12 @@ public class UserImpl implements Serializable, User {
 
 	@DatabaseField(generatedId = true)
 	private long guid;
-	@DatabaseField
+	@DatabaseField(unique = true)
 	private String FB_ID;
 	@DatabaseField
-	private String firstName;
+	private String firstname;
 	@DatabaseField
-	private String lastName;
+	private String lastname;
 	@DatabaseField
 	private boolean isPrivate;
 	
@@ -24,10 +24,10 @@ public class UserImpl implements Serializable, User {
 		//for bean definition
 	}
 	public UserImpl(String FB_ID, String firstname, String lastname, boolean isPrivate) {
-		setFB_ID(FB_ID);
-		setFirstName(firstname);
-		setLastName(lastname);
-		setIsPrivate(isPrivate);
+		this.FB_ID = FB_ID;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.isPrivate = isPrivate;
 	}
 	@Override
 	public String getFB_ID() {
@@ -39,19 +39,19 @@ public class UserImpl implements Serializable, User {
 	}
 	@Override
 	public String getFirstName() {
-		return firstName;
+		return firstname;
 	}
 	@Override
 	public void setFirstName(String firstName){
-		this.firstName = firstName;
+		this.firstname = firstName;
 	}
 	@Override
 	public String getLastName() {
-		return lastName;
+		return lastname;
 	}
 	@Override
 	public void setLastName(String lastName){
-		this.lastName = lastName;
+		this.lastname = lastName;
 	}
 	@Override
 	public boolean getIsPrivate() {
@@ -68,5 +68,9 @@ public class UserImpl implements Serializable, User {
 	@Override
 	public Long getGuid() {
 		return guid;
-	}	
+	}
+		
+	public String toString() {
+		return "FB_ID: " + this.getFB_ID() + " Name: " + this.getFirstName() + "  lastname: " + this.getLastName() + " isPrivate: " + this.getIsPrivate();
+	}
 }

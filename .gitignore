@@ -53,3 +53,4 @@ GetFit/war/WEB-INF/deploy/
 GetFit/war/WEB-INF/logging.properties
 GetFit/war/getfit/
 Servers/
+GetFit/war/WEB-INF/db-context.xml
