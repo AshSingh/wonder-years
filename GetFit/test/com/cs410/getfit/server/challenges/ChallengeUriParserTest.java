@@ -12,6 +12,8 @@ public class ChallengeUriParserTest {
 	private String challengesIdPattern = "/challenges/9";
 	private String participantsPattern = "/challenges/10/participants";
 	private String participantsIdPattern = "/challenges/1/participants/2";
+	private String completedChallengesPattern = "/challenges/11/completedchallenges";
+	private String completedChallengesIdPattern = "/challenges/1/completedchallenges/5";
 	private String invalidUri = "invalidUri";
 	private long defaultId = -1;
 	
@@ -50,6 +52,27 @@ public class ChallengeUriParserTest {
 		assertTrue(parser.isParticipantURI());
 		assertEquals(1, parser.getChallengeId());
 		assertEquals(2, parser.getParticipantId());
+	}
+	@Test
+	public void testCompletedChallengesPattern() {
+		ChallengeUriParser parser = new ChallengeUriParser(completedChallengesPattern);
+		assertEquals(ChallengeUriParser.COMPLETEDCHALLENGES, parser.getResource());
+		assertFalse(parser.isChallengeURI());
+		assertFalse(parser.isParticipantURI());
+		assertTrue(parser.isCompletedChallengeURI());
+		assertEquals(11, parser.getChallengeId());
+		assertEquals(defaultId, parser.getParticipantId());
+	}
+	@Test
+	public void testComepletedChallengesIdPattern() {
+		ChallengeUriParser parser = new ChallengeUriParser(completedChallengesIdPattern);
+		assertEquals(ChallengeUriParser.COMEPLETEDCHALLENGESSID, parser.getResource());
+		assertFalse(parser.isChallengeURI());
+		assertFalse(parser.isParticipantURI());
+		assertTrue(parser.isCompletedChallengeURI());
+		assertEquals(1, parser.getChallengeId());
+		assertEquals(defaultId, parser.getParticipantId());
+		assertEquals(5, parser.getCompletedChallengeId());
 	}
 	@Test
 	public void testInvalidPattern() {
