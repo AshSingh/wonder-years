@@ -61,25 +61,20 @@ public class UsersServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//TODO: mappings to different get post ect
-		StringBuffer jb = new StringBuffer();
-		  String line = null;
-		  try {
-		    BufferedReader reader = request.getReader();
-		    while ((line = reader.readLine()) != null)
-		      jb.append(line);
-		  } catch (Exception e) { 
-			  /*report an error*/ 
-			  }
 
-		String body= jb.toString();		
-		System.out.println(body);
 		
+		String body = request.getParameter("json_body");
 		JsonParser parser = new JsonParser();
-		JsonObject jObjBody = (JsonObject)parser.parse(body);
+		JsonElement element = parser.parse(body);
+		JsonObject jObjBody = null;
+		if(element.isJsonObject()) {
+			jObjBody = (JsonObject)element;
+		}
 		
 		if (request.getRequestURI().equals("/login")){
-			login(jObjBody, resp);
+			login(request.getParameter("FB_id"), jObjBody,resp);
+		} else {
+			resp.setStatus(404);
 		}
 		
 //		List <User> users = formatter.getResourcesFromJSONFormattedString(body);
@@ -99,10 +94,9 @@ public class UsersServlet extends HttpServlet {
 
 	}
 	
-	public void login(JsonObject body, HttpServletResponse resp) throws IOException {		
-		String fb_id = body.get("id").getAsString();
+	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {		
 		User user = usersServices.getUser(fb_id);
-		if(user == null) {
+		if(user == null && body != null) {
 			// String username = body.get("username").getAsString();
 			String firstname = body.get("first_name").getAsString();
 			String lastname = body.get("last_name").getAsString();

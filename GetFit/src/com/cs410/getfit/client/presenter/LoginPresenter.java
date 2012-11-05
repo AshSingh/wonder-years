@@ -2,7 +2,9 @@ package com.cs410.getfit.client.presenter;
 
 
 import com.cs410.getfit.client.event.GoToDashboardEvent;
+import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.view.LoginView;
+import com.cs410.getfit.client.AuthResponse;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -44,7 +46,10 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
                     loginStatus = response.getStatusCode();
                     getResponseStr = response.getText();
                     if(loginStatus == 200) {
+                    	System.out.println(AuthResponse.getInstance());
             			eventBus.fireEvent(new GoToDashboardEvent());
+            		} else if(loginStatus == 403) {
+            			eventBus.fireEvent(new GoToLoginEvent());
             		}
                 }
                 @Override
