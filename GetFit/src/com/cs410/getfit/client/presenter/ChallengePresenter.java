@@ -13,12 +13,15 @@ import com.cs410.getfit.server.challenges.json.OutgoingCompletedChallengeJsonMod
 import com.cs410.getfit.server.challenges.json.OutgoingParticipantJsonModel;
 import com.cs410.getfit.server.json.LinkTypes;
 import com.cs410.getfit.server.json.ResourceLink;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -150,7 +153,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		descriptionText.addStyleName("details-text description small-indent");
 		infoPanel.add(descriptionLabel);
 		infoPanel.add(descriptionText);
-		// action button (join, complete(d))
+		// action button (join, complete(d), edit)
 		displayActionButtons(model, infoPanel);
 		// news feed
 		VerticalPanel newsFeedPanel = view.getNewsFeedPanel();
@@ -158,11 +161,11 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		newsFeedLabel.addStyleName("details-label");	
 		newsFeedPanel.add(newsFeedLabel);
 		ScrollPanel scroller = new ScrollPanel();
-	    scroller.setSize("700px", "400px");
-	    DecoratorPanel decPanel = new DecoratorPanel();
-	    decPanel.setWidget(scroller);
-	    newsFeedPanel.add(decPanel);
-	    // TODO: populate news feed
+		scroller.setSize("700px", "400px");
+		DecoratorPanel decPanel = new DecoratorPanel();
+		decPanel.setWidget(scroller);
+		newsFeedPanel.add(decPanel);
+		// TODO: populate news feed
 	}
 
 	private void clearSubPanels() {
@@ -227,6 +230,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 											completeBtn.setStyleName("btn btn-primary");
 											completeBtn.addStyleName("complete-btn");
 											panel.add(completeBtn);
+											addCompleteBtnFunctionality(completeBtn, model);
 											// if user has completed challenge already, disable button
 											displayCompleteButton(model, completeBtn);
 											// check is user is admin - if true, add edit button
@@ -245,6 +249,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 										joinBtn.setStyleName("btn btn-primary");
 										joinBtn.addStyleName("join-btn");
 										panel.add(joinBtn);
+										addJoinBtnFunctionality(joinBtn, model);
 									}
 								}
 								else {
@@ -266,7 +271,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			}
 		}
 	}
-	
+
 	/* scenarios: 
 	 * user is participant and hasn't completed challenge -	display mark complete button
 	 * user is participant and completed challenge - display disabled complete button
@@ -319,7 +324,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			}
 		}
 	}
-	
+
 	// challenge is private, check if user is a participant before displaying content
 	private void displayPrivateChallenge(final OutgoingChallengeJsonModel model){
 		// TODO: replace temp currentUser value
@@ -343,7 +348,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 											break;
 										}
 									}
-									// user is not a participant - display a join button
+									// user is not a participant - display an error message
 									if (!participating) {
 										view.getTitleLabel().setText(privateChallengeMsg);
 									}
@@ -368,4 +373,73 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
+	// "Mark Complete" button functionality
+	private void addCompleteBtnFunctionality(final Button completeBtn, final OutgoingChallengeJsonModel model) {
+		completeBtn.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				List<ResourceLink> links = model.getLinks();
+				for (ResourceLink link : links) {
+					if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGE.toString())) {
+						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
+						try {
+							builder.sendRequest(null, new RequestCallback() {
+								@Override
+								public void onResponseReceived(Request request, Response response) {
+									if (response.getStatusCode() == 200) {
+										// update view
+										displayCompleteButton(model, completeBtn);
+									}
+									else {
+										// TODO: error handling - non 200 response
+									}
+								}
+								@Override
+								public void onError(Request request, Throwable exception) {
+									// TODO: error handling
+								}
+							});
+						} catch (RequestException e) {
+							// TODO: error handling
+						}
+					}
+				}
+			}
+		});
+	}
+
+	// "Join Challenge" button functionality
+	private void addJoinBtnFunctionality(final Button joinBtn, final OutgoingChallengeJsonModel model) {
+		joinBtn.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				List<ResourceLink> links = model.getLinks();
+				for (ResourceLink link : links) {
+					if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
+						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
+						try {
+							builder.sendRequest(null, new RequestCallback() {
+								@Override
+								public void onResponseReceived(Request request, Response response) {
+									if (response.getStatusCode() == 200) {
+										// update view
+										displayActionButtons(model, view.getChallengeInfoPanel());
+									}
+									else {
+										// TODO: error handling - non 200 response
+									}
+								}
+								@Override
+								public void onError(Request request, Throwable exception) {
+									// TODO: error handling
+								}
+							});
+						} catch (RequestException e) {
+							// TODO: error handling
+						}
+					}
+				}
+			}
+		});
+	}
 }
