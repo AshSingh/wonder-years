@@ -199,7 +199,11 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	// helper method to get correct action button (join/complete(d)/edit)
+	/* scenarios: 
+	 * user is a nonparticipant - display join button
+	 * user is admin - display an edit button
+	 * user is participant - display complete button
+	 */
 	private void displayActionButtons(final OutgoingChallengeJsonModel model, final VerticalPanel panel){
 		// TODO: replace temp currentUser value
 		final long currentUser = new Long(1);
@@ -263,7 +267,10 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 	
-	// helper method for http request to get number of participants and set text in view
+	/* scenarios: 
+	 * user is participant and hasn't completed challenge -	display mark complete button
+	 * user is participant and completed challenge - display disabled complete button
+	 */
 	private void displayCompleteButton(OutgoingChallengeJsonModel model, final Button completeBtn){
 		// TODO: replace temp currentUser value
 		final long currentUser = new Long(1);

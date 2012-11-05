@@ -1,4 +1,4 @@
-package com.cs410.getfit.client;
+package com.cs410.getfit.client.json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 	private String challengeJsonLoc;
 	private String challengeJsonPrivate;
 	private String challengeJsonAdmin;
+	private String challengeJsonDesc;
 	
 	// parsing string
 	private String challengesIncomingJsonString;
@@ -32,10 +33,12 @@ public class ChallengesJsonTest extends GWTTestCase{
 	final String CHALLENGE_TITLE = "title1";
 	final String CHALLENGE_LOC = "Vancouver";
 	final Boolean CHALLENGE_PRIVATE = true;
+	final String CHALLENGE_DESC = "description1";
 
 	final String CHALLENGE2_TITLE = "title2";
 	final String CHALLENGE2_LOC = "Calgary";
 	final Boolean CHALLENGE2_PRIVATE = false;
+	final String CHALLENGE2_DESC = "description2";
 	
 	final String CHALLENGE_SELF_REL = "self";
 	final String CHALLENGE_REL = "/challenges/";
@@ -51,6 +54,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 		challenge1.setTitle(CHALLENGE_TITLE);
 		challenge1.setLocation(CHALLENGE_LOC);
 		challenge1.setIsprivate(CHALLENGE_PRIVATE);
+		challenge1.setDescription(CHALLENGE_DESC);
 		
 		challenges = new ArrayList<ChallengeInfoJsonModel>();
 		challenges.add(challenge1);
@@ -61,17 +65,20 @@ public class ChallengesJsonTest extends GWTTestCase{
 		challengeJsonLoc = "\"location\":\""+CHALLENGE_LOC+"\"";
 		challengeJsonPrivate = "\"isprivate\":"+Boolean.toString(CHALLENGE_PRIVATE);
 		challengeJsonAdmin = "}, \"admin\":"+ Long.toString(CHALLENGE_ADMIN) + "}]";
+		challengeJsonDesc = "\"description\":\""+CHALLENGE_DESC+"\"";
 		
 		challengesIncomingJsonString = "{\"challenges\":["+
 				"{\"info\":{\"title\":\""+CHALLENGE_TITLE+"\"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
-				"\"isprivate\":true}," +
+				"\"isprivate\":true," +
+				"\"description\":\""+CHALLENGE_DESC+"\"}," +
 				"\"links\":[{\"rel\":\"" + CHALLENGE_SELF_REL + "\",\"uri\":\"" + CHALLENGE_REL + CHALLENGEGUID + "\",\"type\":\""+ CHALLENGE_TYPE + "\"}," +
 							"{\"rel\":\"" + CHALLENGE_REL + CHALLENGEGUID + "\",\"uri\":\"" + CHALLENGE_URI + "\",\"type\":\"" + PARTICIPANT_TYPE + "\"}" +
 							"]}," +
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
-				"\"isprivate\":false},"+
+				"\"isprivate\":false,"+
+				"\"description\":\""+CHALLENGE2_DESC+"\"}," +
 				"\"links\":[{\"rel\":\"" + CHALLENGE_SELF_REL + "\",\"uri\":\"" + CHALLENGE_REL + CHALLENGE2GUID+"\",\"type\":\"" + CHALLENGE_TYPE + "\"}," +
 							"{\"rel\":\"" + CHALLENGE_REL + CHALLENGE2GUID + "\",\"uri\":\"" + CHALLENGE_URI + "\",\"type\":\"" + PARTICIPANT_TYPE + "\"}" +
 							"]}" +
@@ -96,6 +103,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 		assertTrue(json.contains(challengeJsonLoc));
 		assertTrue(json.contains(challengeJsonPrivate));
 		assertTrue(json.contains(challengeJsonAdmin));
+		assertTrue(json.contains(challengeJsonDesc));
 	}
 
 	@Test
@@ -107,6 +115,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 		assertEquals(CHALLENGE_TITLE, model1.getInfo().getTitle());
 		assertEquals(CHALLENGE_LOC, model1.getInfo().getLocation());
 		assertEquals(CHALLENGE_PRIVATE, model1.getInfo().getIsprivate());
+		assertEquals(CHALLENGE_DESC, model1.getInfo().getDescription());
 		// check links
 		List<ResourceLink> links = model1.getLinks();
 		ResourceLink link1 = links.get(0);
@@ -123,6 +132,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 		assertEquals(CHALLENGE2_TITLE, model2.getInfo().getTitle());
 		assertEquals(CHALLENGE2_LOC, model2.getInfo().getLocation());
 		assertEquals(CHALLENGE2_PRIVATE, model2.getInfo().getIsprivate());
+		assertEquals(CHALLENGE2_DESC, model2.getInfo().getDescription());
 		// check links
 		links = model2.getLinks();
 		link1 = links.get(0);
