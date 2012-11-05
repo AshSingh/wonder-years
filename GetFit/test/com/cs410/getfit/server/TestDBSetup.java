@@ -116,12 +116,12 @@ public class TestDBSetup {
 
 			while ((strLine = br.readLine()) != null) {
 
-				ArrayList<Object> userProperties = new ArrayList<Object>();
+				ArrayList<String> userProperties = new ArrayList<String>();
 				userProperties.addAll(Arrays.asList(strLine.split(",")));
-				String FB_ID = (String) userProperties.get(0);
-				String firstname = (String) userProperties.get(1);
-				String lastname = (String) userProperties.get(2);
-				boolean isPrivate = (Boolean) userProperties.get(3);
+				String FB_ID = userProperties.get(0);
+				String firstname = userProperties.get(1);
+				String lastname =  userProperties.get(2);
+				boolean isPrivate = Boolean.valueOf(userProperties.get(3));
 				User user = new UserImpl(FB_ID, firstname, lastname, isPrivate);
 				userDao.create(user);
 			}

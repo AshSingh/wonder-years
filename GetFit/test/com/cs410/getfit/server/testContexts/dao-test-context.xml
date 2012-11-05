@@ -1,70 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.springframework.org/schema/beans"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean
-        id="userDao"
-        class="com.j256.ormlite.spring.DaoFactory"
-        factory-method="createDao" >
-
-        <constructor-arg
-            index="0"
-            ref="connectionSource" />
-
-        <constructor-arg
-            index="1"
-            value="com.cs410.getfit.server.models.UserImpl" />
-    </bean>
-
-    <bean
-        id="challengeDao"
-        class="com.j256.ormlite.spring.DaoFactory"
-        factory-method="createDao" >
-
-        <constructor-arg
-            index="0"
-            ref="connectionSource" />
-
-        <constructor-arg
-            index="1"
-            value="com.cs410.getfit.server.models.ChallengeImpl" />
-    </bean>
-
-    <bean
-        id="challengeUsersDao"
-        class="com.j256.ormlite.spring.DaoFactory"
-        factory-method="createDao" >
-
-        <constructor-arg
-            index="0"
-            ref="connectionSource" />
-
-        <constructor-arg
-            index="1"
-            value="com.cs410.getfit.server.models.ChallengeUserImpl" />
-    </bean>
-
-    <bean
-        id="tableCreator"
-        class="com.j256.ormlite.spring.TableCreator" >
-
-        <property
-            name="connectionSource"
-            ref="connectionSource" />
-
-        <property name="configuredDaos" >
-
-            <list>
-
-                <ref bean="userDao" />
-
-                <ref bean="challengeDao" />
-
-                <ref bean="challengeUsersDao" />
-            </list>
-        </property>
-    </bean>
-
+	<bean id="userDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.UserImpl" />
+	</bean>
+	<bean id="challengeDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.ChallengeImpl" />
+	</bean>
+	<bean id="challengeUsersDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.ChallengeUserImpl" />
+	</bean>
+	<bean id="completedChallengesDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.CompletedChallengeImpl" />
+	</bean>
+	
+	<bean id="tableCreator" class="com.j256.ormlite.spring.TableCreator">
+		<property name="connectionSource" ref="connectionSource" />
+		<property name="configuredDaos">
+			<list>
+				<ref bean="userDao" />
+				<ref bean="challengeDao"/>
+				<ref bean="challengeUsersDao"/>
+				<ref bean="completedChallengesDao"/>
+			</list>
+		</property>
+	</bean>
 </beans>

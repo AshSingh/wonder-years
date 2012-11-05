@@ -16,13 +16,17 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cs410.getfit.server.challenges.json.ChallengesJsonFormatter;
+import com.cs410.getfit.server.challenges.json.CompletedChallengesJsonFormatter;
 import com.cs410.getfit.server.challenges.json.ParticipantJsonFormatter;
 import com.cs410.getfit.server.challenges.services.ChallengeResourceServices;
 import com.cs410.getfit.server.challenges.services.ChallengesServicesFactory;
+import com.cs410.getfit.server.challenges.services.CompletedChallengeResourceServices;
+import com.cs410.getfit.server.challenges.services.CompletedChallengesServicesFactory;
 import com.cs410.getfit.server.challenges.services.ParticipantResourceServices;
 import com.cs410.getfit.server.challenges.services.ParticipantServicesFactory;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.CompletedChallenge;
 
 public class ChallengesServlet extends HttpServlet {
 
@@ -79,6 +83,25 @@ public class ChallengesServlet extends HttpServlet {
 			} else {
 				resp.setStatus(404); // resource not found
 			}
+		} else if (parser.isCompletedChallengeURI()) {
+			CompletedChallengesJsonFormatter formatter = new CompletedChallengesJsonFormatter();
+			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(ctx, parser);
+			CompletedChallengeResourceServices services = factory.getCompletedChallengeServices();
+			List<CompletedChallenge> c_challenges;
+			try {
+				c_challenges = services.get();
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
+			if (c_challenges != null && c_challenges.size() > 0) {
+				writer.write(formatter.getJSONFormattedStringOfResource(c_challenges));
+				writer.flush();
+				resp.setStatus(200);
+			} else {
+				resp.setStatus(404); // resource not found
+			}
+		} else {
+			resp.setStatus(404); // resource not found
 		}
 	}
 
@@ -118,6 +141,25 @@ public class ChallengesServlet extends HttpServlet {
 			final List<ChallengeUser> participants = formatter.getResourcesFromJSONFormattedString(requestBody);
 			ParticipantResourceServices services = factory.getParticipantServices(participants);
 			List<ChallengeUser> created;
+			try {
+				created = services.create();
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
+			if (created != null && created.size() > 0) {
+				writer.write(formatter.getJSONFormattedStringOfResource(created));
+				writer.flush();
+				resp.setStatus(201);
+				
+			} else {
+				resp.setStatus(200); // not created
+			}
+		} else if(parser.isCompletedChallengeURI()) {
+			CompletedChallengesJsonFormatter formatter = new CompletedChallengesJsonFormatter();
+			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(ctx, parser);
+			final List<CompletedChallenge> c_challenges = formatter.getResourcesFromJSONFormattedString(requestBody);
+			CompletedChallengeResourceServices services = factory.getCompletedChallengeServices(c_challenges);
+			List<CompletedChallenge> created;
 			try {
 				created = services.create();
 			} catch (SQLException e) {
@@ -172,7 +214,7 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 		
-		} else {
+		}else {
 			resp.setStatus(404); //invalid url
 		}
 		if (updated) {
