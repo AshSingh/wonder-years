@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:dp="urn:import:com.google.gwt.user.datepicker.client"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
 
 	<g:HTMLPanel>
@@ -14,22 +14,22 @@
 		<div class="row">
 			<div class="main-panel">
 				<form class="form-inline">
-					<h4>
+					<h5>
 						<g:Label styleName="spaced-label" ui:field="challengeLabel">Challenge
 							Name*:</g:Label>
-					</h4>
+					</h5>
 					<g:TextBox ui:field="challengeNameBox" />
 				</form>
 				<form class="form-inline">
 					<h5>
-						<g:Label styleName="spaced-label indent" ui:field="locationLabel">Location: </g:Label>
+						<g:Label styleName="spaced-label" ui:field="locationLabel">Location: </g:Label>
 					</h5>
 					<g:TextBox styleName="spaced-label" ui:field="locationBox" />
 				</form>
 				<div>
 					<form class="form-inline">
 						<h5>
-							<g:Label styleName="spaced-label indent" ui:field="privacyLabel">Privacy
+							<g:Label styleName="spaced-label" ui:field="privacyLabel">Privacy
 								Setting*:
 							</g:Label>
 						</h5>
@@ -47,7 +47,7 @@
 				</div>
 				<div>
 					<h5>
-						<g:Label styleName="spaced-label indent" ui:field="descriptionLabel">Description*:
+						<g:Label styleName="spaced-label" ui:field="descriptionLabel">Description*:
 						</g:Label>
 					</h5>
 					<div>
@@ -56,7 +56,7 @@
 				</div>
 				<h5>
 					<small>
-						<g:Label styleName="spaced-label indent">*required fields
+						<g:Label styleName="spaced-label">*required fields
 						</g:Label>
 					</small>
 				</h5>

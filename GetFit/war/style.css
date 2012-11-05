@@ -239,13 +239,9 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	padding-right: 10px;
 }
 
-.indent {
-	padding-left: 40px;
-}
-
-.form-inline h5,.form-inline h4{
+.form-inline h5,.form-inline h4 {
 	display: inline-block;
-	vertical-align: middle; 
+	vertical-align: middle;
 }
 
 .radio-label {
@@ -258,7 +254,6 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .description-box {
-	margin-left: 40px;
 	width: 600px;
 	height: 100px;
 }
@@ -274,4 +269,72 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 .error-popup {
 	border: 3px solid #b94a48;
 	padding: 5px 5px 5px 5px;
+}
+
+/*
+ * challenge
+ */
+.span3 {
+	width: 250px;
+	min-width: 250px;
+}
+
+.details-label {
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.details-text {
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: normal;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.description {
+	width: 250px;
+}
+
+.location {
+	width: 175px;
+}
+
+.small-indent {
+	padding-left: 10px;
+}
+
+.text-panel {
+	word-wrap: break-word;
+}
+
+.complete-btn {
+    margin-left: 70px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.completed-btn {
+    margin-left: 85px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.edit-btn {
+    margin-left: 105px;	
+}
+
+.join-btn {
+    margin-left: 65px;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }

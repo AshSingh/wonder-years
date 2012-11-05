@@ -5,14 +5,18 @@
 	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
 
 	<g:HTMLPanel>
-		<div class="hero-unit-login-header">
-			<div class="page-header-login">
-				<h1>
-					Challenge!
-					<p>
-						<small>Coming soon...</small>
-					</p>
-				</h1>
+		<div class="menu-bar-padding" />
+		<div class="page-header-create-challenge">
+			<h4>
+				<g:Label ui:field="titleLabel"/>
+			</h4>
+		</div>
+		<div class="row">
+			<div class="span3">
+				<g:VerticalPanel ui:field="challengeInfoPanel" />
+			</div>
+			<div class="span8">
+				<g:VerticalPanel ui:field="newsFeedPanel" />
 			</div>
 		</div>
 	</g:HTMLPanel>

@@ -1,15 +1,15 @@
 package com.cs410.getfit.client;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.HasWidgets;
-
-
+import com.cs410.getfit.client.event.GoToChallengeEvent;
+import com.cs410.getfit.client.event.GoToChallengeEventHandler;
+import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
+import com.cs410.getfit.client.event.GoToCreateChallengeEventHandler;
+import com.cs410.getfit.client.event.GoToDashboardEvent;
+import com.cs410.getfit.client.event.GoToDashboardEventHandler;
+import com.cs410.getfit.client.event.GoToLoginEvent;
+import com.cs410.getfit.client.event.GoToLoginEventHandler;
+import com.cs410.getfit.client.event.GoToRegisterEvent;
+import com.cs410.getfit.client.event.GoToRegisterEventHandler;
 import com.cs410.getfit.client.presenter.ChallengePresenter;
 import com.cs410.getfit.client.presenter.CreateChallengePresenter;
 import com.cs410.getfit.client.presenter.DashboardPresenter;
@@ -23,7 +23,14 @@ import com.cs410.getfit.client.view.DashboardViewImpl;
 import com.cs410.getfit.client.view.LoginViewImpl;
 import com.cs410.getfit.client.view.MenuBarViewImpl;
 import com.cs410.getfit.client.view.RegisterViewImpl;
-import com.cs410.getfit.client.event.*;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.HasWidgets;
 
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
@@ -77,7 +84,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		eventBus.addHandler(GoToChallengeEvent.TYPE,
 				new GoToChallengeEventHandler() {
 			public void onGoToChallenge(GoToChallengeEvent event) {
-				doGoToChallenge();
+				doGoToChallenge(event.getChallengeUri());
 			}
 		});  
 	}
@@ -98,13 +105,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		History.newItem(HistoryValues.CREATECHALLENGE.toString());
 	}
 	
-	private void doGoToChallenge() {
-		History.newItem(HistoryValues.CHALLENGE.toString());
+	private void doGoToChallenge(String challengeUri) {
+		History.newItem(challengeUri);
 	}
 	
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-	    String token = event.getValue();
+	    final String token = event.getValue();
 	    
 	    if (token != null) {
 	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
@@ -169,7 +176,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 	        	});
 	        }
-	        else if (token.equals(HistoryValues.CHALLENGE.toString())) {
+	        else if (token.contains("/challenges/")) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
 	        		}
@@ -183,7 +190,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        			}
 	        			challengeView.setMenuBar(menuBarView);
 	        			new MenuBarPresenter(eventBus, menuBarView);
-	        			new ChallengePresenter(eventBus, challengeView).go(container);	 	
+	        			new ChallengePresenter(eventBus, challengeView).go(container, token);	 	
 	        		}
 	        	});
 	        }

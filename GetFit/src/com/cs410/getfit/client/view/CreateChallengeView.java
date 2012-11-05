@@ -18,5 +18,5 @@ public interface CreateChallengeView {
 	String getLocation();
 	String getDescription();
 	Label getDescriptionLabel();
-	boolean isPrivate();
+	boolean getIsPrivate();
 }

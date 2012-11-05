@@ -4,8 +4,7 @@ public enum HistoryValues {
 	LOGIN,
 	REGISTER,
 	DASHBOARD,
-	CREATECHALLENGE,
-	CHALLENGE;
+	CREATECHALLENGE;
 	
 	 @Override 
 	 public String toString() {

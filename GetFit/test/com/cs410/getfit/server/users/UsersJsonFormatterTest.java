@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
-import com.cs410.getfit.server.users.UsersJsonFormatter;
 
 public class UsersJsonFormatterTest {
 

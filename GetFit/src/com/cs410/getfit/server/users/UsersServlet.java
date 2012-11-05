@@ -1,6 +1,5 @@
 package com.cs410.getfit.server.users;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,8 +16,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
-import com.cs410.getfit.server.users.UsersJsonFormatter;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class UsersServlet extends HttpServlet {
 

@@ -3,11 +3,15 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.view.CreateChallengeView;
 import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
 import com.cs410.getfit.server.challenges.json.IncomingChallengeJsonModel;
+import com.cs410.getfit.server.challenges.json.OutgoingChallengeJsonModel;
+import com.cs410.getfit.server.json.LinkTypes;
+import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -67,10 +71,9 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 			// gather challenge info from view
 			ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
 			info.setTitle(view.getChallengeName());
-			info.setIsprivate(view.isPrivate());
+			info.setIsprivate(view.getIsPrivate());
 			info.setLocation(view.getLocation());
 			info.setDescription(view.getDescription());
-			// TODO: description for info
 
 			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
 			// TODO: retrive current user's ID
@@ -89,16 +92,31 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 					@Override
 					public void onResponseReceived(Request request, Response response) {
 						if (response.getStatusCode() == 200) {
-							ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
-							Window.alert("Challenge created");
+							List<OutgoingChallengeJsonModel> models = ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
+							String challengeUri = null;
+							if (models.size() > 0) {
+								OutgoingChallengeJsonModel model = models.get(0);
+								List<ResourceLink> links = model.getLinks();
+								for (ResourceLink link : links) {
+									if (link.getType().equals(LinkTypes.CHALLENGE.toString())) {
+										challengeUri = link.getUri();
+										break;
+									}
+								}
+								eventBus.fireEvent(new GoToChallengeEvent(challengeUri));
+							}
+							else {
+								// TODO: error handling - empty models
+							}
 						} else {
 							Window.alert("Response " + response.getStatusCode());
+							// TODO: error handling
 						}
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
-						// TODO Auto-generated method stub
+						// TODO error handling
 
 					}
 				});

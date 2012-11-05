@@ -2,12 +2,18 @@ package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ChallengeViewImpl extends Composite implements ChallengeView {
-	
+	@UiField static Label titleLabel;
+	@UiField static VerticalPanel challengeInfoPanel;
+	@UiField static VerticalPanel newsFeedPanel;
+
 	private Presenter presenter;
 	private MenuBarView menuBar;
 	
@@ -33,5 +39,19 @@ public class ChallengeViewImpl extends Composite implements ChallengeView {
 	public MenuBarView getMenuBar() {
 		return menuBar;
 	}
-	
+
+	@Override
+	public Label getTitleLabel() {
+		return titleLabel;
+	}
+
+	@Override
+	public VerticalPanel getChallengeInfoPanel() {
+		return challengeInfoPanel;
+	}
+
+	@Override
+	public VerticalPanel getNewsFeedPanel() {
+		return newsFeedPanel;
+	}
 }

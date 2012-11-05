@@ -13,4 +13,10 @@ public class OutgoingParticipantJsonModel {
 	public void setLinks(List<ResourceLink> links) {
 		this.links = links;
 	}
+	public ParticipantInfoJsonModel getInfo() {
+		return info;
+	}
+	public List<ResourceLink> getLinks() {
+		return links;
+	}
 }

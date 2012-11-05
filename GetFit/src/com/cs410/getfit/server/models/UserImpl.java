@@ -8,10 +8,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @SuppressWarnings("serial")
 @DatabaseTable(tableName = "users")
 public class UserImpl implements Serializable, User {
-
 	@DatabaseField(generatedId = true)
 	private long guid;
-	@DatabaseField(unique=true)
+	@DatabaseField(unique=true, canBeNull = false)
 	private String FB_ID;
 	@DatabaseField
 	private String firstname;

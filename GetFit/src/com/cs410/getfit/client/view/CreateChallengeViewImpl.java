@@ -65,7 +65,7 @@ public class CreateChallengeViewImpl extends Composite implements CreateChalleng
 	}
 
 	@Override
-	public boolean isPrivate() {
+	public boolean getIsPrivate() {
 		return privacyPrivate.getValue();
 	}
 

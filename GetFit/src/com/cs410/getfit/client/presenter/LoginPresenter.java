@@ -1,10 +1,10 @@
 package com.cs410.getfit.client.presenter;
 
 
+import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.event.GoToDashboardEvent;
 import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.view.LoginView;
-import com.cs410.getfit.client.AuthResponse;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;

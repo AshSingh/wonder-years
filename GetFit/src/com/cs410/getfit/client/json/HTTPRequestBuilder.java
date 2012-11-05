@@ -13,4 +13,10 @@ public class HTTPRequestBuilder {
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
+
+	public static RequestBuilder getGetRequest(String url) {
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, warFileName + url);
+		builder.setHeader(header, headerValue);
+		return builder;
+	}
 }

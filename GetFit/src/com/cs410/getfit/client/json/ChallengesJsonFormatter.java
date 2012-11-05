@@ -81,7 +81,7 @@ public class ChallengesJsonFormatter {
 			infoModel.setTitle(info.get(ChallengeJsonFields.TITLE.toString()).isString().stringValue());
 			infoModel.setLocation(info.get(ChallengeJsonFields.LOCATION.toString()).isString().stringValue());
 			infoModel.setIsprivate(info.get(ChallengeJsonFields.ISPRIVATE.toString()).isBoolean().booleanValue());
-			// TODO: add description to info
+			infoModel.setDescription(info.get(ChallengeJsonFields.DESCRIPTION.toString()).isString().stringValue());
 			
 			JSONArray linksArray = challenge.get(ChallengeJsonFields.LINKS.toString()).isArray(); 
 			List<ResourceLink> links = LinksJsonParser.getLinks(linksArray);

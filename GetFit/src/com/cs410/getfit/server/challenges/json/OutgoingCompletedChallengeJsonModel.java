@@ -13,4 +13,10 @@ public class OutgoingCompletedChallengeJsonModel {
 	public void setLinks(List<ResourceLink> links) {
 		this.links = links;
 	}
+	public CompletedChallengeInfoJsonModel getInfo() {
+		return info;
+	}
+	public List<ResourceLink> getLinks() {
+		return links;
+	}
 }

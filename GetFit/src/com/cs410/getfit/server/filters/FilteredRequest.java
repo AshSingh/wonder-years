@@ -3,7 +3,6 @@ package com.cs410.getfit.server.filters;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import com.google.gson.JsonObject;
 
 public class FilteredRequest extends HttpServletRequestWrapper {
 
