@@ -61,7 +61,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	margin-left: 0px;
 	height: 175px;
 	width: 500px;
-	background-color: #eeeeee;
+	background-color: #FFF;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
@@ -337,4 +337,8 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
     margin-left: 65px;
     margin-bottom: 20px;
     margin-top: 10px;
+}
+
+.gwt-button {
+	border: 10px solid #FF0000; 
 }

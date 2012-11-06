@@ -98,12 +98,9 @@ public class UsersServlet extends HttpServlet {
 	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {		
 		User user = usersServices.getUser(fb_id);
 		if(user == null && body != null) {
-			// String username = body.get("username").getAsString();
 			String firstname = body.get("first_name").getAsString();
 			String lastname = body.get("last_name").getAsString();
-			// TODO: Get rid of the username
 			user = new UserImpl(fb_id, firstname, lastname, false);
-			System.out.println(user.toString());
 			usersServices.createUser(user);
 		}
 		

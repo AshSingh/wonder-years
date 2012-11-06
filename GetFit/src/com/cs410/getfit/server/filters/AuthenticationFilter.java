@@ -66,7 +66,6 @@ public class AuthenticationFilter implements Filter{
 			  }
 
 			String body= jb.toString();
-			System.out.println(body);
 			
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(body);
@@ -111,7 +110,6 @@ public class AuthenticationFilter implements Filter{
 				//convert JSON to String
 				JsonParser parser = new JsonParser();
 				JsonObject jObjBody = (JsonObject)parser.parse(result);
-				System.out.println(result);
 				if(jObjBody.get("error") == null) {
 					// If no error in the FB response get the ID
 					String FB_id = jObjBody.get("id").getAsString();

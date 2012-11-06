@@ -1,3 +1,9 @@
+$(document).ready(function() {
+	// Remove the click handler to the login button
+	// added by facebook.
+	$(".fb-login-button").unbind('click');
+});
+
 function login() {
     FB.login(function(response) {
         if (response.authResponse) {

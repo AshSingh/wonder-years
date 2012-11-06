@@ -6,6 +6,8 @@ import com.cs410.getfit.client.event.GoToDashboardEvent;
 import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.view.LoginView;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -45,8 +47,10 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
                 public void onResponseReceived(Request request, Response response) {
                     loginStatus = response.getStatusCode();
                     getResponseStr = response.getText();
+                    JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
+                    AuthResponse auth_response = AuthResponse.getInstance();
+                    auth_response.setGuid((int) jsonBody.get("guid").isNumber().doubleValue());
                     if(loginStatus == 200) {
-                    	System.out.println(AuthResponse.getInstance());
             			eventBus.fireEvent(new GoToDashboardEvent());
             		} else if(loginStatus == 403) {
             			eventBus.fireEvent(new GoToLoginEvent());
