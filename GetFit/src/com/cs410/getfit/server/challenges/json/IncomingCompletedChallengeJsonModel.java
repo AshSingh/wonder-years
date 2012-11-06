@@ -6,4 +6,12 @@ public class IncomingCompletedChallengeJsonModel {
 	public long getUserId(){
 		return info.getUserId();
 	}
+
+	public void setUserId(long userId){
+		this.info.setUserId(userId);
+	}
+	
+	public void setCompletedChallengeInfoJsonModel(CompletedChallengeInfoJsonModel info) {
+		this.info = info;
+	}
 }

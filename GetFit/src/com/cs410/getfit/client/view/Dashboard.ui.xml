@@ -5,16 +5,21 @@
 	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
 
 	<g:HTMLPanel>
-		<div class="hero-unit-login-header">
-			<div class="page-header-login">
-				<h1>
-					Dashboard!
-					<p>
-						<small>Coming soon...</small>
-					</p>
-				</h1>
+		<div class="menu-bar-padding" />
+		<div class="page-header-general">
+			<h4>
+				<g:Label ui:field="titleLabel">Dashboard</g:Label>
+			</h4>
+		</div>
+		<div class="row">
+			<div class="span3">
+				<g:VerticalPanel ui:field="challengeInfoPanel">
+				<g:Label styleName="hyperlink-label small-indent" ui:field="createChallengeLink">Create a new challenge</g:Label>
+				</g:VerticalPanel> 
 			</div>
-			<g:Label styleName="hyperlink-label" ui:field="createChallengeLink">Create a new challenge</g:Label>
+			<div class="span8">
+				<g:VerticalPanel ui:field="newsFeedPanel" />
+			</div>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>

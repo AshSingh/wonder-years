@@ -15,7 +15,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		this.view = view;
 		this.view.setPresenter(this);
 	}
-
+	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();

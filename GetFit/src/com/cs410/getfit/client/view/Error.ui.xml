@@ -8,13 +8,8 @@
 		<div class="menu-bar-padding" />
 		<div class="page-header-general">
 			<h4>
-				<g:Label ui:field="titleLabel" />
+				<g:Label ui:field="errorLabel" />
 			</h4>
-		</div>
-		<div class="row">
-			<div class="main-panel">
-				<g:VerticalPanel ui:field="challengeInfoPanel" />
-			</div>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>

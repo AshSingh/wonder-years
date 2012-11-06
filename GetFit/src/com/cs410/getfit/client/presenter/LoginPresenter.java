@@ -1,19 +1,14 @@
 package com.cs410.getfit.client.presenter;
 
-
-import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.event.GoToDashboardEvent;
-import com.cs410.getfit.client.event.GoToLoginEvent;
+import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.view.LoginView;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class LoginPresenter implements Presenter, LoginView.Presenter{
@@ -47,26 +42,24 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
                 public void onResponseReceived(Request request, Response response) {
                     loginStatus = response.getStatusCode();
                     getResponseStr = response.getText();
-                    JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
-                    AuthResponse auth_response = AuthResponse.getInstance();
-                    auth_response.setGuid((int) jsonBody.get("guid").isNumber().doubleValue());
+                    //JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
+                    //AuthResponse auth_response = AuthResponse.getInstance();
+                    //auth_response.setGuid((long) jsonBody.get("guid").isNumber().doubleValue());
                     if(loginStatus == 200) {
             			eventBus.fireEvent(new GoToDashboardEvent());
-            		} else if(loginStatus == 403) {
-            			eventBus.fireEvent(new GoToLoginEvent());
+            		} else {
+        				eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
             		}
                 }
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    Window.alert("Error occurred" + exception.getMessage());
-                    //TODO: Error handling
+    				eventBus.fireEvent(new GoToErrorEvent());
                 }
             });
 		}
 		
 		catch(RequestException e){
-			//TODO: Error handling
-			e.printStackTrace();
+			eventBus.fireEvent(new GoToErrorEvent());
 		}		
 	}
 	

@@ -9,4 +9,7 @@ public class IncomingParticipantJsonModel {
 	public Boolean isAdmin() {
 		return info.isAdmin();
 	}
+	public void setParticipantInfoJsonModel(ParticipantInfoJsonModel info) {
+		this.info = info;
+	}
 }

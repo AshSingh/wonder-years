@@ -1,16 +1,23 @@
 package com.cs410.getfit.client.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.client.AuthResponse;
+import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.CompletedChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.json.ParticipantsJsonFormatter;
 import com.cs410.getfit.client.view.ChallengeView;
 import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingParticipantJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingChallengeJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingCompletedChallengeJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingParticipantJsonModel;
+import com.cs410.getfit.server.challenges.json.ParticipantInfoJsonModel;
 import com.cs410.getfit.server.json.LinkTypes;
 import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -21,13 +28,10 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
@@ -45,23 +49,17 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 	}
 
 	@Override
-	// should not be called without challengeId parameter, displays an error message in view
+	// should not be called without challengeId parameter, redirect to error page
 	public void go(HasWidgets container) {
-		container.clear();
-		container.add(view.getMenuBar().asWidget());
-		container.add(view.asWidget());
-		// clear subpanels
-		clearSubPanels();
-		// error messgae
-		view.getTitleLabel().setText(errorMsg);
+		eventBus.fireEvent(new GoToErrorEvent());
 	}
 
 	public void go(HasWidgets container, String challengeId) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
 		container.add(view.asWidget());
-		// clear subpanels
-		clearSubPanels();
+		// clear subpanel
+		view.getChallengeInfoPanel().clear();
 		// fill view with challenge info
 		populateMainPanel(challengeId);
 	}
@@ -96,30 +94,27 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								}
 							}
 							else {
-								view.getTitleLabel().setText(errorMsg);
+								eventBus.fireEvent(new GoToErrorEvent());
 							}
 						}
 						else {
-							view.getTitleLabel().setText(errorMsg);
+							eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 						}
 					}
-
 					@Override
 					public void onError(Request request, Throwable exception) {
-						// TODO error handling
+						eventBus.fireEvent(new GoToErrorEvent());
 					}
 				});
 			} catch (RequestException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				eventBus.fireEvent(new GoToErrorEvent());
 			}
-			// check participants
-			// if participant, display info
-			// else display private challenge view
 		}
 	}
 
 	private void displayChallenge(OutgoingChallengeJsonModel model) {
+		// clear subpanel
+		view.getChallengeInfoPanel().clear();
 		// challenge info
 		ChallengeInfoJsonModel info = model.getInfo();
 		view.getTitleLabel().setText("Challenge: " + info.getTitle());
@@ -129,8 +124,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		if (info.getLocation() != null) {
 			Label locationLabel = new Label("Location: ");
 			Label locationText = new Label(info.getLocation());
-			locationLabel.addStyleName("details-label small-indent");
-			locationText.addStyleName("details-text location small-indent");
+			locationLabel.addStyleName("details-label");
+			locationText.addStyleName("details-text");
 			HorizontalPanel locationPanel = new HorizontalPanel();
 			locationPanel.add(locationLabel);
 			locationPanel.add(locationText);
@@ -140,8 +135,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		Label participantsLabel = new Label("Total Participants: ");
 		Label participantsText = new Label();
 		displayTotalParticipants(model, participantsText);
-		participantsLabel.addStyleName("details-label small-indent");
-		participantsText.addStyleName("details-text small-indent");
+		participantsLabel.addStyleName("details-label");
+		participantsText.addStyleName("details-text");
 		HorizontalPanel participantsPanel = new HorizontalPanel();
 		participantsPanel.add(participantsLabel);
 		participantsPanel.add(participantsText);
@@ -149,28 +144,12 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		// description
 		Label descriptionLabel = new Label("Description: ");
 		Label descriptionText = new Label(info.getDescription());
-		descriptionLabel.addStyleName("details-label small-indent");
-		descriptionText.addStyleName("details-text description small-indent");
+		descriptionLabel.addStyleName("details-label");
+		descriptionText.addStyleName("details-text");
 		infoPanel.add(descriptionLabel);
 		infoPanel.add(descriptionText);
 		// action button (join, complete(d), edit)
 		displayActionButtons(model, infoPanel);
-		// news feed
-		VerticalPanel newsFeedPanel = view.getNewsFeedPanel();
-		Label newsFeedLabel = new Label("News Feed: ");
-		newsFeedLabel.addStyleName("details-label");	
-		newsFeedPanel.add(newsFeedLabel);
-		ScrollPanel scroller = new ScrollPanel();
-		scroller.setSize("700px", "400px");
-		DecoratorPanel decPanel = new DecoratorPanel();
-		decPanel.setWidget(scroller);
-		newsFeedPanel.add(decPanel);
-		// TODO: populate news feed
-	}
-
-	private void clearSubPanels() {
-		view.getChallengeInfoPanel().clear();
-		view.getNewsFeedPanel().clear();
 	}
 
 	// helper method for http request to get number of participants and set text in view
@@ -189,14 +168,15 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 									label.setText(Integer.toString(models.size()));
 								}
 							}
+							
 						}
 						@Override
 						public void onError(Request request, Throwable exception) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					});
 				} catch (RequestException e) {
-					// TODO: error handling
+					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			}
 		}
@@ -208,8 +188,6 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 	 * user is participant - display complete button
 	 */
 	private void displayActionButtons(final OutgoingChallengeJsonModel model, final VerticalPanel panel){
-		// TODO: replace temp currentUser value
-		final long currentUser = new Long(1);
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
@@ -222,6 +200,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean participating = false;
+									long currentUser = AuthResponse.getInstance().getGuid();
 									for (OutgoingParticipantJsonModel participantModel : models) {
 										if (participantModel.getInfo().getUserId() == currentUser) {
 											participating = true;
@@ -229,9 +208,11 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 											Button completeBtn = new Button("Mark Complete");
 											completeBtn.setStyleName("btn btn-primary");
 											completeBtn.addStyleName("complete-btn");
+											// hide button until check done if challenge has already been completed
+											completeBtn.setVisible(false);
 											panel.add(completeBtn);
 											addCompleteBtnFunctionality(completeBtn, model);
-											// if user has completed challenge already, disable button
+											// displays appropriate type of complete button for user
 											displayCompleteButton(model, completeBtn);
 											// check is user is admin - if true, add edit button
 											if (participantModel.getInfo().isAdmin()) {
@@ -252,21 +233,18 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 										addJoinBtnFunctionality(joinBtn, model);
 									}
 								}
-								else {
-									// error handling: no models returned
-								}
 							}
 							else {
-								// TODO: error handling - non 200 response
+								eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 							}
 						}
 						@Override
 						public void onError(Request request, Throwable exception) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					});
 				} catch (RequestException e) {
-					// TODO: error handling
+					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			}
 		}
@@ -274,14 +252,12 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 
 	/* scenarios: 
 	 * user is participant and hasn't completed challenge -	display mark complete button
-	 * user is participant and completed challenge - display disabled complete button
+	 * user is participant and completed challenge - display disabled complete button with "Completed" text
 	 */
 	private void displayCompleteButton(OutgoingChallengeJsonModel model, final Button completeBtn){
-		// TODO: replace temp currentUser value
-		final long currentUser = new Long(1);
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
-			if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGE.toString())) {
+			if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGES.toString())) {
 				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri()); 
 				try {
 					builder.sendRequest(null, new RequestCallback() {
@@ -291,35 +267,34 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingCompletedChallengeJsonModel> models = CompletedChallengesJsonFormatter.parseCompletedChallengesJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean completed = false;
+									long currentUser = AuthResponse.getInstance().getGuid();
 									for (OutgoingCompletedChallengeJsonModel model : models) {
 										if (model.getInfo().getUserId() == currentUser) {
 											completed = true;
 											completeBtn.setEnabled(false);
 											completeBtn.setText("Completed");
-											completeBtn.removeStyleName("complete-btn");
-											completeBtn.addStyleName("completed-btn");
+											completeBtn.removeStyleName("btn-primary");
+											completeBtn.addStyleName("btn-success");
 										}
 										break;
 									}
 									if (!completed) {
 										completeBtn.setEnabled(true);
 									}
-								}
-								else {
-									// TODO: error handling - no models returned
+									completeBtn.setVisible(true);
 								}
 							}
 							else {
-								// TODO: error handling - non 200 response
+								eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 							}
 						}
 						@Override
 						public void onError(Request request, Throwable exception) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					});
 				} catch (RequestException e) {
-					// TODO: error handling
+					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			}
 		}
@@ -327,8 +302,6 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 
 	// challenge is private, check if user is a participant before displaying content
 	private void displayPrivateChallenge(final OutgoingChallengeJsonModel model){
-		// TODO: replace temp currentUser value
-		final long currentUser = new Long(1);
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
@@ -341,6 +314,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean participating = false;
+									long currentUser = AuthResponse.getInstance().getGuid();
 									for (OutgoingParticipantJsonModel participantModel : models) {
 										if (participantModel.getInfo().getUserId() == currentUser) {
 											participating = true;
@@ -354,20 +328,20 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 									}
 								}
 								else {
-									// TODO: error handling - no models returned
+									view.getTitleLabel().setText(privateChallengeMsg);
 								}
 							}
 							else {
-								// TODO: error handling - non 200 response
+								eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 							}
 						}
 						@Override
 						public void onError(Request request, Throwable exception) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					});
 				} catch (RequestException e) {
-					// TODO: error handling
+					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			}
 		}
@@ -380,27 +354,41 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			public void onClick(ClickEvent event) {
 				List<ResourceLink> links = model.getLinks();
 				for (ResourceLink link : links) {
-					if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGE.toString())) {
+					if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGES.toString())) {
 						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
+						
+						// info for POST body
+						CompletedChallengeInfoJsonModel info = new CompletedChallengeInfoJsonModel();
+						info.setUserId(AuthResponse.getInstance().getGuid());
+						
+						IncomingCompletedChallengeJsonModel requestModel = new IncomingCompletedChallengeJsonModel();
+						requestModel.setCompletedChallengeInfoJsonModel(info);
+						
+						List<IncomingCompletedChallengeJsonModel> models = new ArrayList<IncomingCompletedChallengeJsonModel>();
+						models.add(requestModel);
+						
+						// get formatted json
+						String requestJson = CompletedChallengesJsonFormatter.formatCompletedChallengeJsonInfo(models);
+						
 						try {
-							builder.sendRequest(null, new RequestCallback() {
+							builder.sendRequest(requestJson, new RequestCallback() {
 								@Override
 								public void onResponseReceived(Request request, Response response) {
 									if (response.getStatusCode() == 200) {
 										// update view
-										displayCompleteButton(model, completeBtn);
+										displayChallenge(model);
 									}
 									else {
-										// TODO: error handling - non 200 response
+										eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 									}
 								}
 								@Override
 								public void onError(Request request, Throwable exception) {
-									// TODO: error handling
+									eventBus.fireEvent(new GoToErrorEvent());
 								}
 							});
 						} catch (RequestException e) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					}
 				}
@@ -417,25 +405,40 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 				for (ResourceLink link : links) {
 					if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
 						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
+						
+						// info for POST body
+						ParticipantInfoJsonModel info = new ParticipantInfoJsonModel();
+						info.setUserId(AuthResponse.getInstance().getGuid());
+						info.setAdmin(false);
+						
+						IncomingParticipantJsonModel requestModel = new IncomingParticipantJsonModel();
+						requestModel.setParticipantInfoJsonModel(info);
+						
+						List<IncomingParticipantJsonModel> models = new ArrayList<IncomingParticipantJsonModel>();
+						models.add(requestModel);
+						
+						// get formatted json
+						String requestJson = ParticipantsJsonFormatter.formatParticipantsJsonInfo(models);
+						
 						try {
-							builder.sendRequest(null, new RequestCallback() {
+							builder.sendRequest(requestJson, new RequestCallback() {
 								@Override
 								public void onResponseReceived(Request request, Response response) {
 									if (response.getStatusCode() == 200) {
 										// update view
-										displayActionButtons(model, view.getChallengeInfoPanel());
+										displayChallenge(model);
 									}
 									else {
-										// TODO: error handling - non 200 response
+										eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 									}
 								}
 								@Override
 								public void onError(Request request, Throwable exception) {
-									// TODO: error handling
+									eventBus.fireEvent(new GoToErrorEvent());
 								}
 							});
 						} catch (RequestException e) {
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					}
 				}

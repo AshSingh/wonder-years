@@ -1,9 +1,14 @@
 package com.cs410.getfit.client.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingChallengeJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingCompletedChallengeJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingCompletedChallengeJsonModel;
 import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
@@ -26,6 +31,36 @@ public class CompletedChallengesJsonTest extends GWTTestCase {
 			"{\"info\":{\"userId\":"+userId2+",\"dateCompleted\":"+dateCompleted2+"}," +
 			"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+challengeId+"/completedchallenges/"+cCh2Id+"\",\"type\":\"completedchallenge\"},{\"rel\":\"self\",\"uri\":\"/users/"+userId2+"\",\"type\":\"user\"}]}]}";
 
+	String outgoingJson = "{\"completedchallenges\":[{\"info\":" +
+			"{\"userId\":"+userId+"" +
+			 "}}," +
+			 "{\"info\":" +
+						"{\"userId\":"+userId2+"" +
+			 "}}]" +
+			 "}";
+
+	
+	@Test
+	public void testFormatCompletedChallengesJsonInfo() {
+		List<IncomingCompletedChallengeJsonModel> models = new ArrayList<IncomingCompletedChallengeJsonModel>();
+		
+		IncomingCompletedChallengeJsonModel model = new IncomingCompletedChallengeJsonModel(); 
+		CompletedChallengeInfoJsonModel challengeModel = new CompletedChallengeInfoJsonModel();
+		model.setCompletedChallengeInfoJsonModel(challengeModel);		
+		model.setUserId(userId);
+		models.add(model);
+		
+		IncomingCompletedChallengeJsonModel model2 = new IncomingCompletedChallengeJsonModel(); 
+		CompletedChallengeInfoJsonModel challengeModel2 = new CompletedChallengeInfoJsonModel();
+		model2.setCompletedChallengeInfoJsonModel(challengeModel2);		
+		model2.setUserId(userId2);
+		models.add(model2);
+
+		String json = CompletedChallengesJsonFormatter.formatCompletedChallengeJsonInfo(models);
+
+		assertEquals(outgoingJson, json);
+	}
+	
 	@Test
 	public void testParseCompletedChallengesJsonInfo() {
 		List<OutgoingCompletedChallengeJsonModel> models = CompletedChallengesJsonFormatter.parseCompletedChallengesJsonInfo(incomingJson);

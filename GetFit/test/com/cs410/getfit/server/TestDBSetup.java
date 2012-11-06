@@ -18,6 +18,8 @@ import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.ChallengeUserImpl;
+import com.cs410.getfit.server.models.CompletedChallenge;
+import com.cs410.getfit.server.models.CompletedChallengeImpl;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
 import com.j256.ormlite.dao.Dao;
@@ -61,6 +63,7 @@ public class TestDBSetup {
 		createUsers();
 		createChallenges();
 		addUsersToChallenges();
+		createCompletedChallenges();
 	}
 
 	private void addUsersToChallenges() {
@@ -80,15 +83,15 @@ public class TestDBSetup {
 
 				ArrayList<String> challengeUsersProperties = new ArrayList<String>();
 				challengeUsersProperties.addAll(Arrays.asList(strLine.split(",")));
-				String username = challengeUsersProperties.get(0);
-				String challengeTitle = challengeUsersProperties.get(1);
-				boolean isAdmin = Boolean.valueOf(challengeUsersProperties.get(2));
-				boolean isSubscribed = Boolean.valueOf(challengeUsersProperties.get(3));
+				long guid = Long.decode(challengeUsersProperties.get(0));
+				long userid = Long.decode(challengeUsersProperties.get(1));
+				long challengeid = Long.decode(challengeUsersProperties.get(2));
+				boolean isAdmin = Boolean.valueOf(challengeUsersProperties.get(3));
 				long creationDate = Long.decode(challengeUsersProperties.get(4));
-				UserImpl user = (UserImpl) userDao.queryForId(username);		
-				ChallengeImpl challenge = (ChallengeImpl) challengeDao.queryForEq("title", challengeTitle).get(0);
+				UserImpl user = (UserImpl) userDao.queryForEq("guid", userid).get(0);		
+				ChallengeImpl challenge = (ChallengeImpl) challengeDao.queryForEq("guid", challengeid).get(0);
 				
-				ChallengeUser challengeUser = new ChallengeUserImpl(user, challenge, isAdmin, isSubscribed, creationDate);
+				ChallengeUser challengeUser = new ChallengeUserImpl(user, challenge, isAdmin, creationDate);
 				challengeUsersDao.create(challengeUser);
 			}
 			
@@ -169,7 +172,47 @@ public class TestDBSetup {
 			e.printStackTrace();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void createCompletedChallenges() {
+		ctx = new ClassPathXmlApplicationContext(configNames);
+		Dao<CompletedChallenge, Long> completedChallengesDao = (Dao<CompletedChallenge, Long>) ctx.getBean("completedChallengesDao");
+		Dao<Challenge, Long> challengeDao = (Dao<Challenge, Long>) ctx.getBean("challengeDao");
+		Dao<User, String> userDao = (Dao<User, String>) ctx.getBean("userDao");
+		
+		
+		try {
+			Resource resource = new ClassPathResource((String) ctx.getBean("testCompletedChallengesFilePath"));
+			InputStream in = resource.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
 
+			while ((strLine = br.readLine()) != null) {
+
+				ArrayList<String> completedChallengesProperties = new ArrayList<String>();
+				completedChallengesProperties.addAll(Arrays.asList(strLine.split(",")));
+				long guid = Long.decode(completedChallengesProperties.get(0));
+				long userid = Long.decode(completedChallengesProperties.get(1));
+				long challengeid = Long.decode(completedChallengesProperties.get(2));
+				long completedDate = Long.decode(completedChallengesProperties.get(3));
+				UserImpl user = (UserImpl) userDao.queryForEq("guid", userid).get(0);		
+				ChallengeImpl challenge = (ChallengeImpl) challengeDao.queryForEq("guid", challengeid).get(0);
+				
+				CompletedChallenge completedChallenge = new CompletedChallengeImpl(user, challenge, completedDate);
+				completedChallengesDao.create(completedChallenge);
+			}
+			
+
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * This is an example of how to use this class
 	 * @param args

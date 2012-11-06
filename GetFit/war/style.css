@@ -1,6 +1,7 @@
 /*
- * modifications of boostrap.css specific to GetFit
+ * modifications + additions to boostrap.css specific to GetFit
  */
+ 
 /*
  * general use
  */
@@ -20,6 +21,17 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 
 .menu-bar-padding {
 	padding-top: 40px;
+}
+
+.page-header-general {
+	padding-bottom: 0px;
+	margin: 0px 10px 0px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.page-header-general h4 {
+	font-size: 24px;
+	line-height: 28px;
 }
 
 /*
@@ -213,16 +225,6 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 /*
  * create challenge
  */
-.page-header-create-challenge {
-	padding-bottom: 0px;
-	margin: 0px 10px 0px;
-	border-bottom: 1px solid #eeeeee;
-}
-
-.page-header-create-challenge h4 {
-	font-size: 24px;
-	line-height: 28px;
-}
 
 .main-panel {
 	padding-top: 15px;
@@ -280,6 +282,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .details-label {
+	padding-left: 10px;
 	margin: 10px 0;
 	font-family: inherit;
 	font-weight: bold;
@@ -291,6 +294,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .details-text {
+	padding-left: 10px;
 	margin: 10px 0;
 	font-family: inherit;
 	font-weight: normal;
@@ -301,40 +305,22 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	line-height: 20px;
 }
 
-.description {
-	width: 250px;
-}
-
-.location {
-	width: 175px;
-}
-
-.small-indent {
-	padding-left: 10px;
-}
-
 .text-panel {
 	word-wrap: break-word;
 }
 
 .complete-btn {
-    margin-left: 70px;
-    margin-bottom: 20px;
-    margin-top: 10px;
-}
-
-.completed-btn {
-    margin-left: 85px;
+    margin-left: 10px;
     margin-bottom: 20px;
     margin-top: 10px;
 }
 
 .edit-btn {
-    margin-left: 105px;	
+    margin-left: 10px;	
 }
 
 .join-btn {
-    margin-left: 65px;
+    margin-left: 10px;
     margin-bottom: 20px;
     margin-top: 10px;
 }

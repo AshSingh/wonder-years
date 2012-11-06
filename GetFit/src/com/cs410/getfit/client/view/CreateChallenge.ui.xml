@@ -6,7 +6,7 @@
 
 	<g:HTMLPanel>
 		<div class="menu-bar-padding" />
-		<div class="page-header-create-challenge">
+		<div class="page-header-general">
 			<h4>
 				Create your challenge:
 			</h4>

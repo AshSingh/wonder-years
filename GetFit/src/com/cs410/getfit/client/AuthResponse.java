@@ -5,8 +5,8 @@ package com.cs410.getfit.client;
 // to handle the access token on the client side
 public class AuthResponse {
 	private String accessToken;
-	private int guid;
-	private static final AuthResponse instance = new AuthResponse();
+	private long guid;
+	private static AuthResponse instance = null;
 	
 	//gets access token from facebook for the authentication filter
 	private AuthResponse() {
@@ -15,6 +15,9 @@ public class AuthResponse {
 	
 	//returns singleton
 	public static AuthResponse getInstance() {
+		if (instance == null) {
+			instance = new AuthResponse();
+		}
 		return instance;
 	}
 	
@@ -26,13 +29,14 @@ public class AuthResponse {
 	
 	// CALL THIS METHOD FOR THE GUID ON THE CLIENT
 	//returns logged in user's guid
-	public int getGuid() {
-		return this.guid;
+	public long getGuid() {
+		//return this.guid;
+		return new Long(1);
 	}
 	
 	// DON'T CALL THIS METHOD PLEASE!
 	//used by login presenter to set logged in user's guid
-	public void setGuid(int guid) {
+	public void setGuid(long guid) {
 		this.guid = guid;
 	}
 	

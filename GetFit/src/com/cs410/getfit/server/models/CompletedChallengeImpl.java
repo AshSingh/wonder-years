@@ -18,6 +18,16 @@ public class CompletedChallengeImpl implements CompletedChallenge {
 
 	@DatabaseField(canBeNull = false)
 	private long dateCompleted;
+
+	public CompletedChallengeImpl() {
+		// for bean def
+	}
+
+	public CompletedChallengeImpl(UserImpl user, ChallengeImpl challenge, long dateCompleted) {
+		setUser(user);
+		setChallenge(challenge);
+		setDateCompleted(dateCompleted);
+	}
 	
 	@Override
 	public long getGuid() {

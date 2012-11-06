@@ -23,7 +23,7 @@ public class ChallengeUserImpl implements ChallengeUser {
 		//for bean def
 	}
 	
-	public ChallengeUserImpl(User user, Challenge challenge, Boolean isAdmin, Boolean isSubscribed, long creationDate) {
+	public ChallengeUserImpl(User user, Challenge challenge, Boolean isAdmin, long creationDate) {
 		setUser(user);
 		setChallenge(challenge);
 		setAdmin(isAdmin);

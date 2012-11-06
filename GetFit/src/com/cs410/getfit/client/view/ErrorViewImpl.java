@@ -6,21 +6,19 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ChallengeViewImpl extends Composite implements ChallengeView {
-	@UiField static Label titleLabel;
-	@UiField static VerticalPanel challengeInfoPanel;
+public class ErrorViewImpl extends Composite implements ErrorView {
+	@UiField static Label errorLabel;
 
 	private Presenter presenter;
 	private MenuBarView menuBar;
 	
-	@UiTemplate("Challenge.ui.xml") 
-	interface Binder extends UiBinder<Widget, ChallengeViewImpl> {}
+	@UiTemplate("Error.ui.xml") 
+	interface Binder extends UiBinder<Widget, ErrorViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 	
-	public ChallengeViewImpl() {
+	public ErrorViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -40,12 +38,8 @@ public class ChallengeViewImpl extends Composite implements ChallengeView {
 	}
 
 	@Override
-	public Label getTitleLabel() {
-		return titleLabel;
+	public Label getErrorLabel() {
+		return errorLabel;
 	}
 
-	@Override
-	public VerticalPanel getChallengeInfoPanel() {
-		return challengeInfoPanel;
-	}
 }

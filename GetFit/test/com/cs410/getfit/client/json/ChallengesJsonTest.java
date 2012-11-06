@@ -91,7 +91,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 		List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
 		for (ChallengeInfoJsonModel challengeModel : challenges) {
 			model = new IncomingChallengeJsonModel();
-			model.setChallengeJsonModel(challengeModel);
+			model.setChallengeInfoJsonModel(challengeModel);
 			model.setAdminId(CHALLENGE_ADMIN);
 			models.add(model);
 		}

@@ -3,10 +3,13 @@ package com.cs410.getfit.client.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.server.challenges.json.IncomingParticipantJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingParticipantJsonModel;
 import com.cs410.getfit.server.challenges.json.ParticipantInfoJsonModel;
 import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -20,6 +23,30 @@ public class ParticipantsJsonFormatter {
 		isAdmin,
 		dateJoined, 
 		links;
+	}
+
+	public static String formatParticipantsJsonInfo(List<IncomingParticipantJsonModel> models) {
+		JSONArray participantsJson = new JSONArray();
+		// create array of individual challenge json
+		for(IncomingParticipantJsonModel model: models) {
+		
+			JSONObject challengeJson = new JSONObject();
+			JSONObject info = new JSONObject();
+	
+			// challenge info
+			info.put(ParticipantsJsonFields.userId.toString(), new JSONNumber(model.getUserId()));
+			info.put(ParticipantsJsonFields.isAdmin.toString(), JSONBoolean.getInstance(model.isAdmin()));
+			
+			challengeJson.put(ParticipantsJsonFields.info.toString(), info);
+			
+			participantsJson.set(participantsJson.size(), challengeJson);
+		}
+		
+		// create json with the array of individual challenge json
+		JSONObject requestJson = new JSONObject();
+		requestJson.put(ParticipantsJsonFields.participants.toString(), participantsJson);
+		
+		return requestJson.toString();
 	}
 	
 	public static List<OutgoingParticipantJsonModel> parseParticipantsJsonInfo(String json) {

@@ -1,10 +1,15 @@
 package com.cs410.getfit.client.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.cs410.getfit.server.challenges.json.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.server.challenges.json.IncomingParticipantJsonModel;
 import com.cs410.getfit.server.challenges.json.OutgoingParticipantJsonModel;
+import com.cs410.getfit.server.challenges.json.ParticipantInfoJsonModel;
 import com.cs410.getfit.server.json.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -48,6 +53,50 @@ public class ParticipantsJsonTest extends GWTTestCase {
 														"]}" +
 											"]" +
 							"}";
+	
+	String outgoingJson = "{\"participants\":[{\"info\":" +
+				"{\"userId\":"+userId+"," +
+				"\"isAdmin\":"+isAdmin+"}" +
+			"}," +
+			"{\"info\":" +
+				"{\"userId\":"+userId2+"," +
+				"\"isAdmin\":"+isAdmin2+"}" +
+			"}]" +
+			"}";
+	// strings to verify
+	String participantJsonPrefix = "{\"participants\":[{\"info\":{";
+	String participantJsonUserId = "userId\":"+userId;
+	String participantJsonIsAdmin = "\"isAdmin\":"+isAdmin;
+	String participantJsonUserId2 = "userId\":"+userId2;
+	String participantJsonIsAdmin2 = "\"isAdmin\":"+isAdmin2;	
+	
+	@Test
+	public void testFormatParticipantsJsonInfo() {
+		List<IncomingParticipantJsonModel> models = new ArrayList<IncomingParticipantJsonModel>();
+		
+		IncomingParticipantJsonModel model = new IncomingParticipantJsonModel(); 
+		ParticipantInfoJsonModel participantModel = new ParticipantInfoJsonModel();
+		participantModel.setAdmin(isAdmin);
+		participantModel.setUserId(userId);
+		model.setParticipantInfoJsonModel(participantModel);	
+		models.add(model);
+		
+		IncomingParticipantJsonModel model2 = new IncomingParticipantJsonModel(); 
+		ParticipantInfoJsonModel participantModel2 = new ParticipantInfoJsonModel();
+		participantModel2.setAdmin(isAdmin2);
+		participantModel2.setUserId(userId2);
+		model2.setParticipantInfoJsonModel(participantModel2);		
+		models.add(model2);
+
+		String json = ParticipantsJsonFormatter.formatParticipantsJsonInfo(models);
+		
+		// order of json objects not guaranteed - check for substrings
+		assertTrue(json.contains(participantJsonPrefix));
+		assertTrue(json.contains(participantJsonUserId));
+		assertTrue(json.contains(participantJsonIsAdmin));
+		assertTrue(json.contains(participantJsonUserId2));
+		assertTrue(json.contains(participantJsonIsAdmin2));
+	}
 	
 	@Test
 	public void testParseChallengeJsonInfo() {

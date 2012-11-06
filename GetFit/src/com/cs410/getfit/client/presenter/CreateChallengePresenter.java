@@ -3,7 +3,9 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.event.GoToChallengeEvent;
+import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.view.CreateChallengeView;
@@ -18,7 +20,6 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -76,10 +77,8 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 			info.setDescription(view.getDescription());
 
 			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
-			// TODO: retrive current user's ID
-			// temp hard-coded value
-			model.setChallengeJsonModel(info);
-			model.setAdminId((long) 1);
+			model.setChallengeInfoJsonModel(info);
+			model.setAdminId(AuthResponse.getInstance().getGuid());
 			
 			List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
 			models.add(model);
@@ -106,23 +105,20 @@ public class CreateChallengePresenter implements Presenter, CreateChallengeView.
 								eventBus.fireEvent(new GoToChallengeEvent(challengeUri));
 							}
 							else {
-								// TODO: error handling - empty models
+								eventBus.fireEvent(new GoToErrorEvent());
 							}
 						} else {
-							Window.alert("Response " + response.getStatusCode());
-							// TODO: error handling
+							eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 						}
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
-						// TODO error handling
-
+						eventBus.fireEvent(new GoToErrorEvent());
 					}
 				});
 			} catch (RequestException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				eventBus.fireEvent(new GoToErrorEvent());
 			}
 		}
 	}

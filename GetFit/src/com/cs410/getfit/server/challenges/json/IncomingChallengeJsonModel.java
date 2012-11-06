@@ -20,7 +20,7 @@ public class IncomingChallengeJsonModel {
 	public Long getAdminId() {
 		return admin;
 	}
-	public void setChallengeJsonModel(ChallengeInfoJsonModel info) {
+	public void setChallengeInfoJsonModel(ChallengeInfoJsonModel info) {
 		this.info = info;
 	}
 	public void setAdminId(Long admin) {

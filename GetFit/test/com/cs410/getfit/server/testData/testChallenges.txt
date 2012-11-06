@@ -1,2 +1,3 @@
-Go Pro!,false,Vancouver, my description
-Be Fit101,true,Calgary, yay lets be fit
+Go Pro!,false,Vancouver,my description
+Be Fit101,true,Calgary,yay lets be fit
+Run a marathon,false,Vancouver Island,just keep running
