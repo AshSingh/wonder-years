@@ -16,7 +16,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 	private Dao<ChallengeUser, Long> challengeUserDao;
 	private TransactionManager manager;
 	private List<Challenge> challenges;
-
+	
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
 	}
@@ -80,7 +80,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 
 	@Override
 	public List<Challenge> get() throws SQLException {
-			List<Challenge> challenges = challengeDao.queryForAll();
+			List<Challenge> challenges = challengeDao.query(challengeDao.queryBuilder().orderBy("title", true).prepare());
 			for (Challenge challenge : challenges) {
 				List<ChallengeUser> participants = challengeUserDao.queryForEq(
 						"challenge_id", challenge.getGuid());
