@@ -24,7 +24,11 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		<constructor-arg index="0" ref="connectionSource" />
 		<constructor-arg index="1" value="com.cs410.getfit.server.models.CompletedChallengeImpl" />
 	</bean>
-	
+	<bean id="challengeHistoryDao" class="com.j256.ormlite.spring.DaoFactory"
+	factory-method="createDao">
+		<constructor-arg index="0" ref="connectionSource" />
+		<constructor-arg index="1" value="com.cs410.getfit.server.models.ChallengeHistoryImpl" />
+	</bean>
 	<bean id="tableCreator" class="com.j256.ormlite.spring.TableCreator">
 		<property name="connectionSource" ref="connectionSource" />
 		<property name="configuredDaos">
@@ -33,6 +37,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 				<ref bean="challengeDao"/>
 				<ref bean="challengeUsersDao"/>
 				<ref bean="completedChallengesDao"/>
+				<ref bean="challengeHistoryDao"/>
 			</list>
 		</property>
 	</bean>

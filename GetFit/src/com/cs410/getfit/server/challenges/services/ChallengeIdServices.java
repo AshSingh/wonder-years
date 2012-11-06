@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
+import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
@@ -17,6 +19,17 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 	private TransactionManager manager;
 	private long challengeId;
 	private Challenge challenge;
+	private Dao<ChallengeHistory, Long> challengeHistoryDao;
+
+	public Dao<ChallengeHistory, Long> getChallengeHistoryDao() {
+		return challengeHistoryDao;
+	}
+
+	public void setChallengeHistoryDao(
+			Dao<ChallengeHistory, Long> challengeHistoryDao) {
+		this.challengeHistoryDao = challengeHistoryDao;
+	}
+	
 
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
@@ -75,24 +88,31 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 		Integer rowsUpdated = 0;
 		oldChallenge = challengeDao.queryForId(challengeId);
 
-		// when we implement the updates we should add an update for
-		// some changes
+		String desc = "The challenge has been updated:";
+		
 		if (oldChallenge != null) {
-			if (challenge.getLocation() == null) {
-				challenge.setLocation(oldChallenge.getLocation());
+			if (!challenge.getTitle().equals(oldChallenge.getTitle())) {
+				desc = desc.concat("\n"+oldChallenge.getTitle()+" has been updated to  "+challenge.getTitle());
 			}
-			if (challenge.getTitle() == null) {
-				challenge.setTitle(oldChallenge.getTitle());
+			if (!challenge.getLocation().equals(oldChallenge.getLocation())) {
+				desc = desc.concat("\n"+oldChallenge.getLocation()+" has been updated to  "+challenge.getLocation());
 			}
-			if (challenge.getDescription() == null) {
-				challenge.setDescription(oldChallenge.getDescription());
+			if (!challenge.getDescription().equals(oldChallenge.getDescription())) {
+				desc = desc.concat("\n"+oldChallenge.getDescription()+" has been updated to  "+challenge.getDescription());
 			}
-			if (challenge.isPrivate() == null) {
-				challenge.setIsPrivate(oldChallenge.isPrivate());
+			if (!challenge.isPrivate().equals(oldChallenge.isPrivate())) {
+				if(challenge.isPrivate())
+					desc = desc.concat("\n This challenge is now private");
+				else
+					desc = desc.concat("\n This challenge is now public");
 			}
+			final ChallengeHistory historyItem = new ChallengeHistoryImpl(null, challenge, desc);
 			rowsUpdated = manager.callInTransaction(new Callable<Integer>() {
 				public Integer call() throws Exception {
-					return challengeDao.update(challenge);
+					Integer updated = challengeDao.update(challenge);
+					
+					challengeHistoryDao.create(historyItem);
+					return updated;
 				}
 			});
 			return rowsUpdated == 1;

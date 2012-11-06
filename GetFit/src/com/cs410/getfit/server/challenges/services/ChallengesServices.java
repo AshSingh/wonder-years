@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
+import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -16,6 +19,25 @@ public class ChallengesServices implements ChallengeResourceServices {
 	private Dao<ChallengeUser, Long> challengeUserDao;
 	private TransactionManager manager;
 	private List<Challenge> challenges;
+	private Dao<ChallengeHistory, Long> challengeHistoryDao;
+	private Dao <User, Long> userDao;
+	public Dao <User, Long> getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(Dao <User, Long> userDao) {
+		this.userDao = userDao;
+	}
+	
+
+	public Dao<ChallengeHistory, Long> getChallengeHistoryDao() {
+		return challengeHistoryDao;
+	}
+
+	public void setChallengeHistoryDao(
+			Dao<ChallengeHistory, Long> challengeHistoryDao) {
+		this.challengeHistoryDao = challengeHistoryDao;
+	}
 	
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;
@@ -67,9 +89,12 @@ public class ChallengesServices implements ChallengeResourceServices {
 								ChallengeUser participant_created = challengeUserDao
 										.createIfNotExists(participant);
 								participantsCreated.add(participant_created);
-
 								dbChallenge.setParticipants(participantsCreated);
 								created.add(dbChallenge);
+								
+								userDao.refresh(participant.getUser());
+								if(!participant.getUser().getIsPrivate())
+									createHistoryItem(dbChallenge, participant.getUser());
 							} 
 						}
 						return created;
@@ -77,7 +102,14 @@ public class ChallengesServices implements ChallengeResourceServices {
 				});
 		return challengesCreated;
 	}
-
+	private void createHistoryItem(Challenge challenge, User admin) throws SQLException {
+		String firstname = admin.getFirstName();
+		String lastname = admin.getLastName();
+		String challengeTitle = challenge.getTitle();
+		String desc = firstname +" "+lastname +" has created "+challengeTitle;
+		ChallengeHistory history_item = new ChallengeHistoryImpl(admin, challenge, desc);
+		challengeHistoryDao.create(history_item);
+	}
 	@Override
 	public List<Challenge> get() throws SQLException {
 			List<Challenge> challenges = challengeDao.query(challengeDao.queryBuilder().orderBy("title", true).prepare());

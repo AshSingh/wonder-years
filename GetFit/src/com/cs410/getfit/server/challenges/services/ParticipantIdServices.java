@@ -85,7 +85,7 @@ public class ParticipantIdServices implements ParticipantResourceServices {
 		});
 		return rowsUpdated == 1;
 	}
-
+	
 	public Dao <User, Long> getUserDao() {
 		return userDao;
 	}

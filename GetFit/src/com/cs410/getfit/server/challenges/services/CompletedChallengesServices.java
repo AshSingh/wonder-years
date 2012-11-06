@@ -3,12 +3,16 @@ package com.cs410.getfit.server.challenges.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
+import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.CompletedChallenge;
+import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -17,7 +21,34 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 	List<CompletedChallenge> c_challenges = new ArrayList<CompletedChallenge>();
 	private Dao<CompletedChallenge, Long> completedChallengesDao;
 	private TransactionManager manager;
+	private Dao <User, Long> userDao;
+	private Dao<Challenge, Long> challengeDao;
+	private Dao<ChallengeHistory, Long> challengeHistoryDao;
+	
+	public Dao<ChallengeHistory, Long> getChallengeHistoryDao() {
+		return challengeHistoryDao;
+	}
 
+	public void setChallengeHistoryDao(Dao<ChallengeHistory, Long> challengeHistoryDao) {
+		this.challengeHistoryDao = challengeHistoryDao;
+	}
+	
+	public Dao<Challenge, Long> getChallengeDao() {
+		return challengeDao;
+	}
+
+	public void setChallengeDao(Dao<Challenge, Long> challengeDao) {
+		this.challengeDao = challengeDao;
+	}
+	
+	public Dao <User, Long> getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(Dao <User, Long> userDao) {
+		this.userDao = userDao;
+	}
+	
 	public Dao<CompletedChallenge, Long> getCompletedChallengesDao() {
 		return completedChallengesDao;
 	}
@@ -51,10 +82,15 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 						}
 						for (CompletedChallenge c_challenge: c_challenges) {
 								c_challenge.setChallenge(challenge);
-								c_challenge.setDateCompleted(Calendar.getInstance().getTimeInMillis());
-								CompletedChallenge completedChallange_created = completedChallengesDao
+								long dateCompleted = Calendar.getInstance().getTimeInMillis();
+								c_challenge.setDateCompleted(dateCompleted);
+								CompletedChallenge completedChallenge_created = completedChallengesDao
 										.createIfNotExists(c_challenge);
-								created.add(completedChallange_created);
+								userDao.refresh(completedChallenge_created.getUser());
+								challengeDao.refresh(completedChallenge_created.getChallenge());
+								if(!completedChallenge_created.getUser().getIsPrivate())
+									createHistoryItem(completedChallenge_created, dateCompleted);
+								created.add(completedChallenge_created);
 						}
 						return created;
 					}
@@ -62,6 +98,16 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 		return completedChallengesCreated;
 	}
 
+	private void createHistoryItem(CompletedChallenge completedChallenge, long dateCompleted) throws SQLException {
+		String firstname = completedChallenge.getUser().getFirstName();
+		String lastname = completedChallenge.getUser().getLastName();
+		String challengeTitle = completedChallenge.getChallenge().getTitle();
+		Date date = new Date(dateCompleted);
+		String desc = firstname +" "+lastname +" has completed "+challengeTitle+" on "+date;
+		ChallengeHistory history_item = new ChallengeHistoryImpl(completedChallenge.getUser(), completedChallenge.getChallenge(), desc);
+		challengeHistoryDao.create(history_item);
+	}
+	
 	@Override
 	public List<CompletedChallenge> get() throws SQLException {
 		List<CompletedChallenge> challenges = completedChallengesDao.queryForAll();

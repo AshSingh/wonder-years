@@ -5,12 +5,12 @@ public interface CompletedChallenge {
 	public long getGuid();
 	public void setGuid(Long guid);
 	
-	public abstract User getUser();
-	public abstract void setUser(User user);
+	public User getUser();
+	public void setUser(User user);
 
-	public abstract Challenge getChallenge();
-	public abstract void setChallenge(Challenge challenge);
+	public Challenge getChallenge();
+	public void setChallenge(Challenge challenge);
 
-	public abstract long getDateCompleted();
-	public abstract void setDateCompleted(long dateCompleted);
+	public long getDateCompleted();
+	public void setDateCompleted(long dateCompleted);
 }

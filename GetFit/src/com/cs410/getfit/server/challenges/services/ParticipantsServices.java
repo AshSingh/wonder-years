@@ -3,10 +3,13 @@ package com.cs410.getfit.server.challenges.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
+import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
@@ -20,7 +23,26 @@ public class ParticipantsServices implements ParticipantResourceServices {
 	private Dao<User, Long> userDao;
 	private Dao<ChallengeUser, Long> challengeUserDao;
 	private TransactionManager manager;
+	private Dao<ChallengeHistory, Long> challengeHistoryDao;
+	private Dao<Challenge, Long> challengeDao;
+	public Dao<Challenge, Long> getChallengeDao() {
+		return challengeDao;
+	}
 
+	public void setChallengeDao(Dao<Challenge, Long> challengeDao) {
+		this.challengeDao = challengeDao;
+	}
+
+	
+	public Dao<ChallengeHistory, Long> getChallengeHistoryDao() {
+		return challengeHistoryDao;
+	}
+
+	public void setChallengeHistoryDao(
+			Dao<ChallengeHistory, Long> challengeHistoryDao) {
+		this.challengeHistoryDao = challengeHistoryDao;
+	}
+	
 	public Dao<ChallengeUser, Long> getChallengeUserDao() {
 		return challengeUserDao;
 	}
@@ -68,6 +90,10 @@ public class ParticipantsServices implements ParticipantResourceServices {
 								participant.setDateJoined(Calendar.getInstance().getTimeInMillis());
 								ChallengeUser participant_created = challengeUserDao
 										.createIfNotExists(participant);
+								userDao.refresh(participant.getUser());
+								challengeDao.refresh(participant.getChallenge());
+								if(!participant.getUser().getIsPrivate())
+									createHistoryItem(participant);
 								created.add(participant_created);
 						}
 						return created;
@@ -75,7 +101,17 @@ public class ParticipantsServices implements ParticipantResourceServices {
 				});
 		return challengeUsersCreated;
 	}
-
+	
+	private void createHistoryItem(ChallengeUser participant) throws SQLException {
+		String firstname = participant.getUser().getFirstName();
+		String lastname = participant.getUser().getLastName();
+		String challengeTitle = participant.getChallenge().getTitle();
+		Date date = new Date(participant.getDateJoined());
+		String desc = firstname +" "+lastname +" has joined "+challengeTitle+" on "+date;
+		ChallengeHistory history_item = new ChallengeHistoryImpl(participant.getUser(), participant.getChallenge(), desc);
+		challengeHistoryDao.create(history_item);
+	}
+	
 	@Override
 	public List<ChallengeUser> get() throws SQLException {
 		List <ChallengeUser> participants = challengeUserDao.queryForEq("challenge_id", challengeId);
