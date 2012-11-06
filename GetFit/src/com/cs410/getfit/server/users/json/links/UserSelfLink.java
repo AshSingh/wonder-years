@@ -1,7 +1,7 @@
 package com.cs410.getfit.server.users.json.links;
 
-import com.cs410.getfit.server.json.LinkTypes;
-import com.cs410.getfit.server.json.ResourceLink;
+import com.cs410.getfit.shared.LinkTypes;
+import com.cs410.getfit.shared.ResourceLink;
 
 public class UserSelfLink extends ResourceLink {
 	public UserSelfLink(long userId) {

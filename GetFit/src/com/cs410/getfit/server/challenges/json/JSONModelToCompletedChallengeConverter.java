@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.server.challenges.json.links.CompletedChallengeSelfLink;
-import com.cs410.getfit.server.json.ResourceLink;
 import com.cs410.getfit.server.models.CompletedChallenge;
 import com.cs410.getfit.server.models.CompletedChallengeImpl;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
 import com.cs410.getfit.server.users.json.links.UserSelfLink;
+import com.cs410.getfit.shared.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToCompletedChallengeConverter {
 

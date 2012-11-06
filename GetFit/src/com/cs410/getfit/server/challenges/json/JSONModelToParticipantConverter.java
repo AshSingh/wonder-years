@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.server.challenges.json.links.ParticipantSelfLink;
-import com.cs410.getfit.server.json.ResourceLink;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.ChallengeUserImpl;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
 import com.cs410.getfit.server.users.json.links.UserSelfLink;
+import com.cs410.getfit.shared.IncomingParticipantJsonModel;
+import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
+import com.cs410.getfit.shared.ParticipantInfoJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToParticipantConverter {
 

@@ -6,13 +6,16 @@ import java.util.List;
 import com.cs410.getfit.server.challenges.json.links.ChallengeSelfLink;
 import com.cs410.getfit.server.challenges.json.links.CompletedChallengesLink;
 import com.cs410.getfit.server.challenges.json.links.ParticipantsLink;
-import com.cs410.getfit.server.json.ResourceLink;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.ChallengeUserImpl;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
+import com.cs410.getfit.shared.ChallengeInfoJsonModel;
+import com.cs410.getfit.shared.IncomingChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToChallengeConverter {
 

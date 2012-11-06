@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.shared.IncomingParticipantJsonModel;
+import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
 
 public class ParticipantJsonFormatter extends ResourceFormatter {
 

@@ -1,4 +1,4 @@
-package com.cs410.getfit.server.json;
+package com.cs410.getfit.shared;
 
 public class ResourceLink {
 	String rel;

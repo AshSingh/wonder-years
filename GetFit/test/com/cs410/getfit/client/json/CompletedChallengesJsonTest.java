@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cs410.getfit.server.challenges.json.ChallengeInfoJsonModel;
-import com.cs410.getfit.server.challenges.json.CompletedChallengeInfoJsonModel;
-import com.cs410.getfit.server.challenges.json.IncomingChallengeJsonModel;
-import com.cs410.getfit.server.challenges.json.IncomingCompletedChallengeJsonModel;
-import com.cs410.getfit.server.challenges.json.OutgoingCompletedChallengeJsonModel;
-import com.cs410.getfit.server.json.ResourceLink;
+import com.cs410.getfit.shared.ChallengeInfoJsonModel;
+import com.cs410.getfit.shared.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.shared.IncomingChallengeJsonModel;
+import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
 
 public class CompletedChallengesJsonTest extends GWTTestCase {

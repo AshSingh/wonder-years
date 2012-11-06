@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.CompletedChallenge;
+import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
 
 public class CompletedChallengesJsonFormatter extends ResourceFormatter{
 	static Type iclazzArray = IncomingCompletedChallengeJsonModel[].class;

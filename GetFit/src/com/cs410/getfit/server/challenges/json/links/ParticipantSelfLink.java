@@ -1,7 +1,7 @@
 package com.cs410.getfit.server.challenges.json.links;
 
-import com.cs410.getfit.server.json.LinkTypes;
-import com.cs410.getfit.server.json.ResourceLink;
+import com.cs410.getfit.shared.LinkTypes;
+import com.cs410.getfit.shared.ResourceLink;
 
 public class ParticipantSelfLink extends ResourceLink {
 	public ParticipantSelfLink(Long challengeGuid, long participantId){

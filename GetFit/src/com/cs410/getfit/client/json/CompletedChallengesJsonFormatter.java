@@ -3,10 +3,10 @@ package com.cs410.getfit.client.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.server.challenges.json.CompletedChallengeInfoJsonModel;
-import com.cs410.getfit.server.challenges.json.IncomingCompletedChallengeJsonModel;
-import com.cs410.getfit.server.challenges.json.OutgoingCompletedChallengeJsonModel;
-import com.cs410.getfit.server.json.ResourceLink;
+import com.cs410.getfit.shared.CompletedChallengeInfoJsonModel;
+import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;

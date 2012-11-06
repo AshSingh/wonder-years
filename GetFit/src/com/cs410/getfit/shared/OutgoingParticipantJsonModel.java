@@ -1,8 +1,7 @@
-package com.cs410.getfit.server.challenges.json;
+package com.cs410.getfit.shared;
 
 import java.util.List;
 
-import com.cs410.getfit.server.json.ResourceLink;
 
 public class OutgoingParticipantJsonModel {
 	private ParticipantInfoJsonModel info;

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.shared.IncomingChallengeJsonModel;
+import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 
 public class ChallengesJsonFormatter extends ResourceFormatter{
 	static Type iclazzArray = IncomingChallengeJsonModel[].class;

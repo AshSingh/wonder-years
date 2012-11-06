@@ -1,4 +1,5 @@
-package com.cs410.getfit.server.challenges.json;
+package com.cs410.getfit.shared;
+
 
 public class IncomingParticipantJsonModel {
 	private ParticipantInfoJsonModel info;

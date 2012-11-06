@@ -3,7 +3,7 @@ package com.cs410.getfit.client.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.server.json.ResourceLink;
+import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 
