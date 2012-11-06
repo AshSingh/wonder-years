@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.server.challenges.json.links.ChallengeSelfLink;
+import com.cs410.getfit.server.challenges.json.links.CompletedChallengesLink;
 import com.cs410.getfit.server.challenges.json.links.ParticipantsLink;
 import com.cs410.getfit.server.json.ResourceLink;
 import com.cs410.getfit.server.models.Challenge;
@@ -54,6 +55,7 @@ public class JSONModelToChallengeConverter {
 			Long challengeGuid = challenge.getGuid();
 			links.add(new ChallengeSelfLink(challengeGuid));
 			links.add(new ParticipantsLink(challengeGuid));
+			links.add(new CompletedChallengesLink(challengeGuid));
 
 			OutgoingChallengeJsonModel model = new OutgoingChallengeJsonModel();
 			model.setInfo(info);
