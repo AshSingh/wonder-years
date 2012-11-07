@@ -1,12 +1,15 @@
 package com.cs410.getfit.client.view;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface CreateChallengeView {
+public interface CreateAndEditChallengeView {
 	
 	public interface Presenter {
-		void onCreateChallengeButtonClicked();
+		void onSaveChallengeButtonClicked();
 	}
 	
 	void setPresenter(Presenter presenter);
@@ -19,4 +22,9 @@ public interface CreateChallengeView {
 	String getDescription();
 	Label getDescriptionLabel();
 	boolean getIsPrivate();
+	TextBox getChallengeNameBox();
+	TextBox getLocationBox();
+	TextArea getDescriptionBox();
+	RadioButton getPrivacyPrivateRadioButton();
+	RadioButton getPrivacyPublicRadioButton();
 }

@@ -10,25 +10,25 @@
 				<g:Label styleName="navbar-title">Get Fit!</g:Label>
 				<ul class="nav">
 					<li class="active">
-						<g:Label styleName="menubar-link-active" ui:field="homeLink">Home
-						</g:Label>
+						<g:Hyperlink styleName="menubar-link-active"
+							targetHistoryToken="dashboard">Dashboard</g:Hyperlink>
 					</li>
 					<li>
-						<g:Label styleName="menubar-link" ui:field="challengeLink">Challenges
-						</g:Label>
+						<g:Hyperlink styleName="menubar-link"
+							targetHistoryToken="createchallenge">Challenges</g:Hyperlink>
 					</li>
 					<li>
-						<g:Label styleName="menubar-link" ui:field="settingsLink">Settings
-						</g:Label>
+						<g:Hyperlink styleName="menubar-link"
+							targetHistoryToken="createchallenge">Settings</g:Hyperlink>
 					</li>
 					<li>
-						<g:Label styleName="menubar-link" ui:field="logoutLink">Logout
-						</g:Label>
-					</li>					
+						<g:Hyperlink styleName="menubar-link"
+							targetHistoryToken="createchallenge">Logout</g:Hyperlink>
+					</li>
 				</ul>
 				<ul class="nav pull-right">
 					<form class="navbar-search">
-						<input type="text" placeholder="Search Challenges" class="search-query"/>
+						<input type="text" placeholder="Search Challenges" class="search-query" />
 					</form>
 					<li>
 						<button class="transparent-btn" ui:field="searchBtn">

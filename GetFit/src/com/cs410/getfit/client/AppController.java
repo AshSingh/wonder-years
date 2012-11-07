@@ -6,6 +6,8 @@ import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
 import com.cs410.getfit.client.event.GoToCreateChallengeEventHandler;
 import com.cs410.getfit.client.event.GoToDashboardEvent;
 import com.cs410.getfit.client.event.GoToDashboardEventHandler;
+import com.cs410.getfit.client.event.GoToEditChallengeEvent;
+import com.cs410.getfit.client.event.GoToEditChallengeEventHandler;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.event.GoToErrorEventHandler;
 import com.cs410.getfit.client.event.GoToLoginEvent;
@@ -15,13 +17,14 @@ import com.cs410.getfit.client.event.GoToRegisterEventHandler;
 import com.cs410.getfit.client.presenter.ChallengePresenter;
 import com.cs410.getfit.client.presenter.CreateChallengePresenter;
 import com.cs410.getfit.client.presenter.DashboardPresenter;
+import com.cs410.getfit.client.presenter.EditChallengePresenter;
 import com.cs410.getfit.client.presenter.ErrorPresenter;
 import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.presenter.RegisterPresenter;
 import com.cs410.getfit.client.view.ChallengeViewImpl;
-import com.cs410.getfit.client.view.CreateChallengeViewImpl;
+import com.cs410.getfit.client.view.CreateAndEditChallengeViewImpl;
 import com.cs410.getfit.client.view.DashboardViewImpl;
 import com.cs410.getfit.client.view.ErrorViewImpl;
 import com.cs410.getfit.client.view.LoginViewImpl;
@@ -46,7 +49,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private RegisterViewImpl registerView = null;
 	private MenuBarViewImpl menuBarView = null;
 	private DashboardViewImpl dashboardView = null;
-	private CreateChallengeViewImpl createChallengeView = null;
+	private CreateAndEditChallengeViewImpl createAndEditChallengeView = null;
 	private ChallengeViewImpl challengeView = null;	
 	private ErrorViewImpl errorView = null;	
 	
@@ -92,12 +95,20 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				doGoToChallenge(event.getChallengeUri());
 			}
 		});  
+		
 		eventBus.addHandler(GoToErrorEvent.TYPE,
 				new GoToErrorEventHandler() {
 			public void onGoToError(GoToErrorEvent event) {
 				doGoToError(event.getErrorType());
 			}
 		}); 
+		
+		eventBus.addHandler(GoToEditChallengeEvent.TYPE,
+				new GoToEditChallengeEventHandler() {
+			public void onGoToEditChallenge(GoToEditChallengeEvent event) {
+				doGoToEditChallenge(event.getChallengeUri());
+			}
+		});  
 	}
 	
 	private void doGoToLogin() {
@@ -129,10 +140,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		}
 	}
 	
+	private void doGoToEditChallenge(String challengeUri) {
+		History.newItem(HistoryValues.EDIT.toString() + challengeUri);
+	}
+	
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 	    final String token = event.getValue();
-	    
 	    if (token != null) {
 	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
@@ -184,19 +198,19 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 
 	        		public void onSuccess() {
-	        			if (createChallengeView == null) {
-	        				createChallengeView = new CreateChallengeViewImpl();
+	        			if (createAndEditChallengeView == null) {
+	        				createAndEditChallengeView = new CreateAndEditChallengeViewImpl();
 	        			}
 	        			if (menuBarView == null) {
 	        				menuBarView = new MenuBarViewImpl();
 	        			}
-	        			createChallengeView.setMenuBar(menuBarView);
+	        			createAndEditChallengeView.setMenuBar(menuBarView);
 	        			new MenuBarPresenter(eventBus, menuBarView);
-	        			new CreateChallengePresenter(eventBus, createChallengeView).go(container);	 	
+	        			new CreateChallengePresenter(eventBus, createAndEditChallengeView).go(container);	 	
 	        		}
 	        	});
 	        }
-	        else if (token.contains("/challenges/")) {
+	        else if (token.contains("/challenges/") && !token.contains(HistoryValues.EDIT.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
 	        		}
@@ -232,14 +246,32 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 	        	});
 	        }
+	        else if (token.contains(HistoryValues.EDIT.toString())) {
+	        	GWT.runAsync(new RunAsyncCallback() {
+	        		public void onFailure(Throwable caught) {
+	        		}
+
+	        		public void onSuccess() {
+	        			if (createAndEditChallengeView == null) {
+	        				createAndEditChallengeView = new CreateAndEditChallengeViewImpl();
+	        			}
+	        			if (menuBarView == null) {
+	        				menuBarView = new MenuBarViewImpl();
+	        			}
+	        			createAndEditChallengeView.setMenuBar(menuBarView);
+	        			new MenuBarPresenter(eventBus, menuBarView);
+	        			new EditChallengePresenter(eventBus, createAndEditChallengeView).go(container, token);	 	
+	        		}
+	        	});
+	        }
 	        // token doesn't match any of the above
 	        else {
-	        	
+	        	eventBus.fireEvent(new GoToErrorEvent());
 	        }
 	    }
 	    // null token - display error page
 	    else {
-	    	
+        	eventBus.fireEvent(new GoToErrorEvent());	    	
 	    }
 	}
 

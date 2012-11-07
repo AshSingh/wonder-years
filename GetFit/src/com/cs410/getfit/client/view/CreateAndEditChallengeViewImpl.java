@@ -13,22 +13,23 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateChallengeViewImpl extends Composite implements CreateChallengeView {
+public class CreateAndEditChallengeViewImpl extends Composite implements CreateAndEditChallengeView {
 	@UiField static TextBox challengeNameBox;
 	@UiField static TextBox locationBox;
 	@UiField static TextArea descriptionBox;
 	@UiField static RadioButton privacyPrivate;
+	@UiField static RadioButton privacyPublic;
 	@UiField static Label challengeLabel;
 	@UiField static Label descriptionLabel;
 	
 	private Presenter presenter;
 	private MenuBarView menuBar;
 
-	@UiTemplate("CreateChallenge.ui.xml") 
-	interface Binder extends UiBinder<Widget, CreateChallengeViewImpl> {}
+	@UiTemplate("CreateAndEditChallenge.ui.xml") 
+	interface Binder extends UiBinder<Widget, CreateAndEditChallengeViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 
-	public CreateChallengeViewImpl() {
+	public CreateAndEditChallengeViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -47,10 +48,10 @@ public class CreateChallengeViewImpl extends Composite implements CreateChalleng
 		return menuBar;
 	}
 	
-	@UiHandler("createChallengeBtn")
+	@UiHandler("saveChallengeBtn")
 	void onCreateChallengeClicked(ClickEvent event) {
 		if (presenter != null) {
-			presenter.onCreateChallengeButtonClicked();			
+			presenter.onSaveChallengeButtonClicked();			
 		}
 	}
 
@@ -82,6 +83,36 @@ public class CreateChallengeViewImpl extends Composite implements CreateChalleng
 	@Override
 	public Label getDescriptionLabel() {
 		return descriptionLabel;
+	}
+
+	
+	/*
+	 * 	field getters for edit view
+	 */
+	
+	@Override
+	public TextBox getChallengeNameBox() {
+		return challengeNameBox;
+	}
+
+	@Override
+	public TextBox getLocationBox() {
+		return locationBox;
+	}
+
+	@Override
+	public TextArea getDescriptionBox() {
+		return descriptionBox;
+	}
+
+	@Override
+	public RadioButton getPrivacyPrivateRadioButton() {
+		return privacyPrivate;
+	}
+
+	@Override
+	public RadioButton getPrivacyPublicRadioButton() {
+		return privacyPublic;
 	}
 	
 }

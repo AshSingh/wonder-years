@@ -5,7 +5,8 @@ public enum HistoryValues {
 	REGISTER,
 	DASHBOARD,
 	CREATECHALLENGE,
-	ERROR;
+	ERROR,
+	EDIT;
 	
 	 @Override 
 	 public String toString() {

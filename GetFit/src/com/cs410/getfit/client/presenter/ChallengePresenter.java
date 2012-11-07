@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.client.AuthResponse;
+import com.cs410.getfit.client.event.GoToEditChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.CompletedChallengesJsonFormatter;
@@ -54,14 +55,14 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		eventBus.fireEvent(new GoToErrorEvent());
 	}
 
-	public void go(HasWidgets container, String challengeId) {
+	public void go(HasWidgets container, String challengeUri) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
 		container.add(view.asWidget());
 		// clear subpanel
 		view.getChallengeInfoPanel().clear();
 		// fill view with challenge info
-		populateMainPanel(challengeId);
+		populateMainPanel(challengeUri);
 	}
 
 	/* scenarios: 
@@ -220,6 +221,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 												editBtn.setStyleName("btn btn-primary");
 												editBtn.addStyleName("edit-btn");
 												panel.add(editBtn);
+												addEditBtnFunctionality(editBtn, model);
 											}		
 											break;
 										}
@@ -441,6 +443,26 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 							eventBus.fireEvent(new GoToErrorEvent());
 						}
 					}
+				}
+			}
+		});
+	}
+	
+	// "Edit" button functionality
+	private void addEditBtnFunctionality(final Button editBtn, final OutgoingChallengeJsonModel model) {
+		editBtn.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				List<ResourceLink> links = model.getLinks();
+				Boolean linkFound = false;
+				for (ResourceLink link : links) {
+					if (link.getType().equals(LinkTypes.CHALLENGE.toString())) {
+						linkFound = true;
+						eventBus.fireEvent(new GoToEditChallengeEvent(link.getUri()));
+					}
+				}
+				if (!linkFound) {
+					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			}
 		});

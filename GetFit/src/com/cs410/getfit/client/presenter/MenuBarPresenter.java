@@ -22,36 +22,6 @@ public class MenuBarPresenter implements Presenter, MenuBarView.Presenter{
 	}
 
 	@Override
-	public void onHomeOptionClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onChallengesOptionClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProfileOptionClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onSettingsOptionClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onLogoutOptionClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onSearchOptionClicked() {
 		// TODO Auto-generated method stub
 		

@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.Widget;
 public interface DashboardView {
 	
 	public interface Presenter {
-		void onCreateChallengeLinkClicked();
+
 	}
 	
 	void setPresenter(Presenter presenter);

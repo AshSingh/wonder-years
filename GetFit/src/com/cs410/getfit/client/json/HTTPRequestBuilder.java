@@ -19,4 +19,10 @@ public class HTTPRequestBuilder {
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
+
+	public static RequestBuilder getPutRequest(String url) {
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.PUT, warFileName + url);
+		builder.setHeader(header, headerValue);
+		return builder;
+	}
 }

@@ -127,29 +127,34 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	margin-left: -10px;
 }
 
-.menubar-link-active {
+.menubar-link-active a:link,
+.menubar-link-active a:visited,
+.menubar-link-active a:active {
 	color: #ffffff;
 	float: none;
 	padding: 10px 15px 10px;
+  	display: block;
 }
 
-.menu-bar-link-active:hover {
+.menu-bar-link-active a:hover {
 	cursor: normal;
 	color: #ffffff;
 	text-decoration: none;
 }
 
-.menubar-link {
+.menubar-link a:link,
+.menubar-link a:visited,
+.menubar-link a:active {
 	color: #999999;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	padding: 10px 15px 0px;
 	float: none;
+	padding: 10px 15px 10px;
+  	display: block;
 }
 
-.menubar-link:hover {
+.menubar-link a:hover {
 	color: #ffffff;
 	text-decoration: none;
-	cursor: pointer;
 }
 
 .menubar-dropdown-link {
@@ -261,7 +266,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .create-btn-padding {
-	padding-top: 40px;
+	padding-top: 20px;
 }
 
 .error-label {
