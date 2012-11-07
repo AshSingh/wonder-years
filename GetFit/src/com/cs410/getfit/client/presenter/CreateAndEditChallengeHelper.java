@@ -35,6 +35,7 @@ public class CreateAndEditChallengeHelper {
 	// error strings and variables
 	private final static String mandatoryVerificationError = "Please fill in all required fields.";
 	private final static String descLengthVerificationError = "Description cannot exceed 255 characters.";
+	private final static String nameLengthVerificationError = "Challenge name cannot exceed 255 characters.";
 	private final static int popupXPosition = 400;
 	private final static int popupYPosition = 55;
 	private static PopupPanel errorPopup;
@@ -46,12 +47,17 @@ public class CreateAndEditChallengeHelper {
 		// input checks
 		Boolean mandatoryVerification = checkMandatoryFields(view);
 		Boolean descriptionVerification = checkDescriptionLength(view);
+		Boolean nameVerification = checkNameLength(view);
 		if (!mandatoryVerification) {
 			displayPopup(view, mandatoryVerificationError);
 			return false;
 		}
 		else if (!descriptionVerification) {
 			displayPopup(view, descLengthVerificationError);
+			return false;
+		}
+		else if (!nameVerification) {
+			displayPopup(view, nameLengthVerificationError);
 			return false;
 		}
 		return true;
@@ -73,10 +79,19 @@ public class CreateAndEditChallengeHelper {
 		return pass;
 	}
 
-	// check user's description input - return true if length <
+	// check user's description input - return true if length < 256
 	private static Boolean checkDescriptionLength(CreateAndEditChallengeView view) {
 		if (view.getDescription().trim().length() > VARCHARMAX) {
 			view.getDescriptionLabel().addStyleName("error-label");
+			return false;
+		}
+		return true;
+	}
+	
+	// check user's description input - return true if length < 256
+	private static Boolean checkNameLength(CreateAndEditChallengeView view) {
+		if (view.getChallengeName().trim().length() > VARCHARMAX) {
+			view.getChallengeNameLabel().addStyleName("error-label");
 			return false;
 		}
 		return true;
@@ -103,10 +118,10 @@ public class CreateAndEditChallengeHelper {
 
 		// gather challenge info from view
 		ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
-		info.setTitle(view.getChallengeName());
+		info.setTitle(view.getChallengeName().trim());
 		info.setIsprivate(view.getIsPrivate());
 		info.setLocation(view.getLocation());
-		info.setDescription(view.getDescription());
+		info.setDescription(view.getDescription().trim());
 
 		IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
 		model.setChallengeInfoJsonModel(info);

@@ -21,9 +21,18 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
+		resetFields();
 		container.add(view.asWidget());
 	}
 
+	private void resetFields(){
+		view.getChallengeNameBox().setText("");
+		view.getLocationBox().setText("");
+		view.getDescriptionBox().setText("");
+		view.getPrivacyPrivateRadioButton().setValue(false);
+		view.getPrivacyPublicRadioButton().setValue(true);
+	}
+	
 	@Override
 	public void onSaveChallengeButtonClicked() {
 		Boolean fieldsPass = CreateAndEditChallengeHelper.verifyFields(view);
