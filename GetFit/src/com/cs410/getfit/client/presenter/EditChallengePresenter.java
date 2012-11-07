@@ -1,15 +1,18 @@
 package com.cs410.getfit.client.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.HistoryValues;
+import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.json.ParticipantsJsonFormatter;
 import com.cs410.getfit.client.view.CreateAndEditChallengeView;
 import com.cs410.getfit.shared.ChallengeInfoJsonModel;
+import com.cs410.getfit.shared.IncomingChallengeJsonModel;
 import com.cs410.getfit.shared.LinkTypes;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
@@ -186,7 +189,42 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 
 		if (fieldsPass) {
 			RequestBuilder builder = HTTPRequestBuilder.getPutRequest(challengeUri); 
-			CreateAndEditChallengeHelper.sendRequest(view, builder, eventBus);
+
+			// gather challenge info from view
+			ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
+			info.setTitle(view.getChallengeName().trim());
+			info.setIsprivate(view.getIsPrivate());
+			info.setLocation(view.getLocation());
+			info.setDescription(view.getDescription().trim());
+
+			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
+			model.setChallengeInfoJsonModel(info);
+			model.setAdminId(AuthResponse.getInstance().getGuid());
+
+			List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
+			models.add(model);
+
+			// get formatted challenge json
+			String requestJson = ChallengesJsonFormatter.formatChallengeJsonInfo(models);
+
+			try {
+				builder.sendRequest(requestJson, new RequestCallback() {
+					@Override
+					public void onResponseReceived(Request request, Response response) {
+						if (response.getStatusCode() == 200) {
+								eventBus.fireEvent(new GoToChallengeEvent(challengeUri));
+						} else {
+							eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
+						}
+					}
+					@Override
+					public void onError(Request request, Throwable exception) {
+						eventBus.fireEvent(new GoToErrorEvent());
+					}
+				});
+			} catch (RequestException e) {
+				eventBus.fireEvent(new GoToErrorEvent());
+			}
 		}
 	}
 
