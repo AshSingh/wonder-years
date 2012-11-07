@@ -110,7 +110,7 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 	
 	@Override
 	public List<CompletedChallenge> get() throws SQLException {
-		List<CompletedChallenge> challenges = completedChallengesDao.queryForAll();
+		List<CompletedChallenge> challenges = completedChallengesDao.queryForEq("challenge_id", challengeId);
 		return challenges;
 	}
 
