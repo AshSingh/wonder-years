@@ -18,7 +18,12 @@ public class HTTPRequestBuilder {
 
 	public static RequestBuilder getGetRequest(String url) {
 		String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, warFileName + url + "?" + query);
+		if(url.indexOf('?') == -1) {
+			url += "?" + query;
+		} else {
+			url += "&" + query;
+		}
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, warFileName + url);
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
