@@ -14,6 +14,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
 
 public class ChallengesJsonFormatter {
 	public enum ChallengeJsonFields {
@@ -56,6 +57,8 @@ public class ChallengesJsonFormatter {
 		// create json with the array of individual challenge json
 		JSONObject requestJson = new JSONObject();
 		requestJson.put(ChallengeJsonFields.CHALLENGES.toString(), challengesJson);
+		// Add the accessToken to the json
+		requestJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 		
 		return requestJson.toString();
 	}

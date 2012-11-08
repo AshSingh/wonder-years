@@ -12,7 +12,9 @@ import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
 
 public class ParticipantsJsonFormatter {
 	
@@ -38,6 +40,8 @@ public class ParticipantsJsonFormatter {
 			info.put(ParticipantsJsonFields.isAdmin.toString(), JSONBoolean.getInstance(model.isAdmin()));
 			
 			challengeJson.put(ParticipantsJsonFields.info.toString(), info);
+			// Add the accessToken to the json
+			challengeJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 			
 			participantsJson.set(participantsJson.size(), challengeJson);
 		}
@@ -45,6 +49,7 @@ public class ParticipantsJsonFormatter {
 		// create json with the array of individual challenge json
 		JSONObject requestJson = new JSONObject();
 		requestJson.put(ParticipantsJsonFields.participants.toString(), participantsJson);
+		requestJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 		
 		return requestJson.toString();
 	}

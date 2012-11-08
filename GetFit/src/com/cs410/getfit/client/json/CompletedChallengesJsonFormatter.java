@@ -11,7 +11,9 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
 
 public class CompletedChallengesJsonFormatter {
 	public enum CompletedChallengesJsonFields {
@@ -34,6 +36,8 @@ public class CompletedChallengesJsonFormatter {
 			info.put(CompletedChallengesJsonFields.userId.toString(), new JSONNumber(model.getUserId()));
 			
 			challengeJson.put(CompletedChallengesJsonFields.info.toString(), info);
+			// Add the accessToken to the json
+			challengeJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 			
 			completedChallengesJson.set(completedChallengesJson.size(), challengeJson);
 		}

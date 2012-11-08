@@ -53,8 +53,8 @@ public class AuthenticationFilter implements Filter{
 		String token = "";
 		
 		if(requestMethod.equals("GET")) {
-			token = (String) request.getParameter("FB_Token");
-		} else if (requestMethod.equals("POST")) {
+			token = (String) request.getParameter("access_token");
+		} else if (requestMethod.equals("POST") || requestMethod.equals("PUT")) {
 			StringBuffer jb = new StringBuffer();
 			String line = null;
 			try {
@@ -67,12 +67,14 @@ public class AuthenticationFilter implements Filter{
 
 			String body= jb.toString();
 			
+			System.out.println(body);
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(body);
 			if(element.isJsonObject()) {
 				JsonObject jObjBody = (JsonObject)element;
 				token = jObjBody.get("accessToken").getAsString();
-				filtered_request.setJson_body(body);
+				jObjBody.remove("accessToken"); 				// Remove the accessToken so the Servlets don't worry about it
+				filtered_request.setJson_body(jObjBody.toString());
 			}
 		}
 		

@@ -114,7 +114,7 @@ public class ChallengesServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		resp.setHeader("Content-Type", "application/json");
 		
-		String requestBody = getRequestBody(request);
+		String requestBody = request.getParameter("json_body");
 		
 		if(parser.isChallengeURI()) {
 			ChallengesJsonFormatter formatter = new ChallengesJsonFormatter();
@@ -186,7 +186,7 @@ public class ChallengesServlet extends HttpServlet {
 		
 		resp.setHeader("Content-Type", "application/json");
 		
-		String requestBody = getRequestBody(request);
+		String requestBody = request.getParameter("json_body");
 		
 		boolean updated = false;
 		if(parser.isChallengeURI()) {
@@ -230,19 +230,4 @@ public class ChallengesServlet extends HttpServlet {
 		resp.setStatus(501); // method not implemented
 	}
 
-	private String getRequestBody(HttpServletRequest request)
-			throws ServletException {
-		StringBuffer jb = new StringBuffer();
-		String line = null;
-		try {
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null)
-				jb.append(line);
-		} catch (Exception e) {
-			throw new ServletException("Error reading request body: "
-					+ e.getMessage());
-		}
-
-		return jb.toString();
-	}
 }
