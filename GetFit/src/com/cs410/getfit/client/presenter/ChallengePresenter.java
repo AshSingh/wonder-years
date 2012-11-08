@@ -3,7 +3,6 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.event.GoToEditChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
@@ -29,6 +28,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -201,7 +201,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean participating = false;
-									long currentUser = AuthResponse.getInstance().getGuid();
+									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingParticipantJsonModel participantModel : models) {
 										if (participantModel.getInfo().getUserId() == currentUser) {
 											participating = true;
@@ -269,7 +269,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingCompletedChallengeJsonModel> models = CompletedChallengesJsonFormatter.parseCompletedChallengesJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean completed = false;
-									long currentUser = AuthResponse.getInstance().getGuid();
+									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingCompletedChallengeJsonModel model : models) {
 										if (model.getInfo().getUserId() == currentUser) {
 											completed = true;
@@ -316,7 +316,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
 								if (models.size() > 0) {
 									Boolean participating = false;
-									long currentUser = AuthResponse.getInstance().getGuid();
+									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingParticipantJsonModel participantModel : models) {
 										if (participantModel.getInfo().getUserId() == currentUser) {
 											participating = true;
@@ -361,7 +361,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						
 						// info for POST body
 						CompletedChallengeInfoJsonModel info = new CompletedChallengeInfoJsonModel();
-						info.setUserId(AuthResponse.getInstance().getGuid());
+						info.setUserId(Long.parseLong(Cookies.getCookie("guid")));
 						
 						IncomingCompletedChallengeJsonModel requestModel = new IncomingCompletedChallengeJsonModel();
 						requestModel.setCompletedChallengeInfoJsonModel(info);
@@ -410,7 +410,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						
 						// info for POST body
 						ParticipantInfoJsonModel info = new ParticipantInfoJsonModel();
-						info.setUserId(AuthResponse.getInstance().getGuid());
+						info.setUserId(Long.parseLong(Cookies.getCookie("guid")));
 						info.setAdmin(false);
 						
 						IncomingParticipantJsonModel requestModel = new IncomingParticipantJsonModel();

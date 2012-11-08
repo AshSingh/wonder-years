@@ -3,7 +3,6 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.HistoryValues;
 import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
@@ -23,6 +22,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class EditChallengePresenter implements Presenter, CreateAndEditChallengeView.Presenter{
@@ -105,7 +105,7 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 						List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
 						if (models.size() > 0) {
 							Boolean admin = false;
-							long currentUser = AuthResponse.getInstance().getGuid();
+							long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 							for (OutgoingParticipantJsonModel participantModel : models) {
 								if (participantModel.getInfo().getUserId() == currentUser) {
 									// check is user is admin - if true allow user to view page
@@ -199,7 +199,7 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 
 			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
 			model.setChallengeInfoJsonModel(info);
-			model.setAdminId(AuthResponse.getInstance().getGuid());
+			model.setAdminId(Long.parseLong(Cookies.getCookie("guid")));
 
 			List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
 			models.add(model);

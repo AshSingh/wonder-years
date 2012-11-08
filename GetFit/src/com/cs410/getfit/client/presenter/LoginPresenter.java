@@ -9,6 +9,9 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class LoginPresenter implements Presenter, LoginView.Presenter{
@@ -42,10 +45,13 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
                 public void onResponseReceived(Request request, Response response) {
                     loginStatus = response.getStatusCode();
                     getResponseStr = response.getText();
-                    //JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
-                    //AuthResponse auth_response = AuthResponse.getInstance();
-                    //auth_response.setGuid((long) jsonBody.get("guid").isNumber().doubleValue());
+                    System.out.println(getResponseStr);
+                    JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
+                    
                     if(loginStatus == 200) {
+                        String accessToken = fb_getAuthResponse();
+            			Cookies.setCookie("accessToken", accessToken);
+                        Cookies.setCookie("guid", "" + (long) jsonBody.get("guid").isNumber().doubleValue());
             			eventBus.fireEvent(new GoToDashboardEvent());
             		} else {
         				eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
@@ -70,6 +76,12 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	@Override
 	public native void onLoginButtonClicked() /*-{
 		  $wnd.login();
+	}-*/;
+	
+	//facebook request for auth token
+	private static native String fb_getAuthResponse() /*-{
+		var authResponse = $wnd.FB.getAuthResponse();
+		return authResponse.accessToken;
 	}-*/;
 
 }

@@ -3,7 +3,6 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.client.AuthResponse;
 import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
@@ -20,6 +19,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class CreateChallengePresenter implements Presenter, CreateAndEditChallengeView.Presenter{
@@ -65,7 +65,7 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 
 			IncomingChallengeJsonModel model = new IncomingChallengeJsonModel();
 			model.setChallengeInfoJsonModel(info);
-			model.setAdminId(AuthResponse.getInstance().getGuid());
+			model.setAdminId(Long.parseLong(Cookies.getCookie("guid")));
 
 			List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
 			models.add(model);
