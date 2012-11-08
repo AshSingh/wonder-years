@@ -10,20 +10,20 @@
 				<g:Label styleName="navbar-title">Get Fit!</g:Label>
 				<ul class="nav">
 					<li class="active">
-						<g:Hyperlink styleName="menubar-link-active"
+						<g:Hyperlink styleName="menubar-link"
 							targetHistoryToken="dashboard">Dashboard</g:Hyperlink>
 					</li>
 					<li>
 						<g:Hyperlink styleName="menubar-link"
-							targetHistoryToken="createchallenge">Challenges</g:Hyperlink>
+							targetHistoryToken="challenges">Challenges</g:Hyperlink>
 					</li>
 					<li>
 						<g:Hyperlink styleName="menubar-link"
-							targetHistoryToken="createchallenge">Settings</g:Hyperlink>
+							targetHistoryToken="">Settings</g:Hyperlink>
 					</li>
 					<li>
 						<g:Hyperlink styleName="menubar-link"
-							targetHistoryToken="createchallenge">Logout</g:Hyperlink>
+							targetHistoryToken="">Logout</g:Hyperlink>
 					</li>
 				</ul>
 				<ul class="nav pull-right">

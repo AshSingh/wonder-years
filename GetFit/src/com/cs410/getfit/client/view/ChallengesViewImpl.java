@@ -7,22 +7,20 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DashboardViewImpl extends Composite implements DashboardView {
-	@UiField static VerticalPanel newsFeedPanel;
-	@UiField static Label nameLabel;
-	
+public class ChallengesViewImpl extends Composite implements ChallengesView {
+	@UiField static VerticalPanel challengesPanel;
+
 	private Presenter presenter;
 	private MenuBarView menuBar;
 	
-	@UiTemplate("Dashboard.ui.xml") 
-	interface Binder extends UiBinder<Widget, DashboardViewImpl> {}
+	@UiTemplate("Challenges.ui.xml") 
+	interface Binder extends UiBinder<Widget, ChallengesViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 	
-	public DashboardViewImpl() {
+	public ChallengesViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -47,15 +45,9 @@ public class DashboardViewImpl extends Composite implements DashboardView {
 	public MenuBarView getMenuBar() {
 		return menuBar;
 	}
-	
+
 	@Override
-	public VerticalPanel getNewsFeedPanel(){
-		return newsFeedPanel;
+	public VerticalPanel getChallengesPanel() {
+		return challengesPanel;
 	}
-	
-	@Override
-	public Label getNameLabel(){
-		return nameLabel;
-	}
-	
 }

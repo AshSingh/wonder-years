@@ -8,20 +8,20 @@
 		<div class="menu-bar-padding" />
 		<div class="page-header-general">
 			<h4>
-				<g:Label ui:field="nameLabel" />
+				<g:Label ui:field="titleLabel">Challenges</g:Label>
 			</h4>
 		</div>
 		<div class="row">
 			<div class="span3 side-panel">
-				<g:VerticalPanel ui:field="challengeInfoPanel">
-				<g:Label styleName="subtitle-label">My challenges:</g:Label>
+				<g:VerticalPanel ui:field="userChallengesPanel">
+					<g:Label styleName="subtitle-label">My challenges:</g:Label>
 					<g:Button ui:field="newChallengeBtn" styleName="btn btn-primary large">Create a new challenge
 					</g:Button>
 				</g:VerticalPanel>
 			</div>
 			<div class="span8">
-				<g:Label styleName="subtitle-label">News feed:</g:Label>
-				<g:VerticalPanel ui:field="newsFeedPanel" />
+				<g:Label styleName="subtitle-label">Public Challenges:</g:Label>
+				<g:VerticalPanel ui:field="challengesPanel" />
 			</div>
 		</div>
 	</g:HTMLPanel>

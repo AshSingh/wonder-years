@@ -170,11 +170,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						public void onResponseReceived(Request request, Response response) {
 							if (response.getStatusCode() == 200) {
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
-								if (models.size() > 0) {
-									label.setText(Integer.toString(models.size()));
-								}
+								label.setText(Integer.toString(models.size()));
 							}
-							
 						}
 						@Override
 						public void onError(Request request, Throwable exception) {
@@ -366,20 +363,20 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 				for (ResourceLink link : links) {
 					if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGES.toString())) {
 						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
-						
+
 						// info for POST body
 						CompletedChallengeInfoJsonModel info = new CompletedChallengeInfoJsonModel();
 						info.setUserId(Long.parseLong(Cookies.getCookie("guid")));
-						
+
 						IncomingCompletedChallengeJsonModel requestModel = new IncomingCompletedChallengeJsonModel();
 						requestModel.setCompletedChallengeInfoJsonModel(info);
-						
+
 						List<IncomingCompletedChallengeJsonModel> models = new ArrayList<IncomingCompletedChallengeJsonModel>();
 						models.add(requestModel);
-						
+
 						// get formatted json
 						String requestJson = CompletedChallengesJsonFormatter.formatCompletedChallengeJsonInfo(models);
-						
+
 						try {
 							builder.sendRequest(requestJson, new RequestCallback() {
 								@Override
@@ -415,21 +412,21 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 				for (ResourceLink link : links) {
 					if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
 						RequestBuilder builder = HTTPRequestBuilder.getPostRequest(link.getRel() + link.getUri()); 
-						
+
 						// info for POST body
 						ParticipantInfoJsonModel info = new ParticipantInfoJsonModel();
 						info.setUserId(Long.parseLong(Cookies.getCookie("guid")));
 						info.setAdmin(false);
-						
+
 						IncomingParticipantJsonModel requestModel = new IncomingParticipantJsonModel();
 						requestModel.setParticipantInfoJsonModel(info);
-						
+
 						List<IncomingParticipantJsonModel> models = new ArrayList<IncomingParticipantJsonModel>();
 						models.add(requestModel);
-						
+
 						// get formatted json
 						String requestJson = ParticipantsJsonFormatter.formatParticipantsJsonInfo(models);
-						
+
 						try {
 							builder.sendRequest(requestJson, new RequestCallback() {
 								@Override
@@ -455,7 +452,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			}
 		});
 	}
-	
+
 	// "Edit" button functionality
 	private void addEditBtnFunctionality(final Button editBtn, final OutgoingChallengeJsonModel model) {
 		editBtn.addClickHandler(new ClickHandler(){

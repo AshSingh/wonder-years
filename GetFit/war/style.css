@@ -1,7 +1,6 @@
 /*
  * modifications + additions to boostrap.css specific to GetFit
  */
- 
 /*
  * general use
  */
@@ -32,6 +31,21 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 .page-header-general h4 {
 	font-size: 24px;
 	line-height: 28px;
+}
+
+.subtitle-label {
+	margin: 10px 0;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.side-panel {
+	padding-left: 10px;
 }
 
 /*
@@ -128,13 +142,12 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	margin-left: -10px;
 }
 
-.menubar-link-active a:link,
-.menubar-link-active a:visited,
-.menubar-link-active a:active {
+.menubar-link-active a:link,.menubar-link-active a:visited,.menubar-link-active a:active
+	{
 	color: #ffffff;
 	float: none;
 	padding: 10px 15px 10px;
-  	display: block;
+	display: block;
 }
 
 .menu-bar-link-active a:hover {
@@ -143,14 +156,12 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	text-decoration: none;
 }
 
-.menubar-link a:link,
-.menubar-link a:visited,
-.menubar-link a:active {
+.menubar-link a:link,.menubar-link a:visited,.menubar-link a:active {
 	color: #999999;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	float: none;
 	padding: 10px 15px 10px;
-  	display: block;
+	display: block;
 }
 
 .menubar-link a:hover {
@@ -218,20 +229,14 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 /*
  * dashboard
  */
-.hyperlink-label {
-	color: #0088cc;
-}
-
-.hyperlink-label:hover {
-	text-decoration: underline;
-	cursor: pointer;
-	color: #555555;
+.newsFeed-panel {
+	width: 700px;
+	height: 400px;
 }
 
 /*
  * create challenge
  */
-
 .main-panel {
 	padding-top: 15px;
 	padding-left: 50px;
@@ -316,19 +321,19 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .complete-btn {
-    margin-left: 10px;
-    margin-bottom: 20px;
-    margin-top: 10px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	margin-top: 10px;
 }
 
 .edit-btn {
-    margin-left: 10px;	
+	margin-left: 10px;
 }
 
 .join-btn {
-    margin-left: 10px;
-    margin-bottom: 20px;
-    margin-top: 10px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	margin-top: 10px;
 }
 
 
@@ -368,4 +373,25 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 {
 	box-shadow: 0 1px 0 #cadbfe inset, 0 1px 0 0 #2d447f, 0 2px 2px #999999;
 	top:2px;
+
+.gwt-button {
+	border: 10px solid #FF0000;
+}
+
+/*
+ * challenges
+ */
+.challenges-link {
+	padding-right: 10px;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.challenges-desc {
+	padding-bottom: 10px;
 }

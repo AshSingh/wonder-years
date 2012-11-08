@@ -2,6 +2,8 @@ package com.cs410.getfit.client;
 
 import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.event.GoToChallengeEventHandler;
+import com.cs410.getfit.client.event.GoToChallengesEvent;
+import com.cs410.getfit.client.event.GoToChallengesEventHandler;
 import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
 import com.cs410.getfit.client.event.GoToCreateChallengeEventHandler;
 import com.cs410.getfit.client.event.GoToDashboardEvent;
@@ -15,6 +17,7 @@ import com.cs410.getfit.client.event.GoToLoginEventHandler;
 import com.cs410.getfit.client.event.GoToRegisterEvent;
 import com.cs410.getfit.client.event.GoToRegisterEventHandler;
 import com.cs410.getfit.client.presenter.ChallengePresenter;
+import com.cs410.getfit.client.presenter.ChallengesPresenter;
 import com.cs410.getfit.client.presenter.CreateChallengePresenter;
 import com.cs410.getfit.client.presenter.DashboardPresenter;
 import com.cs410.getfit.client.presenter.EditChallengePresenter;
@@ -24,6 +27,8 @@ import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.presenter.RegisterPresenter;
 import com.cs410.getfit.client.view.ChallengeViewImpl;
+import com.cs410.getfit.client.view.ChallengesView;
+import com.cs410.getfit.client.view.ChallengesViewImpl;
 import com.cs410.getfit.client.view.CreateAndEditChallengeViewImpl;
 import com.cs410.getfit.client.view.DashboardViewImpl;
 import com.cs410.getfit.client.view.ErrorViewImpl;
@@ -52,6 +57,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private CreateAndEditChallengeViewImpl createAndEditChallengeView = null;
 	private ChallengeViewImpl challengeView = null;	
 	private ErrorViewImpl errorView = null;	
+	private ChallengesView challengesView = null;
 	
 	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
 	    this.eventBus = eventBus;
@@ -109,6 +115,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				doGoToEditChallenge(event.getChallengeUri());
 			}
 		});  
+		
+		eventBus.addHandler(GoToChallengesEvent.TYPE,
+				new GoToChallengesEventHandler() {
+			public void onGoToChallenges(GoToChallengesEvent event) {
+				doGoToChallenges();
+			}
+		});  
 	}
 	
 	private void doGoToLogin() {
@@ -142,6 +155,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	
 	private void doGoToEditChallenge(String challengeUri) {
 		History.newItem(HistoryValues.EDIT.toString() + challengeUri);
+	}
+	
+	private void doGoToChallenges() {
+		History.newItem(HistoryValues.CHALLENGES.toString());
 	}
 	
 	@Override
@@ -261,6 +278,24 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        			createAndEditChallengeView.setMenuBar(menuBarView);
 	        			new MenuBarPresenter(eventBus, menuBarView);
 	        			new EditChallengePresenter(eventBus, createAndEditChallengeView).go(container, token);	 	
+	        		}
+	        	});
+	        }
+	        else if (token.equals(HistoryValues.CHALLENGES.toString())) {
+	        	GWT.runAsync(new RunAsyncCallback() {
+	        		public void onFailure(Throwable caught) {
+	        		}
+
+	        		public void onSuccess() {
+	        			if (challengesView == null) {
+	        				challengesView = new ChallengesViewImpl();
+	        			}
+	        			if (menuBarView == null) {
+	        				menuBarView = new MenuBarViewImpl();
+	        			}
+	        			challengesView.setMenuBar(menuBarView);
+	        			new MenuBarPresenter(eventBus, menuBarView);
+	        			new ChallengesPresenter(eventBus, challengesView).go(container);	 	
 	        		}
 	        	});
 	        }
