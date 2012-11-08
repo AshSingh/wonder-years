@@ -7,7 +7,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class GetFit implements EntryPoint{
-
+	 
 	@Override
 	public void onModuleLoad() {
 		LoginPresenter.exportLoginRequest(); // this will assign the function to a variable in the window object called loginRequest()
@@ -16,6 +16,5 @@ public class GetFit implements EntryPoint{
 	    AppController appViewer = new AppController(requestBuilder, eventBus);
 	    appViewer.go(RootPanel.get());
 	}
-
 	
 }

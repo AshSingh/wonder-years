@@ -26,7 +26,8 @@ public class LoginViewImpl extends Composite implements LoginView {
 	}
 	
 	@UiHandler("loginBtn")
-	void onLoginClicked(ClickEvent event) {
+	void addClickHandler(ClickEvent event) {
+		event.preventDefault();
 		if (presenter != null) {
 			presenter.onLoginButtonClicked();
 		}

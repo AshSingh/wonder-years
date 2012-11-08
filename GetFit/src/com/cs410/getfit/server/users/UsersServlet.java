@@ -95,7 +95,7 @@ public class UsersServlet extends HttpServlet {
 
 	}
 	
-	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {		
+	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {
 		User user = usersServices.getUser(fb_id);
 		if(user == null && body != null) {
 			String firstname = body.get("first_name").getAsString();

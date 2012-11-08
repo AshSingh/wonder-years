@@ -45,7 +45,9 @@ public class UsersServicesImpl implements UsersServices {
 		User user = null;
 		try {
 			ArrayList<User> userList = (ArrayList<User>) userDao.queryForEq("FB_ID", fb_id);
-			user = userList.get(0);
+			if (userList.size() > 0) {
+				user = userList.get(0);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

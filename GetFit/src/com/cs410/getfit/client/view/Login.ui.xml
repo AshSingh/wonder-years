@@ -20,14 +20,15 @@
 				<form class="form-horizontal">
 		        	<div class="control-group" align="left">
 		        	    <div class="controls">
-		          			<g:Button ui:field="loginBtn">
-		          			    <div class="fb-login-button"  size="xlarge" data-show-faces="false" data-width="200" data-max-rows="1"></div>
-		          			</g:Button>
-		          			
+	          			    <div id="facebook-login-btb">
+								<g:Anchor href="#" ui:field="loginBtn">
+									login with <span>facebook</span>
+								</g:Anchor>
+							</div>
 		          		</div>
 		          	</div>
 	        	</form>
 	        </div>
-	    </center>	
+	    </center>
     </g:HTMLPanel>
 </ui:UiBinder>
