@@ -31,7 +31,7 @@
   <source path='presenter'/>
   <source path='shared'/>
   
-  <script src="http://maps.google.com/maps/api/js?sensor=false" ></script>
+  <!-- <script src="http://maps.google.com/maps/api/js?sensor=false" ></script> -->
   
   
 </module>
