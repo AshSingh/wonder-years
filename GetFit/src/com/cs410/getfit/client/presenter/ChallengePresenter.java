@@ -77,10 +77,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			view.getTitleLabel().setText(errorMsg);
 		}
 		else {
-			
-			String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
 			// GET request on challenge uri
-			RequestBuilder builder = HTTPRequestBuilder.getGetRequest(challengeUri + "?" + query);
+			RequestBuilder builder = HTTPRequestBuilder.getGetRequest(challengeUri);
 			try {
 				builder.sendRequest(null, new RequestCallback() {
 					@Override
@@ -162,8 +160,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
-				String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
-				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri() + "?" + query); 
+				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri()); 
 				try {
 					builder.sendRequest(null, new RequestCallback() {
 						@Override
@@ -194,8 +191,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
-				String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
-				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri() + "?" + query); 
+				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri()); 
 				try {
 					builder.sendRequest(null, new RequestCallback() {
 						@Override
@@ -263,8 +259,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.COMPLETEDCHALLENGES.toString())) {
-				String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
-				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri() + "?" + query); 
+				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri()); 
 				try {
 					builder.sendRequest(null, new RequestCallback() {
 						@Override
@@ -311,8 +306,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
 			if (link.getType().equals(LinkTypes.PARTICIPANTS.toString())) {
-				String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
-				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri() + "?" + query); 
+				RequestBuilder builder = HTTPRequestBuilder.getGetRequest(link.getRel() + link.getUri()); 
 				try {
 					builder.sendRequest(null, new RequestCallback() {
 						@Override

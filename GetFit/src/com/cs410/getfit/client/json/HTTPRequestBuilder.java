@@ -1,6 +1,8 @@
 package com.cs410.getfit.client.json;
 
 import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Cookies;
 
 public class HTTPRequestBuilder {
 	
@@ -15,7 +17,8 @@ public class HTTPRequestBuilder {
 	}
 
 	public static RequestBuilder getGetRequest(String url) {
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, warFileName + url);
+		String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, warFileName + url + "?" + query);
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
