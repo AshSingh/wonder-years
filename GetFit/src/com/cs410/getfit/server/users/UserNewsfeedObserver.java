@@ -8,7 +8,7 @@ public class UserNewsfeedObserver implements Observer {
 		private UserNewsfeedObserver() {
 			//singleton
 		}
-	    private long lastModifiedAt = -1;
+	    private long lastModifiedAt = 0;
 	    public void update(Observable obj, Object arg) {
 	    	lastModifiedAt = (Long) arg;
 	    }
