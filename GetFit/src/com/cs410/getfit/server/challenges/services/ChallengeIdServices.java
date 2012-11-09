@@ -9,6 +9,8 @@ import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -88,25 +90,15 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 		Integer rowsUpdated = 0;
 		oldChallenge = challengeDao.queryForId(challengeId);
 
-		String desc = "The challenge has been updated:";
+		if (oldChallenge != null) {	
 		
-		if (oldChallenge != null) {
-			if (!challenge.getTitle().equals(oldChallenge.getTitle())) {
-				desc = desc.concat("\n"+oldChallenge.getTitle()+" has been updated to  "+challenge.getTitle());
-			}
-			if (!challenge.getLocation().equals(oldChallenge.getLocation())) {
-				desc = desc.concat("\n"+oldChallenge.getLocation()+" has been updated to  "+challenge.getLocation());
-			}
-			if (!challenge.getDescription().equals(oldChallenge.getDescription())) {
-				desc = desc.concat("\n"+oldChallenge.getDescription()+" has been updated to  "+challenge.getDescription());
-			}
-			if (!challenge.isPrivate().equals(oldChallenge.isPrivate())) {
-				if(challenge.isPrivate())
-					desc = desc.concat("\n This challenge is now private");
-				else
-					desc = desc.concat("\n This challenge is now public");
-			}
-			final ChallengeHistory historyItem = new ChallengeHistoryImpl(null, challenge, desc);
+		User admin = null;
+		for(ChallengeUser user: oldChallenge.getParticipants()) {
+			challengeUserDao.refresh(user);
+			if(user.isAdmin())
+				admin = user.getUser();
+		}
+		final ChallengeHistory historyItem = new ChallengeHistoryImpl(admin, challenge, NewsfeedItemType.EDIT.toString());
 			rowsUpdated = manager.callInTransaction(new Callable<Integer>() {
 				public Integer call() throws Exception {
 					Integer updated = challengeDao.update(challenge);

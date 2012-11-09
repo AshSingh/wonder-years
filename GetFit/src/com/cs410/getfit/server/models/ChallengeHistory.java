@@ -1,6 +1,7 @@
 package com.cs410.getfit.server.models;
 
-public interface ChallengeHistory {
+public interface ChallengeHistory{
+
 	public long getGuid();
 	public void setGuid(long guid);
 	

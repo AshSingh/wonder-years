@@ -11,6 +11,7 @@ import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -103,11 +104,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 		return challengesCreated;
 	}
 	private void createHistoryItem(Challenge challenge, User admin) throws SQLException {
-		String firstname = admin.getFirstName();
-		String lastname = admin.getLastName();
-		String challengeTitle = challenge.getTitle();
-		String desc = firstname +" "+lastname +" has created "+challengeTitle;
-		ChallengeHistory history_item = new ChallengeHistoryImpl(admin, challenge, desc);
+		ChallengeHistory history_item = new ChallengeHistoryImpl(admin, challenge, NewsfeedItemType.CREATE.toString());
 		challengeHistoryDao.create(history_item);
 	}
 	@Override

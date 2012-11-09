@@ -59,7 +59,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (challenges != null && challenges.size() > 0) {
+			if (challenges != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(challenges));
 				writer.flush();
 				resp.setStatus(200);
@@ -76,7 +76,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (participants != null && participants.size() > 0) {
+			if (participants != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(participants));
 				writer.flush();
 				resp.setStatus(200);
@@ -93,7 +93,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (c_challenges != null && c_challenges.size() > 0) {
+			if (c_challenges != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(c_challenges));
 				writer.flush();
 				resp.setStatus(200);
@@ -127,7 +127,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (created != null && created.size() > 0) {
+			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
 				resp.setStatus(201);
@@ -146,7 +146,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (created != null && created.size() > 0) {
+			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
 				resp.setStatus(201);
@@ -165,7 +165,7 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-			if (created != null && created.size() > 0) {
+			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
 				resp.setStatus(201);

@@ -3,7 +3,6 @@ package com.cs410.getfit.server.challenges.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -13,6 +12,7 @@ import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -103,12 +103,7 @@ public class ParticipantsServices implements ParticipantResourceServices {
 	}
 	
 	private void createHistoryItem(ChallengeUser participant) throws SQLException {
-		String firstname = participant.getUser().getFirstName();
-		String lastname = participant.getUser().getLastName();
-		String challengeTitle = participant.getChallenge().getTitle();
-		Date date = new Date(participant.getDateJoined());
-		String desc = firstname +" "+lastname +" has joined "+challengeTitle+" on "+date;
-		ChallengeHistory history_item = new ChallengeHistoryImpl(participant.getUser(), participant.getChallenge(), desc);
+		ChallengeHistory history_item = new ChallengeHistoryImpl(participant.getUser(), participant.getChallenge(), NewsfeedItemType.JOIN.toString());
 		challengeHistoryDao.create(history_item);
 	}
 	

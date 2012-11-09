@@ -3,7 +3,6 @@ package com.cs410.getfit.server.challenges.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -13,6 +12,7 @@ import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.CompletedChallenge;
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -89,7 +89,7 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 								userDao.refresh(completedChallenge_created.getUser());
 								challengeDao.refresh(completedChallenge_created.getChallenge());
 								if(!completedChallenge_created.getUser().getIsPrivate())
-									createHistoryItem(completedChallenge_created, dateCompleted);
+									createHistoryItem(completedChallenge_created);
 								created.add(completedChallenge_created);
 						}
 						return created;
@@ -98,13 +98,8 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 		return completedChallengesCreated;
 	}
 
-	private void createHistoryItem(CompletedChallenge completedChallenge, long dateCompleted) throws SQLException {
-		String firstname = completedChallenge.getUser().getFirstName();
-		String lastname = completedChallenge.getUser().getLastName();
-		String challengeTitle = completedChallenge.getChallenge().getTitle();
-		Date date = new Date(dateCompleted);
-		String desc = firstname +" "+lastname +" has completed "+challengeTitle+" on "+date;
-		ChallengeHistory history_item = new ChallengeHistoryImpl(completedChallenge.getUser(), completedChallenge.getChallenge(), desc);
+	private void createHistoryItem(CompletedChallenge completedChallenge) throws SQLException {
+		ChallengeHistory history_item = new ChallengeHistoryImpl(completedChallenge.getUser(), completedChallenge.getChallenge(), NewsfeedItemType.COMPLETE.toString());
 		challengeHistoryDao.create(history_item);
 	}
 	

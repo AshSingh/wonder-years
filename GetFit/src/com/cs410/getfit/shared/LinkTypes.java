@@ -6,7 +6,7 @@ public enum LinkTypes {
 	PARTICIPANTS,
 	USER,
 	COMPLETEDCHALLENGE,
-	COMPLETEDCHALLENGES;
+	COMPLETEDCHALLENGES, NEWSFEEDITEM;
 	
 	 @Override 
 	 public String toString() {

@@ -2,6 +2,7 @@ package com.cs410.getfit.server.users;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.cs410.getfit.server.challenges.json.ChallengeHistoryJsonFormatter;
+import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
 import com.google.gson.Gson;
@@ -41,11 +44,8 @@ public class UsersServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		//TODO: all the other mappings
-		//TODO: error handling!!
-		
-		if(req.getPathInfo().equals("/users")) {
+		UserUriParser parser = new UserUriParser(req.getRequestURI());
+		if(parser.getResource() == UserUriParser.USERS) {
 			List<User> users = new ArrayList<User>();
 	
 			users = usersServices.queryForAllUsers();
@@ -56,6 +56,24 @@ public class UsersServlet extends HttpServlet {
 	
 			// Set the correct status code
 			resp.setStatus(200);
+		} else if(parser.getResource() == UserUriParser.NEWSFEED) {
+			UserNewsfeedServices services = (UserNewsfeedServices) ctx.getBean("userNewsfeedServices");
+			services.setUserId(parser.getUserId());
+			Long polled = Long.decode(req.getParameter("lastPolled"));
+			services.setLastPolled(polled);
+			try {
+				List<ChallengeHistory> history = services.getChallengeHistory();
+				PrintWriter writer = resp.getWriter();
+				ChallengeHistoryJsonFormatter formatter = new ChallengeHistoryJsonFormatter();
+				writer.write(formatter.getJSONFormattedStringOfResource(history));
+				writer.flush();
+		
+				// Set the correct status code
+				resp.setStatus(200);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
