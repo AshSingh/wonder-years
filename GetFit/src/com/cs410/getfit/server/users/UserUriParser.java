@@ -8,7 +8,8 @@ public class UserUriParser {
 	public static final int USERS = 0;
 	public static final int USERSID = 1;
 	public static final int NEWSFEED = 2;
-
+	public static final int CHALLENGES = 3;
+	
 	private int resource = -1;
 
 	private static final Pattern usersPattern = Pattern.compile("/users");
@@ -16,6 +17,8 @@ public class UserUriParser {
 			.compile("/users/([0-9]*)");
 	private static final Pattern newsfeedPattern = Pattern
 			.compile("/users/([0-9]*)/newsfeed");
+	private static final Pattern challengesPattern = Pattern
+			.compile("/users/([0-9]*)/challenges");
 	private long userId = -1;
 
 	public UserUriParser(String pathURI) {
@@ -28,6 +31,12 @@ public class UserUriParser {
 		if (matcher.find()) {
 			userId = Long.parseLong(matcher.group(1));
 			resource = NEWSFEED;
+			return;
+		}
+		matcher = challengesPattern.matcher(pathURI);
+		if (matcher.find()) {
+			userId = Long.parseLong(matcher.group(1));
+			resource = CHALLENGES;
 			return;
 		}
 
@@ -61,5 +70,9 @@ public class UserUriParser {
 
 	public boolean isNewsfeedUri() {
 		return resource == UserUriParser.NEWSFEED;
+	}
+	
+	public boolean isChallengesUri() {
+		return resource == UserUriParser.CHALLENGES;
 	}
 }

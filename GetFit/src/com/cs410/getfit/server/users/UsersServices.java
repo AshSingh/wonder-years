@@ -28,5 +28,12 @@ public interface UsersServices {
 	 * @param fb_id
 	 */
 	User getUser(String fb_id);
+	
+	/**
+	 * get a user by their guid
+	 * @param guid
+	 * @return
+	 */
+	User getUserById(String guid);
 
 }

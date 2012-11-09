@@ -53,4 +53,13 @@ public class UsersServicesImpl implements UsersServices {
 		}
 		return user;
 	}
+	public User getUserById(String guid) {
+		User user = null;
+		try {
+			user = userDao.queryForId(guid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 }

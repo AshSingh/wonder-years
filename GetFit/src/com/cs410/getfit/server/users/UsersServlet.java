@@ -18,6 +18,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cs410.getfit.server.challenges.json.ChallengeHistoryJsonFormatter;
+import com.cs410.getfit.server.challenges.json.ChallengesJsonFormatter;
+import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
@@ -58,6 +60,17 @@ public class UsersServlet extends HttpServlet {
 	
 			// Set the correct status code
 			resp.setStatus(200);
+		} else if(parser.getResource() == UserUriParser.USERSID) {
+			User user = usersServices.getUserById(String.valueOf(parser.getUserId()));
+			List <User> users = new ArrayList<User>();
+			if(user != null)
+				users.add(user);
+			PrintWriter writer = resp.getWriter();
+			writer.write(formatter.getJSONFormattedStringOfResource(users));
+			writer.flush();
+	
+			// Set the correct status code
+			resp.setStatus(200);
 		} else if(parser.getResource() == UserUriParser.NEWSFEED) {
 			UserNewsfeedServices services = (UserNewsfeedServices) ctx.getBean("userNewsfeedServices");
 			services.setUserId(parser.getUserId());
@@ -68,6 +81,22 @@ public class UsersServlet extends HttpServlet {
 				PrintWriter writer = resp.getWriter();
 				ChallengeHistoryJsonFormatter formatter = new ChallengeHistoryJsonFormatter();
 				writer.write(formatter.getJSONFormattedStringOfResource(history));
+				writer.flush();
+		
+				// Set the correct status code
+				resp.setStatus(200);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(parser.getResource() == UserUriParser.CHALLENGES) {
+			UserChallengesServices services = (UserChallengesServices) ctx.getBean("userChallengesServices");
+			services.setUserId(parser.getUserId());
+			try {
+				List<Challenge> challenges = services.getChallenges();
+				PrintWriter writer = resp.getWriter();
+				ChallengesJsonFormatter formatter = new ChallengesJsonFormatter();
+				writer.write(formatter.getJSONFormattedStringOfResource(challenges));
 				writer.flush();
 		
 				// Set the correct status code
@@ -101,22 +130,6 @@ public class UsersServlet extends HttpServlet {
 		} else {
 			resp.setStatus(404);
 		}
-		
-//		List <User> users = formatter.getResourcesFromJSONFormattedString(body);
-//		
-//		if(users.size() == 1) {
-//			User user = users.get(0); // get first user
-//			usersServices.createUser(user);
-//
-//		} else {
-//			//return an error that you cant create more than one user one post.
-//		}
-//
-//		PrintWriter writer = resp.getWriter();
-//		writer.write("Created");
-//		writer.flush();
-//		resp.setStatus(201);
-
 	}
 	
 	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {
