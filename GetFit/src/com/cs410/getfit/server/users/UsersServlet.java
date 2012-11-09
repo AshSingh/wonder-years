@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -82,6 +84,8 @@ public class UsersServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		
+		Pattern loginPattern = Pattern
+				.compile(".*/login");
 		String body = request.getParameter("json_body");
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(body);
@@ -90,7 +94,9 @@ public class UsersServlet extends HttpServlet {
 			jObjBody = (JsonObject)element;
 		}
 		
-		if (request.getRequestURI().equals("/login")){
+		Matcher matcher;
+		matcher = loginPattern.matcher(request.getRequestURI());
+		if (matcher.find()) {
 			login(request.getParameter("FB_id"), jObjBody,resp);
 		} else {
 			resp.setStatus(404);

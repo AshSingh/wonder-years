@@ -53,12 +53,12 @@
 	<!-- Servlet mappings -->
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/getfit/users</url-pattern>
+		<url-pattern>/users</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/getfit/users/*</url-pattern>
+		<url-pattern>/users/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
@@ -68,15 +68,13 @@
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/getfit/challenges</url-pattern>
+		<url-pattern>/challenges</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/getfit/challenges/*</url-pattern>
+		<url-pattern>/challenges/*</url-pattern>
 	</servlet-mapping>
 
-	<listener>
-	  	<listener-class>com.cs410.getfit.server.listeners.HistoryObserverListener</listener-class>
-  	</listener>
+
 </web-app>

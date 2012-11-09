@@ -36,7 +36,7 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	
 	public static void loginRequest(String fb_user){
 		try{
-			rb = new RequestBuilder(RequestBuilder.POST, "/login");
+			rb = new RequestBuilder(RequestBuilder.POST, "/getfit/login");
 			
 			rb.setHeader("Content-Type", "application/json");
             String body = fb_user;
