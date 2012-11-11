@@ -13,9 +13,11 @@
 		</div>
 		<div class="row">
 			<div class="span3 side-panel">
-				<g:VerticalPanel ui:field="userChallengesPanel">
+				<g:VerticalPanel>
 					<g:Label styleName="subtitle-label">My challenges:</g:Label>
-					<g:Button ui:field="newChallengeBtn" styleName="btn btn-primary large">Create a new challenge
+					<g:VerticalPanel ui:field="userChallengesPanel" />
+					<g:Button ui:field="newChallengeBtn" styleName="btn btn-primary large new-challenge-btn">Create a
+						new challenge
 					</g:Button>
 				</g:VerticalPanel>
 			</div>

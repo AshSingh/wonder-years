@@ -1,6 +1,5 @@
 package com.cs410.getfit.client.presenter;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +34,12 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.http.client.URL;
 
 public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 
 	private final HandlerManager eventBus;
 	private final ChallengeView view;
 
-	private final String errorMsg = "Oh no! The challenge you are looking for could not be found.";
 	private final String privateChallengeMsg = "Permission denied: The challenge you are trying to view is set to private.";
 
 	public ChallengePresenter(HandlerManager eventBus, ChallengeView view){
@@ -61,8 +58,9 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
 		container.add(view.asWidget());
-		// clear subpanel
+		// clear subpanel and title
 		view.getChallengeInfoPanel().clear();
+		view.getTitleLabel().setText("");
 		// fill view with challenge info
 		populateMainPanel(challengeUri);
 	}
@@ -74,7 +72,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 	 */
 	private void populateMainPanel(String challengeUri) {
 		if (challengeUri == null) {
-			view.getTitleLabel().setText(errorMsg);
+			eventBus.fireEvent(new GoToErrorEvent());
 		}
 		else {
 			// GET request on challenge uri
@@ -198,7 +196,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						public void onResponseReceived(Request request, Response response) {
 							if (response.getStatusCode() == 200) {
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
-								if (models.size() > 0) {
+								if (models.size() >= 0) {
 									Boolean participating = false;
 									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingParticipantJsonModel participantModel : models) {
@@ -266,7 +264,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						public void onResponseReceived(Request request, Response response) {
 							if (response.getStatusCode() == 200) {
 								List<OutgoingCompletedChallengeJsonModel> models = CompletedChallengesJsonFormatter.parseCompletedChallengesJsonInfo(response.getText());
-								if (models.size() > 0) {
+								if (models.size() >= 0) {
 									Boolean completed = false;
 									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingCompletedChallengeJsonModel model : models) {
@@ -276,8 +274,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 											completeBtn.setText("Completed");
 											completeBtn.removeStyleName("btn-primary");
 											completeBtn.addStyleName("btn-success");
+											break;
 										}
-										break;
 									}
 									if (!completed) {
 										completeBtn.setEnabled(true);
@@ -313,7 +311,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						public void onResponseReceived(Request request, Response response) {
 							if (response.getStatusCode() == 200) {
 								List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(response.getText());
-								if (models.size() > 0) {
+								if (models.size() >= 0) {
 									Boolean participating = false;
 									long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 									for (OutgoingParticipantJsonModel participantModel : models) {

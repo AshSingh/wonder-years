@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ChallengesViewImpl extends Composite implements ChallengesView {
+	@UiField static VerticalPanel userChallengesPanel;
 	@UiField static VerticalPanel challengesPanel;
 
 	private Presenter presenter;
@@ -46,6 +47,11 @@ public class ChallengesViewImpl extends Composite implements ChallengesView {
 		return menuBar;
 	}
 
+	@Override
+	public VerticalPanel getUserChallengesPanel() {
+		return userChallengesPanel;
+	}
+	
 	@Override
 	public VerticalPanel getChallengesPanel() {
 		return challengesPanel;

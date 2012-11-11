@@ -13,5 +13,6 @@ public interface ChallengesView {
 	void setMenuBar(MenuBarView menuBar);
 	MenuBarView getMenuBar();
 	Widget asWidget();
+	VerticalPanel getUserChallengesPanel();
 	VerticalPanel getChallengesPanel();
 }

@@ -48,6 +48,10 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	padding-left: 10px;
 }
 
+.new-challenge-btn {
+	margin-top: 10px;
+}
+
 /*
  * login
  */
@@ -396,4 +400,15 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 
 .challenges-desc {
 	padding-bottom: 10px;
+}
+
+.challenges-participants {
+	padding-right: 10px;
+	font-family: inherit;
+	font-weight: normal;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 12px;
+	line-height: 20px;
 }

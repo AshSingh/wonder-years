@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cs410.getfit.shared.CompletedChallengeInfoJsonModel;
-import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
 import com.cs410.getfit.shared.IncomingParticipantJsonModel;
 import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
 import com.cs410.getfit.shared.ParticipantInfoJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.user.client.Cookies;
 
 public class ParticipantsJsonTest extends GWTTestCase {
 	@Override
@@ -72,6 +71,7 @@ public class ParticipantsJsonTest extends GWTTestCase {
 	
 	@Test
 	public void testFormatParticipantsJsonInfo() {
+		Cookies.setCookie("accessToken", "r109809f");
 		List<IncomingParticipantJsonModel> models = new ArrayList<IncomingParticipantJsonModel>();
 		
 		IncomingParticipantJsonModel model = new IncomingParticipantJsonModel(); 

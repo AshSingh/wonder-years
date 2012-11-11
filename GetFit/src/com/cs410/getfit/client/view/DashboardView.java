@@ -16,4 +16,5 @@ public interface DashboardView {
 	Widget asWidget();
 	VerticalPanel getNewsFeedPanel();
 	Label getNameLabel();
+	VerticalPanel getUserChallengesPanel();
 }

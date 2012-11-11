@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cs410.getfit.shared.ChallengeInfoJsonModel;
 import com.cs410.getfit.shared.CompletedChallengeInfoJsonModel;
-import com.cs410.getfit.shared.IncomingChallengeJsonModel;
 import com.cs410.getfit.shared.IncomingCompletedChallengeJsonModel;
 import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.user.client.Cookies;
 
 public class CompletedChallengesJsonTest extends GWTTestCase {
 	@Override
@@ -25,6 +24,7 @@ public class CompletedChallengesJsonTest extends GWTTestCase {
 	private long cCh2Id = 2;
 	private long dateCompleted = System.currentTimeMillis();
 	private long dateCompleted2 = System.currentTimeMillis() + 1000000;
+	private String accessToken = "r109809f";
 
 	String incomingJson ="{\"completedchallenges\":[{\"info\":{\"userId\":"+userId+",\"dateCompleted\":"+dateCompleted+"}," +
 			"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+challengeId+"/completedchallenges/"+cCh1Id+"\",\"type\":\"completedchallenge\"},{\"rel\":\"self\",\"uri\":\"/users/"+userId+"\",\"type\":\"user\"}]}," +
@@ -33,15 +33,16 @@ public class CompletedChallengesJsonTest extends GWTTestCase {
 
 	String outgoingJson = "{\"completedchallenges\":[{\"info\":" +
 			"{\"userId\":"+userId+"" +
-			 "}}," +
+			 "}, \"accessToken\":\"" + accessToken + "\"}," +
 			 "{\"info\":" +
 						"{\"userId\":"+userId2+"" +
-			 "}}]" +
+			 "}, \"accessToken\":\"" + accessToken + "\"}]" +
 			 "}";
 
 	
 	@Test
 	public void testFormatCompletedChallengesJsonInfo() {
+		Cookies.setCookie("accessToken", accessToken);
 		List<IncomingCompletedChallengeJsonModel> models = new ArrayList<IncomingCompletedChallengeJsonModel>();
 		
 		IncomingCompletedChallengeJsonModel model = new IncomingCompletedChallengeJsonModel(); 

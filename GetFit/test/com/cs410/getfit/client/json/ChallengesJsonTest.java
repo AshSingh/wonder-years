@@ -12,6 +12,7 @@ import com.cs410.getfit.shared.IncomingChallengeJsonModel;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.user.client.Cookies;
 
 public class ChallengesJsonTest extends GWTTestCase{
 
@@ -87,6 +88,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 	
 	@Test
 	public void testFormatChallengeJsonInfo() {
+		Cookies.setCookie("accessToken", "r109809f");
 		IncomingChallengeJsonModel model; 
 		List<IncomingChallengeJsonModel> models = new ArrayList<IncomingChallengeJsonModel>();
 		for (ChallengeInfoJsonModel challengeModel : challenges) {

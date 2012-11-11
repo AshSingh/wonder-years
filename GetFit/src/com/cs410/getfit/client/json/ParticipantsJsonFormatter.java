@@ -32,18 +32,16 @@ public class ParticipantsJsonFormatter {
 		// create array of individual challenge json
 		for(IncomingParticipantJsonModel model: models) {
 		
-			JSONObject challengeJson = new JSONObject();
+			JSONObject participantJson = new JSONObject();
 			JSONObject info = new JSONObject();
 	
 			// challenge info
 			info.put(ParticipantsJsonFields.userId.toString(), new JSONNumber(model.getUserId()));
 			info.put(ParticipantsJsonFields.isAdmin.toString(), JSONBoolean.getInstance(model.isAdmin()));
 			
-			challengeJson.put(ParticipantsJsonFields.info.toString(), info);
-			// Add the accessToken to the json
-			challengeJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
+			participantJson.put(ParticipantsJsonFields.info.toString(), info);
 			
-			participantsJson.set(participantsJson.size(), challengeJson);
+			participantsJson.set(participantsJson.size(), participantJson);
 		}
 		
 		// create json with the array of individual challenge json

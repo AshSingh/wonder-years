@@ -36,8 +36,6 @@ public class CompletedChallengesJsonFormatter {
 			info.put(CompletedChallengesJsonFields.userId.toString(), new JSONNumber(model.getUserId()));
 			
 			challengeJson.put(CompletedChallengesJsonFields.info.toString(), info);
-			// Add the accessToken to the json
-			challengeJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 			
 			completedChallengesJson.set(completedChallengesJson.size(), challengeJson);
 		}
@@ -45,6 +43,8 @@ public class CompletedChallengesJsonFormatter {
 		// create json with the array of individual challenge json
 		JSONObject requestJson = new JSONObject();
 		requestJson.put(CompletedChallengesJsonFields.completedchallenges.toString(), completedChallengesJson);
+		// Add the accessToken to the json
+		requestJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
 		
 		return requestJson.toString();
 	}

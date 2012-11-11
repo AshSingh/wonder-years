@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class DashboardViewImpl extends Composite implements DashboardView {
 	@UiField static VerticalPanel newsFeedPanel;
 	@UiField static Label nameLabel;
+	@UiField static VerticalPanel userChallengesPanel;
 	
 	private Presenter presenter;
 	private MenuBarView menuBar;
@@ -56,6 +57,11 @@ public class DashboardViewImpl extends Composite implements DashboardView {
 	@Override
 	public Label getNameLabel(){
 		return nameLabel;
+	}
+	
+	@Override
+	public VerticalPanel getUserChallengesPanel(){
+		return userChallengesPanel;
 	}
 	
 }
