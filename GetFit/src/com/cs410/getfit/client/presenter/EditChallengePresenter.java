@@ -142,7 +142,7 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 	
 	// fill in the fields with current challenge details
 	private void populateFields() {
-		if (challengeUri == "") {
+		if (challengeUri.equals("")) {
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 		else {

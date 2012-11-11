@@ -17,10 +17,11 @@ public class UserNewsfeedServices {
 	private Long lastPolled;
 
 	public List<ChallengeHistory> getChallengeHistory() throws SQLException {
-		if (UserNewsfeedObserver.getInstance().getLastModified() > lastPolled
-				|| UserNewsfeedObserver.getInstance().getLastModified() == 0
-				|| lastPolled == null || lastPolled == 0) {
-	List<ChallengeHistory> history = new ArrayList<ChallengeHistory>();
+		if (lastPolled == null
+				|| lastPolled == 0
+				|| UserNewsfeedObserver.getInstance().getLastModified() > lastPolled
+				|| UserNewsfeedObserver.getInstance().getLastModified() == 0) {
+			List<ChallengeHistory> history = new ArrayList<ChallengeHistory>();
 			List<ChallengeUser> participatingIn = challengeUserDao.queryForEq(
 					"user_id", userId);
 			for (ChallengeUser challengeUser : participatingIn) {
