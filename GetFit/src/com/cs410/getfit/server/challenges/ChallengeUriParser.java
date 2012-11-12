@@ -15,17 +15,17 @@ public class ChallengeUriParser {
 	private int resource = -1;
 
 	private static final Pattern challengesPattern = Pattern
-			.compile("/challenges");
+			.compile(".*/challenges");
 	private static final Pattern challengesIdPattern = Pattern
-			.compile("/challenges/([0-9]*)");
+			.compile(".*/challenges/([0-9]*)");
 	private static final Pattern participantsPattern = Pattern
-			.compile("/challenges/([0-9]*)/participants");
+			.compile(".*/challenges/([0-9]*)/participants");
 	private static final Pattern participantsIdPattern = Pattern
-			.compile("/challenges/([0-9]*)/participants/([0-9]*)");
+			.compile(".*/challenges/([0-9]*)/participants/([0-9]*)");
 	private static final Pattern completedChallengesPattern = Pattern
-			.compile("/challenges/([0-9]*)/completedchallenges");
+			.compile(".*/challenges/([0-9]*)/completedchallenges");
 	private static final Pattern completedChallengesIdPattern = Pattern
-			.compile("/challenges/([0-9]*)/completedchallenges/([0-9]*)");
+			.compile(".*/challenges/([0-9]*)/completedchallenges/([0-9]*)");
 	private long challengeId = -1;
 	private long participantId = -1;
 	private long completedChallengeId = -1;
