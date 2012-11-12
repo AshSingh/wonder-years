@@ -12,13 +12,13 @@ public class UserUriParser {
 	
 	private int resource = -1;
 
-	private static final Pattern usersPattern = Pattern.compile("/users");
+	private static final Pattern usersPattern = Pattern.compile(".*/users");
 	private static final Pattern usersIdPattern = Pattern
-			.compile("/users/([0-9]*)");
+			.compile(".*/users/([0-9]*)");
 	private static final Pattern newsfeedPattern = Pattern
-			.compile("/users/([0-9]*)/newsfeed");
+			.compile(".*/users/([0-9]*)/newsfeed");
 	private static final Pattern challengesPattern = Pattern
-			.compile("/users/([0-9]*)/challenges");
+			.compile(".*/users/([0-9]*)/challenges");
 	private long userId = -1;
 
 	public UserUriParser(String pathURI) {
