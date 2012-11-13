@@ -99,7 +99,7 @@ public class ParticipantsJsonTest extends GWTTestCase {
 	}
 	
 	@Test
-	public void testParseChallengeJsonInfo() {
+	public void testParseParticipantsJsonInfo() {
 		List<OutgoingParticipantJsonModel> models = ParticipantsJsonFormatter.parseParticipantsJsonInfo(incomingJson);
 
 		OutgoingParticipantJsonModel model1 = models.get(0);

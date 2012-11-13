@@ -1,5 +1,6 @@
 package com.cs410.getfit.client.presenter;
 
+import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.view.ErrorView;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -37,6 +38,11 @@ public class ErrorPresenter implements Presenter, ErrorView.Presenter{
 		}
 		else if (errorType.contains("500")) {
 			view.getErrorLabel().setText(ERROR_MSG_500);
+		}
+		// 403 error thrown when auth token has expired or user is not logged in
+		else if (errorType.contains("403")) {
+			// redirect to login page
+			eventBus.fireEvent(new GoToLoginEvent());
 		}
 		else {
 			view.getErrorLabel().setText(ERROR_MSG_DEFAULT);
