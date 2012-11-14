@@ -26,16 +26,6 @@
 							targetHistoryToken="">Logout</g:Hyperlink>
 					</li>
 				</ul>
-				<ul class="nav pull-right">
-					<form class="navbar-search">
-						<input type="text" placeholder="Search Challenges" class="search-query" />
-					</form>
-					<li>
-						<button class="transparent-btn" ui:field="searchBtn">
-							<i class="icon-search icon-white"></i>
-						</button>
-					</li>
-				</ul>
 			</div>
 		</div>
 	</g:HTMLPanel>

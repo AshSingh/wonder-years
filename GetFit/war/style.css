@@ -215,21 +215,6 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	text-decoration: none;
 }
 
-.menubar-dropdown-link {
-	text-decoration: none;
-	padding: 3px 20px;
-	color: #0088cc;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.menubar-dropdown-link:hover {
-	color: #ffffff;
-	text-decoration: none;
-	cursor: pointer;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-	background-color: #0088cc;
-}
-
 .navbar-title {
 	display: block;
 	float: left;
@@ -237,39 +222,6 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	font-size: 20px;
 	font-weight: 200;
 	color: #777777;
-}
-
-.search-label {
-	color: #999999;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	padding: 10px 15px 0px;
-	float: none;
-}
-
-.transparent-btn {
-	padding-right: 20px;
-	display: block;
-	height: 40px;
-	background: transparent;
-	background-color: transparent;
-	border: activeborder;
-}
-
-.search-list {
-	width: auto;
-	height: 28px;
-	font-size: 12px;
-	color: #555555;
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	float: none;
-	margin-top: 5px;
-	margin-bottom: -5px;
-}
-
-.navbar-search {
-	padding-left: 10px;
-	padding-right: 5px;
 }
 
 /*
