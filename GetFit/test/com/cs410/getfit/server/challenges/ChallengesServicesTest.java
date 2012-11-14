@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.cs410.getfit.server.challenges.services.ChallengesServices;
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -22,12 +23,15 @@ public class ChallengesServicesTest {
 	JUnit4Mockery context = new JUnit4Mockery();
 
 	Dao<Challenge, Long> challengeDao = context.mock(Dao.class,"challengeDao");
+	Dao<ChallengeHistory, Long>challengeHistoryDao = context.mock(Dao.class, "challengeHistory");
 	Dao<ChallengeUser, Long> challengeUserDao = context.mock(Dao.class,"challengeUserDao");
+	Dao<User, Long> userDao = context.mock(Dao.class,"userDao");
 	TransactionManager manager = new TransactionManager() {
 		public <T> T callInTransaction(Callable<T> callable) throws SQLException {
 			return (T)challenges;
 		}
 	};
+
 	List<Challenge> challenges = new ArrayList<Challenge>();
 	final Challenge challenge = context.mock(Challenge.class, "challenge");
 	final Challenge challenge2 = context.mock(Challenge.class, "challenge2");
@@ -59,25 +63,35 @@ public class ChallengesServicesTest {
 		service.setTransactionManager(manager);
 
 	}
-	
 	@Test
-	public void testGetAllChallengesWithParticipants() throws SQLException {
-		final List<Challenge> challenges = new ArrayList<Challenge> ();
-		challenges.add(challenge);
-		challenges.add(challenge2);
-		context.checking(new Expectations() {
-			{
-				oneOf(challengeDao).queryForAll(); will(returnValue(challenges));
-				oneOf(challenge).getGuid(); will(returnValue(CHALLENGEGUID));
-				oneOf(challenge2).getGuid(); will(returnValue(CHALLENGE2GUID));
-				oneOf(challengeUserDao).queryForEq("challenge_id", CHALLENGEGUID); will(returnValue(chUsers));
-				oneOf(challengeUserDao).queryForEq("challenge_id", CHALLENGE2GUID); will(returnValue(null));
-				oneOf(challenge).setParticipants(chUsers);
-				oneOf(challenge2).setParticipants(null);
-			}
-		});
-		List<Challenge> returnedChallenges = service.get();
-		assertEquals("two challenges should be returned", 2, returnedChallenges.size());
+	public void testSettingAndGettingChallengesForService() {
+		List<Challenge> chall = new ArrayList<Challenge>();
+		service.setChallenges(chall);
+		assertEquals(chall, service.getChallenges());
 	}
 	
+	@Test
+	public void testUpdateIsAlwaysFals() {
+		assertEquals(false, service.update());
+	}
+	@Test
+	public void testSetAndGetUserDao() {
+		service.setUserDao(userDao);
+		assertEquals(userDao, service.getUserDao());
+	}
+	@Test
+	public void testSetAndGetChallengeUserDao() {
+		service.setChallengeUserDao(challengeUserDao);
+		assertEquals(challengeUserDao, service.getChallengeUserDao());
+	}
+	@Test
+	public void testSetAndGetChallengeHistoryDao() {
+		service.setChallengeHistoryDao(challengeHistoryDao);
+		assertEquals(challengeHistoryDao, service.getChallengeHistoryDao());
+	}
+	@Test
+	public void testSetAndGetChallengeDao() {
+		service.setChallengeDao(challengeDao);
+		assertEquals(challengeDao, service.getChallengeDao());
+	}
 }

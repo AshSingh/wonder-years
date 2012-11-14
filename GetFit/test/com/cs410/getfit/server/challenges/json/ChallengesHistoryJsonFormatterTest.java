@@ -70,4 +70,8 @@ public class ChallengesHistoryJsonFormatterTest {
 		
 	}
 
+	@Test
+	public void testNotSupportedMethod() {
+		assertEquals(null, formatter.getResourcesFromJSONFormattedString(""));
+	}
 }
