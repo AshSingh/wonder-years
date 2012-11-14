@@ -1,4 +1,4 @@
-package com.cs410.getfit.server.users;
+package com.cs410.getfit.server.users.json.links;
 
 import com.cs410.getfit.shared.LinkTypes;
 import com.cs410.getfit.shared.ResourceLink;

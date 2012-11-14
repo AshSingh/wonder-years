@@ -29,9 +29,6 @@ public class ChallengesHistoryJsonFormatterTest {
 												"{\"datemodified\":"+dateModified+"," +
 												"\"newsfeedItemType\":\""+type+"\"}," +
 											"\"links\":[{\"rel\":\"self\"," +
-															"\"uri\":\"/users/"+userId+"/newsfeed/"+newsFeedId+"\"," +
-															"\"type\":\"newsfeeditem\"}," +
-														"{\"rel\":\"self\"," +
 															"\"uri\":\"/users/"+userId+"\"," +
 															"\"type\":\"user\"}," +
 															"{\"rel\":\"self\"," +

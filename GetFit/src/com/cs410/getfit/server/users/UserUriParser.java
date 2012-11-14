@@ -9,6 +9,7 @@ public class UserUriParser {
 	public static final int USERSID = 1;
 	public static final int NEWSFEED = 2;
 	public static final int CHALLENGES = 3;
+	public static final int LOGIN = 4;
 	
 	private int resource = -1;
 
@@ -19,6 +20,8 @@ public class UserUriParser {
 			.compile(".*/users/([0-9]*)/newsfeed");
 	private static final Pattern challengesPattern = Pattern
 			.compile(".*/users/([0-9]*)/challenges");
+	Pattern loginPattern = Pattern
+			.compile(".*/login");
 	private long userId = -1;
 
 	public UserUriParser(String pathURI) {
@@ -27,6 +30,11 @@ public class UserUriParser {
 
 	public void setResource(String pathURI) {
 		Matcher matcher;
+		matcher = loginPattern.matcher(pathURI);
+		if (matcher.find()) {
+			resource = LOGIN;
+			return;
+		}
 		matcher = newsfeedPattern.matcher(pathURI);
 		if (matcher.find()) {
 			userId = Long.parseLong(matcher.group(1));

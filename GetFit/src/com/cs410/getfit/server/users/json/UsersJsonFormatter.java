@@ -1,20 +1,21 @@
-package com.cs410.getfit.server.users;
+package com.cs410.getfit.server.users.json;
 
 import java.util.List;
 
 import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.User;
-import com.cs410.getfit.server.models.UserImpl;
+import com.cs410.getfit.shared.IncomingUserJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
 
 public class UsersJsonFormatter extends ResourceFormatter{
 	
 	public UsersJsonFormatter() {
-		super(UserImpl[].class, OutgoingUserJsonModel.class, UserJsonFields.USERS.toString());
+		super(IncomingUserJsonModel[].class, OutgoingUserJsonModel.class, "users");
 	}
 	
 	public List<User> getResourcesFromJSONFormattedString(String jsonFormattedResourceString) {
-		return (List<User>)super.getResourcesFromJSONFormattedString(jsonFormattedResourceString);
+		List<IncomingUserJsonModel> models= (List<IncomingUserJsonModel>)super.getResourcesFromJSONFormattedString(jsonFormattedResourceString);
+		return JSONModelToUserConverter.convertToUsers(models);
 	}
 	@Override
 	public String getJSONFormattedStringOfResource(List<? extends Object> objects) {

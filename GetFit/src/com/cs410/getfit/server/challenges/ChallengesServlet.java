@@ -129,11 +129,8 @@ public class ChallengesServlet extends HttpServlet {
 			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
-				resp.setStatus(201);
-				
-			} else {
-				resp.setStatus(200); // not created
-			}
+			} 
+			resp.setStatus(200);
 		} else if(parser.isParticipantURI()) {
 			ParticipantJsonFormatter formatter = new ParticipantJsonFormatter();
 			ParticipantServicesFactory factory = new ParticipantServicesFactory(ctx, parser);
@@ -148,11 +145,8 @@ public class ChallengesServlet extends HttpServlet {
 			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
-				resp.setStatus(201);
-				
-			} else {
-				resp.setStatus(200); // not created
 			}
+			resp.setStatus(200);
 		} else if(parser.isCompletedChallengeURI()) {
 			CompletedChallengesJsonFormatter formatter = new CompletedChallengesJsonFormatter();
 			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(ctx, parser);
@@ -167,11 +161,8 @@ public class ChallengesServlet extends HttpServlet {
 			if (created != null) {
 				writer.write(formatter.getJSONFormattedStringOfResource(created));
 				writer.flush();
-				resp.setStatus(201);
-				
-			} else {
-				resp.setStatus(200); // not created
 			}
+			resp.setStatus(200);
 		} else {
 			resp.setStatus(404); // resource not found
 		}

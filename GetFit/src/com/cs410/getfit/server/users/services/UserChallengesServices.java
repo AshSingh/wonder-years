@@ -1,7 +1,9 @@
-package com.cs410.getfit.server.users;
+package com.cs410.getfit.server.users.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.cs410.getfit.server.models.Challenge;
@@ -15,7 +17,7 @@ public class UserChallengesServices {
 
 	/**
 	 * return the challenges that the set user is a part of.
-	 * @return
+	 * @return challenges that the passed in user is a part of
 	 * @throws SQLException
 	 */
 	public List<Challenge> getChallenges() throws SQLException {
@@ -26,6 +28,11 @@ public class UserChallengesServices {
 				challengeDao.refresh(challengeUser.getChallenge()); //bring in all the information about the challenge
 				challenges.add(challengeUser.getChallenge());
 			}
+			Collections.sort(challenges, new Comparator<Challenge>() {
+				public int compare(Challenge o1, Challenge o2) {
+					return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+				}
+			});
 			return challenges;
 	}
 

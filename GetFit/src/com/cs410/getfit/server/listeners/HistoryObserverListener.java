@@ -4,10 +4,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.cs410.getfit.server.users.UserNewsfeedObserver;
-import com.cs410.getfit.server.users.UserNewsfeedSource;
+import com.cs410.getfit.server.users.UserNewsfeedObservable;
 
 public class HistoryObserverListener implements ServletContextListener {
-	UserNewsfeedSource source = UserNewsfeedSource.getInstance();
+	UserNewsfeedObservable source = UserNewsfeedObservable.getInstance();
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {

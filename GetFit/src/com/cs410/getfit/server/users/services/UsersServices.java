@@ -1,5 +1,6 @@
-package com.cs410.getfit.server.users;
+package com.cs410.getfit.server.users.services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.cs410.getfit.server.models.User;
@@ -35,5 +36,13 @@ public interface UsersServices {
 	 * @return
 	 */
 	User getUserById(String guid);
+	
+	/**
+	 * Update a user
+	 * @param user
+	 * @return
+	 * @throws SQLException 
+	 */
+	public boolean updateUser(User user) throws SQLException; 
 
 }

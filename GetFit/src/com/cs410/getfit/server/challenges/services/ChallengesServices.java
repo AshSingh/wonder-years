@@ -3,6 +3,8 @@ package com.cs410.getfit.server.challenges.services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -104,6 +106,11 @@ public class ChallengesServices implements ChallengeResourceServices {
 						"challenge_id", challenge.getGuid());
 				challenge.setParticipants(participants);
 			}
+			Collections.sort(challenges, new Comparator<Challenge>() {
+				public int compare(Challenge o1, Challenge o2) {
+					return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+				}
+			});
 			return challenges;
 	}
 

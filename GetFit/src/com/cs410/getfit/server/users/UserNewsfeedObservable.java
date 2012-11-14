@@ -2,11 +2,11 @@ package com.cs410.getfit.server.users;
 
 import java.util.Observable;
 
-public class UserNewsfeedSource extends Observable {
+public class UserNewsfeedObservable extends Observable {
 
-	private static UserNewsfeedSource instance = null;
+	private static UserNewsfeedObservable instance = null;
 	
-	private UserNewsfeedSource() {
+	private UserNewsfeedObservable() {
 		//singleton
 	}
 	
@@ -14,9 +14,9 @@ public class UserNewsfeedSource extends Observable {
 		setChanged();
         notifyObservers(modifiedTime);
 	}
-	public static UserNewsfeedSource getInstance() {
+	public static UserNewsfeedObservable getInstance() {
 		if (instance == null) 
-			instance = new UserNewsfeedSource();
+			instance = new UserNewsfeedObservable();
 		return instance;
 	}
 }

@@ -3,7 +3,6 @@ package com.cs410.getfit.server.challenges.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cs410.getfit.server.challenges.json.links.ChallengeHistorySelfLink;
 import com.cs410.getfit.server.challenges.json.links.ChallengeSelfLink;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.users.json.links.UserSelfLink;
@@ -23,7 +22,6 @@ public class JSONModelToChallengeHistoryConverter {
 			info.setNewsfeedItemType(item.getHistoryDescription());
 			
 			List <ResourceLink> links = new ArrayList<ResourceLink>();
-			links.add(new ChallengeHistorySelfLink(item.getUser().getGuid(), item.getGuid()));
 			links.add(new UserSelfLink(item.getUser().getGuid()));
 			links.add(new ChallengeSelfLink(item.getChallenge().getGuid()));
 			model.setInfo(info);

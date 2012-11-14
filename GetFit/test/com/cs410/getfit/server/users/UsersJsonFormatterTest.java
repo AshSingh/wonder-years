@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.server.users.json.UsersJsonFormatter;
 
 @RunWith(JMock.class)
 public class UsersJsonFormatterTest {
@@ -29,9 +30,9 @@ public class UsersJsonFormatterTest {
 	final User user2 = context.mock(User.class, "user2");
 
 	private String usersJsonString = "{\"users\":"
-			+ "[{\"FB_ID\":\""+fb_id1+"\",\"firstname\":\""+user1fname+"\",\"lastname\":\""+user1lname+"\",\"isPrivate\":\"true\"},"
-			+ "{\"FB_ID\":\""+fb_id2+"\",\"firstname\":\""+user2fname+"\",\"lastname\":\""+user2lname+"\",\"isPrivate\":\"false\"}"
-			+ "]}";;
+			+ "[{\"info\":{\"isPrivate\":true}},"
+			+ "{\"info\":{\"isPrivate\":false}}"
+			+ "]}";
 	private String outgoingJsonString = "{\"users\":[{\"info\":{\"firstname\":\""+user1fname+"\"," +
 																"\"lastname\":\""+user1lname+"\"," +
 																"\"isPrivate\":true}," +
@@ -81,15 +82,9 @@ public class UsersJsonFormatterTest {
 		List<User> actualUsers = formatter.getResourcesFromJSONFormattedString(usersJsonString);
 		assertEquals(2, actualUsers.size());
 		User user1 = actualUsers.get(0);
-		assertEquals(user1fname, user1.getFirstName());
-		assertEquals(user1lname, user1.getLastName());
-		assertEquals(fb_id1, user1.getFB_ID());
 		assertEquals(true, user1.getIsPrivate());
 
 		User user2 = actualUsers.get(1);
-		assertEquals(user2fname, user2.getFirstName());
-		assertEquals(user2lname, user2.getLastName());
-		assertEquals(fb_id2, user2.getFB_ID());
 		assertEquals(false, user2.getIsPrivate());
 	}
 

@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,6 +21,10 @@ import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.models.UserImpl;
+import com.cs410.getfit.server.users.json.UsersJsonFormatter;
+import com.cs410.getfit.server.users.services.UserChallengesServices;
+import com.cs410.getfit.server.users.services.UserNewsfeedServices;
+import com.cs410.getfit.server.users.services.UsersServices;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -111,28 +113,53 @@ public class UsersServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		
-		Pattern loginPattern = Pattern
-				.compile(".*/login");
 		String body = request.getParameter("json_body");
-		JsonParser parser = new JsonParser();
-		JsonElement element = parser.parse(body);
-		JsonObject jObjBody = null;
-		if(element.isJsonObject()) {
-			jObjBody = (JsonObject)element;
-		}
 		
-		Matcher matcher;
-		matcher = loginPattern.matcher(request.getRequestURI());
-		if (matcher.find()) {
+		UserUriParser uriParser = new UserUriParser(request.getRequestURI());
+		if(uriParser.getResource() == UserUriParser.LOGIN) {
+			
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(body);
+			JsonObject jObjBody = null;
+			if(element.isJsonObject()) {
+				jObjBody = (JsonObject)element;
+			}
 			login(request.getParameter("FB_id"), jObjBody,resp);
+			
 		} else {
 			resp.setStatus(404);
 		}
 	}
 	
-	public void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String body = request.getParameter("json_body");
+		
+		UserUriParser uriParser = new UserUriParser(request.getRequestURI());
+		if(uriParser.getResource() == UserUriParser.USERSID) {
+			boolean updated = false;
+			UsersJsonFormatter formatter = new UsersJsonFormatter();
+			List<User> users = formatter.getResourcesFromJSONFormattedString(body);
+			if(users != null && users.size() == 1) {
+				try {
+					users.get(0).setGuid(uriParser.getUserId());
+					updated = usersServices.updateUser(users.get(0));
+				} catch (SQLException e) {
+					throw new ServletException(e);
+				}
+			}
+			if (updated) {
+				resp.setStatus(200);
+			} else {
+				resp.setStatus(404); // resource not updated because it doesnt exist
+			}
+		} else {
+			resp.setStatus(404);
+		}
+	}
+
+	private void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {
 		User user = usersServices.getUser(fb_id);
 		if(user == null && body != null) {
 			String firstname = body.get("first_name").getAsString();

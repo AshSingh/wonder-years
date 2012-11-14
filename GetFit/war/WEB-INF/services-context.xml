@@ -6,8 +6,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<!-- services -->
 	<bean id="usersServices"
-	class="com.cs410.getfit.server.users.UsersServicesImpl">
+	class="com.cs410.getfit.server.users.services.UsersServicesImpl">
 		<property name="userDao" ref="userDao" />
+		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	<bean id="challengesService"
 	class="com.cs410.getfit.server.challenges.services.ChallengesServices">
@@ -47,13 +48,13 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	<bean id="userNewsfeedServices"
-	class="com.cs410.getfit.server.users.UserNewsfeedServices">
+	class="com.cs410.getfit.server.users.services.UserNewsfeedServices">
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="challengeHistoryDao" ref="challengeHistoryDao" />
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="userChallengesServices"
-	class="com.cs410.getfit.server.users.UserChallengesServices">
+	class="com.cs410.getfit.server.users.services.UserChallengesServices">
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="challengeDao" ref="challengeDao" />
 	</bean>

@@ -96,14 +96,14 @@ public class ChallengesJsonFormatterTest {
 				"\"description\":\""+DESCRIPTION2+"\"}," +
 				"\"admin\": \""+USERID2+"\"}"+
 				"]}";
-		
-		challengesOutgoingJsonString = "{\"challenges\":["+
+	challengesOutgoingJsonString = "{\"challenges\":["+
 				"{\"info\":{\"title\":\""+CHALLENGE_TITLE+"\"," +
 				"\"location\":\""+CHALLENGE_LOC+"\"," +
 				"\"isprivate\":true," +
 				"\"description\":\""+DESCRIPTION+"\"}," +
 				"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+CHALLENGEGUID+"\",\"type\":\"challenge\"}," +
 							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}" +
+							"{\"rel\":\"/challenges/"+CHALLENGEGUID+"\",\"uri\":\"/completedchallenges\",\"type\":\"completedchallenges\"}"+
 							"]}," +
 				"{\"info\":{\"title\":\""+CHALLENGE2_TITLE+"\"," +
 				"\"location\":\""+CHALLENGE2_LOC+"\"," +
@@ -111,6 +111,7 @@ public class ChallengesJsonFormatterTest {
 				"\"description\":\""+DESCRIPTION2+"\"}," +
 				"\"links\":[{\"rel\":\"self\",\"uri\":\"/challenges/"+CHALLENGE2GUID+"\",\"type\":\"challenge\"}," +
 							"{\"rel\":\"/challenges/"+CHALLENGE2GUID+"\",\"uri\":\"/participants\",\"type\":\"participants\"}" +
+							"{\"rel\":\"/challenges/"+CHALLENGE2GUID+"\",\"uri\":\"/completedchallenges\",\"type\":\"completedchallenges\"}"+
 							"]}" +
 				"]}";
 	}

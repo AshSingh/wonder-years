@@ -1,4 +1,4 @@
-package com.cs410.getfit.server.users;
+package com.cs410.getfit.server.users.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.List;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
+import com.cs410.getfit.server.users.UserNewsfeedObserver;
 import com.j256.ormlite.dao.Dao;
 
 public class UserNewsfeedServices {
