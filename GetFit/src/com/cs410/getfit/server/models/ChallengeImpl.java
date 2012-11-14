@@ -19,7 +19,6 @@ public class ChallengeImpl implements Challenge {
 	@DatabaseField
 	private String description;
 	private List <ChallengeUser> participants = new ArrayList<ChallengeUser>();
-	//private Set <Activity> activities;
 	
 	
 	public ChallengeImpl(String title, Boolean isPrivate, String location, String description, List<ChallengeUser> participants) {

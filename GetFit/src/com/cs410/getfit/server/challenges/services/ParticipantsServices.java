@@ -11,7 +11,6 @@ import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
-import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
@@ -20,7 +19,6 @@ public class ParticipantsServices implements ParticipantResourceServices {
 
 	private long challengeId;
 	private List<ChallengeUser> participants;
-	private Dao<User, Long> userDao;
 	private Dao<ChallengeUser, Long> challengeUserDao;
 	private TransactionManager manager;
 	private Dao<ChallengeHistory, Long> challengeHistoryDao;
@@ -63,14 +61,6 @@ public class ParticipantsServices implements ParticipantResourceServices {
 		this.challengeId = challengeId;
 	}
 
-	public Dao <User, Long> getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(Dao <User, Long> userDao) {
-		this.userDao = userDao;
-	}
-
 	@Override
 	public List<ChallengeUser> create() throws SQLException {
 		final Challenge challenge = new ChallengeImpl();
@@ -90,10 +80,7 @@ public class ParticipantsServices implements ParticipantResourceServices {
 								participant.setDateJoined(Calendar.getInstance().getTimeInMillis());
 								ChallengeUser participant_created = challengeUserDao
 										.createIfNotExists(participant);
-								userDao.refresh(participant.getUser());
-								challengeDao.refresh(participant.getChallenge());
-								if(!participant.getUser().getIsPrivate())
-									createHistoryItem(participant);
+								createHistoryItem(participant);
 								created.add(participant_created);
 						}
 						return created;
@@ -110,9 +97,6 @@ public class ParticipantsServices implements ParticipantResourceServices {
 	@Override
 	public List<ChallengeUser> get() throws SQLException {
 		List <ChallengeUser> participants = challengeUserDao.queryForEq("challenge_id", challengeId);
-		for(ChallengeUser participant: participants) {
-			userDao.refresh(participant.getUser());
-		}
 		return participants;
 	}
 

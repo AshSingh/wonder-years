@@ -8,32 +8,41 @@ import java.util.List;
 
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.server.models.ChallengeUser;
+import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 
 public class UserNewsfeedServices {
 	private long userId;
 	private Dao<ChallengeHistory, Long> challengeHistoryDao;
 	private Dao<ChallengeUser, Long> challengeUserDao;
+	private Dao<User, Long> userDao;
 	private Long lastPolled;
 
 	public List<ChallengeHistory> getChallengeHistory() throws SQLException {
 		if (lastPolled == null
 				|| lastPolled == 0
-				|| UserNewsfeedObserver.getInstance().getLastModified() > lastPolled
-				|| UserNewsfeedObserver.getInstance().getLastModified() == 0) {
+				|| UserNewsfeedObserver.getInstance().getLastModified() > lastPolled) {
 			List<ChallengeHistory> history = new ArrayList<ChallengeHistory>();
 			List<ChallengeUser> participatingIn = challengeUserDao.queryForEq(
 					"user_id", userId);
-			for (ChallengeUser challengeUser : participatingIn) {
+			//Query all the history items for each challenge the user is participating in
+			for (ChallengeUser challenge : participatingIn) {
 				List<ChallengeHistory> perChallenge = challengeHistoryDao
-						.queryForEq("challenge_id", challengeUser
+						.queryForEq("challenge_id", challenge
 								.getChallenge().getGuid());
-				if (perChallenge.size() > 0)
-					history.addAll(perChallenge);
+				//Filter out history of private users
+				if (perChallenge.size() > 0) {
+					for(ChallengeHistory indChallengeHistory : perChallenge ) {
+						userDao.refresh(indChallengeHistory.getUser());
+						if(!indChallengeHistory.getUser().getIsPrivate())
+							history.add(indChallengeHistory);
+					}
+					
+				}
 			}
 			Collections.sort(history, new Comparator<ChallengeHistory>() {
 				public int compare(ChallengeHistory o1, ChallengeHistory o2) {
-					return (int) (o1.getDateModified() - o2.getDateModified());
+					return (int) (o2.getDateModified() - o1.getDateModified());
 				}
 			});
 			return history;
@@ -64,5 +73,13 @@ public class UserNewsfeedServices {
 
 	public void setLastPolled(long lastPolled) {
 		this.lastPolled = lastPolled;
+	}
+
+	public Dao<User, Long> getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(Dao<User, Long> userDao) {
+		this.userDao = userDao;
 	}
 }

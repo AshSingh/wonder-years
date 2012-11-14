@@ -14,6 +14,10 @@
 	    <param-value>/WEB-INF/db-context.xml /WEB-INF/dao-context.xml /WEB-INF/services-context.xml</param-value>
 	</context-param>
 	
+	<!-- listeners-->
+	<listener>
+		 <listener-class>com.cs410.getfit.server.listeners.HistoryObserverListener</listener-class>
+	</listener>
 
 	<listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -75,6 +79,5 @@
 		<servlet-name>ChallengesServlet</servlet-name>
 		<url-pattern>/challenges/*</url-pattern>
 	</servlet-mapping>
-
 
 </web-app>

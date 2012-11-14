@@ -74,11 +74,7 @@ public class ChallengesServicesTest {
 	public void testUpdateIsAlwaysFals() {
 		assertEquals(false, service.update());
 	}
-	@Test
-	public void testSetAndGetUserDao() {
-		service.setUserDao(userDao);
-		assertEquals(userDao, service.getUserDao());
-	}
+
 	@Test
 	public void testSetAndGetChallengeUserDao() {
 		service.setChallengeUserDao(challengeUserDao);

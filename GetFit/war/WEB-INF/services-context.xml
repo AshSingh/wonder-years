@@ -14,13 +14,10 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		<property name="challengeDao" ref="challengeDao" />
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="challengeHistoryDao" ref="challengeHistoryDao" />
-		<property name="userDao" ref="userDao" />
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	<bean id="completedChallengesService"
 	class="com.cs410.getfit.server.challenges.services.CompletedChallengesServices">
-		<property name="userDao" ref="userDao" />
-		<property name="challengeDao" ref="challengeDao" />
 		<property name="completedChallengesDao" ref="completedChallengesDao" />
 		<property name="challengeHistoryDao" ref="challengeHistoryDao" />
 		<property name="transactionManager" ref="transactionManager" />
@@ -32,7 +29,6 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="participantsServices"
 	class="com.cs410.getfit.server.challenges.services.ParticipantsServices">
 		<property name="challengeUserDao" ref="challengeUserDao" />
-		<property name="userDao" ref="userDao" />
 		<property name="challengeDao" ref="challengeDao" />
 		<property name="challengeHistoryDao" ref="challengeHistoryDao" />
 		<property name="transactionManager" ref="transactionManager" />
@@ -54,6 +50,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	class="com.cs410.getfit.server.users.UserNewsfeedServices">
 		<property name="challengeUserDao" ref="challengeUserDao" />
 		<property name="challengeHistoryDao" ref="challengeHistoryDao" />
+		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="userChallengesServices"
 	class="com.cs410.getfit.server.users.UserChallengesServices">

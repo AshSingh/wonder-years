@@ -21,15 +21,6 @@ public class ChallengesServices implements ChallengeResourceServices {
 	private TransactionManager manager;
 	private List<Challenge> challenges;
 	private Dao<ChallengeHistory, Long> challengeHistoryDao;
-	private Dao <User, Long> userDao;
-	public Dao <User, Long> getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(Dao <User, Long> userDao) {
-		this.userDao = userDao;
-	}
-	
 
 	public Dao<ChallengeHistory, Long> getChallengeHistoryDao() {
 		return challengeHistoryDao;
@@ -93,9 +84,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 								dbChallenge.setParticipants(participantsCreated);
 								created.add(dbChallenge);
 								
-								userDao.refresh(participant.getUser());
-								if(!participant.getUser().getIsPrivate())
-									createHistoryItem(dbChallenge, participant.getUser());
+								createHistoryItem(dbChallenge, participant.getUser());
 							} 
 						}
 						return created;

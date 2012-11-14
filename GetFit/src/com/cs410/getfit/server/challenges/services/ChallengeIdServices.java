@@ -93,10 +93,12 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 		if (oldChallenge != null) {	
 		
 		User admin = null;
-		for(ChallengeUser user: oldChallenge.getParticipants()) {
-			challengeUserDao.refresh(user);
-			if(user.isAdmin())
+		List<ChallengeUser> participants = challengeUserDao.queryForEq("challenge_id", challengeId);
+		for(ChallengeUser user: participants) {
+			if(user.isAdmin()) {
 				admin = user.getUser();
+				break;
+			}
 		}
 		final ChallengeHistory historyItem = new ChallengeHistoryImpl(admin, challenge, NewsfeedItemType.EDIT.toString());
 			rowsUpdated = manager.callInTransaction(new Callable<Integer>() {
