@@ -3,12 +3,16 @@ package com.cs410.getfit.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.client.event.GoToChallengeEvent;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.view.CreateAndEditChallengeView;
 import com.cs410.getfit.shared.ChallengeInfoJsonModel;
 import com.cs410.getfit.shared.IncomingChallengeJsonModel;
+import com.cs410.getfit.shared.LinkTypes;
+import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
+import com.cs410.getfit.shared.ResourceLink;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -16,7 +20,6 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class CreateChallengePresenter implements Presenter, CreateAndEditChallengeView.Presenter{
@@ -51,10 +54,7 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 		Boolean fieldsPass = CreateAndEditChallengeHelper.verifyFields(view);
 
 		if (fieldsPass) {
-			RequestBuilder builder = HTTPRequestBuilder.getPutRequest("/users/3");
-			String usersJsonString = "{\"users\":"
-					+ "[{\"info\":{\"isPrivate\":"+view.getIsPrivate()+"}}"
-					+ "],\"accessToken\":\""+Cookies.getCookie("accessToken")+"\"}";
+			RequestBuilder builder = HTTPRequestBuilder.getPostRequest("/challenges"); 
 			
 			// gather challenge info from view
 			ChallengeInfoJsonModel info = new ChallengeInfoJsonModel();
@@ -74,16 +74,29 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 			String requestJson = ChallengesJsonFormatter.formatChallengeJsonInfo(models);
 
 			try {
-				builder.sendRequest(usersJsonString, new RequestCallback() {
+				builder.sendRequest(requestJson, new RequestCallback() {
 					@Override
 					public void onResponseReceived(Request request, Response response) {
 						if (response.getStatusCode() == 200) {
-							Window.alert("yes");
+							List<OutgoingChallengeJsonModel> models = ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
+							String challengeUri = null;
+							if (models.size() > 0) {
+								OutgoingChallengeJsonModel model = models.get(0);
+								List<ResourceLink> links = model.getLinks();
+								for (ResourceLink link : links) {
+									if (link.getType().equals(LinkTypes.CHALLENGE.toString())) {
+										challengeUri = link.getUri();
+										break;
+									}
+								}
+								eventBus.fireEvent(new GoToChallengeEvent(challengeUri));
 							}
 							else {
 								eventBus.fireEvent(new GoToErrorEvent());
 							}
-					
+						} else {
+							eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
+						}
 					}
 					@Override
 					public void onError(Request request, Throwable exception) {
