@@ -41,7 +41,6 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	private final ChallengesView view;
 
 	private final String NO_CHALLENGES_MSG = "There are currently no challenges to display.";
-	private final String NO_USERCHALLENGES_MSG = "You have not joined any challenges yet.";
 
 	public ChallengesPresenter(HandlerManager eventBus, ChallengesView view){
 		this.eventBus = eventBus;
@@ -111,7 +110,7 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 							List<ResourceLink> links = models.get(0).getLinks();
 							for (ResourceLink link : links) {
 								if (link.getType().equals(LinkTypes.USERCHALLENGES.toString())){
-									displayChallenges(link.getRel() + link.getUri());
+									UserChallengesHelper.displayUserChallenges(link.getRel() + link.getUri(), view.getUserChallengesPanel(), eventBus);
 								}
 							}
 						}
@@ -194,62 +193,6 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		} catch (RequestException e) {
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
-	}
-
-
-	// display a list of challenges that user is participating in
-	private void displayChallenges(String userChallengesUri){
-		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(userChallengesUri); 
-		try {
-			builder.sendRequest(null, new RequestCallback() {
-				@Override
-				public void onResponseReceived(Request request, Response response) {
-					if (response.getStatusCode() == 200) {
-						List<OutgoingChallengeJsonModel> models = ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
-						if (models.size() > 0) {
-							for (OutgoingChallengeJsonModel model : models) {
-								addUserChallengeToView(model);
-							}
-						}
-						else {
-							view.getUserChallengesPanel().add(new Label(NO_USERCHALLENGES_MSG));
-						}
-					}
-					else {
-						eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
-					}
-				}
-				@Override
-				public void onError(Request request, Throwable exception) {
-					eventBus.fireEvent(new GoToErrorEvent());
-				}
-			});
-		} catch (RequestException e) {
-			eventBus.fireEvent(new GoToErrorEvent());
-		}
-	}
-
-	private void addUserChallengeToView(OutgoingChallengeJsonModel model) {
-		String challengeUri = null;
-		ChallengeInfoJsonModel infoModel = model.getInfo();
-		List<ResourceLink> links = model.getLinks();
-		for (ResourceLink link : links) {
-			if (link.getType().equals(LinkTypes.CHALLENGE.toString())) {
-				challengeUri = link.getUri();
-			}
-		}
-		// only create hyperlink if successfully got challenge uri
-		Widget name;
-		if (challengeUri != null) {
-			name = new Hyperlink(infoModel.getTitle(), challengeUri);
-		}
-		// else just display challenge name as a label
-		else {
-			name = new Label(infoModel.getTitle());
-		}
-		name.addStyleName("challenges-link");
-		// add to main panel
-		view.getUserChallengesPanel().add(name);
 	}
 
 	public void onNewChallengeButtonClicked(){

@@ -32,7 +32,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 
@@ -40,14 +39,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 	private final DashboardView view;
 
 	private final String NO_NEWSFEED_MSG = "There is currently no newsfeed to display.";
-	private final String NO_USERCHALLENGES_MSG = "You have not joined any challenges yet.";
 	
 	// polling variables
 	private static Timer refreshTimer;
 	private final int POLL_INTERVAL = 2000;
 
 	private long lastPollDate;
-	private final String dateFormat = "MM-dd-yyyy hh:mm:ss";
+	private final String dateFormat = "MMM d, yyyy 'at' hh:mm:ss a";
 	
 	public DashboardPresenter(HandlerManager eventBus, DashboardView view){
 		this.eventBus = eventBus;
@@ -272,7 +270,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 							for (ResourceLink link : links) {
 								if (link.getType().equals(LinkTypes.USERCHALLENGES.toString())){
 									// display challenges user is participating in
-									displayChallenges(link.getRel() + link.getUri());
+									UserChallengesHelper.displayUserChallenges(link.getRel() + link.getUri(), view.getUserChallengesPanel(), eventBus);
 								}
 								else if (link.getType().equals(LinkTypes.NEWSFEED.toString())) {
 									// set up newsfeed with auto-refresh 
@@ -293,63 +291,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		} catch (RequestException e) {
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
-	}
-
-	// display a list of challenges that user is participating in
-	private void displayChallenges(String userChallengesUri){
-		// clean panel
-		view.getUserChallengesPanel().clear();
-		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(userChallengesUri); 
-		try {
-			builder.sendRequest(null, new RequestCallback() {
-				@Override
-				public void onResponseReceived(Request request, Response response) {
-					if (response.getStatusCode() == 200) {
-						List<OutgoingChallengeJsonModel> models = ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
-						if (models.size() > 0) {
-							for (OutgoingChallengeJsonModel model : models) {
-								addChallengeToView(model);
-							}
-						}
-						else {
-							view.getUserChallengesPanel().add(new Label(NO_USERCHALLENGES_MSG));
-						}
-					}
-					else {
-						eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
-					}
-				}
-				@Override
-				public void onError(Request request, Throwable exception) {
-					eventBus.fireEvent(new GoToErrorEvent());
-				}
-			});
-		} catch (RequestException e) {
-			eventBus.fireEvent(new GoToErrorEvent());
-		}
-	}
-
-	private void addChallengeToView(OutgoingChallengeJsonModel model) {
-		String challengeUri = null;
-		ChallengeInfoJsonModel infoModel = model.getInfo();
-		List<ResourceLink> links = model.getLinks();
-		for (ResourceLink link : links) {
-			if (link.getType().equals(LinkTypes.CHALLENGE.toString())) {
-				challengeUri = link.getUri();
-			}
-		}
-		// only create hyperlink if successfully got challenge uri
-		Widget name;
-		if (challengeUri != null) {
-			name = new Hyperlink(infoModel.getTitle(), challengeUri);
-		}
-		// else just display challenge name as a label
-		else {
-			name = new Label(infoModel.getTitle());
-		}
-		name.addStyleName("challenges-link");
-		// add to main panel
-		view.getUserChallengesPanel().add(name);
 	}
 
 	public void onNewChallengeButtonClicked(){
