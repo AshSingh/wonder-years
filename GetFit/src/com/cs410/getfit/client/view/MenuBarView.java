@@ -6,6 +6,7 @@ public interface MenuBarView {
 	
 	public interface Presenter {
 	    void onSearchOptionClicked();
+	    void onLogoutButtonClicked();
 	}
 	
 	void setPresenter(Presenter presenter);

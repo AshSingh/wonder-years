@@ -22,8 +22,7 @@
 							targetHistoryToken="settings">Settings</g:Hyperlink>
 					</li>
 					<li>
-						<g:Hyperlink styleName="menubar-link"
-							targetHistoryToken="">Logout</g:Hyperlink>
+						<g:Anchor ui:field="logoutBtn" styleName="menubar-link">Logout</g:Anchor>
 					</li>
 				</ul>
 			</div>
