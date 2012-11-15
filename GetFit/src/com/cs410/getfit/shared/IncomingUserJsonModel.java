@@ -6,4 +6,7 @@ public class IncomingUserJsonModel {
 	public Boolean getIsPrivate() {
 		return info.getIsPrivate();
 	}
+	public void setUserInfoJsonModel(UserInfoJsonModel info) {
+		this.info = info;
+	}
 }

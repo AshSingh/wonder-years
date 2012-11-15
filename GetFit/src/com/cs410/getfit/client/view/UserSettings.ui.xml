@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:webapplication='urn:import:com.cs410.getfit.client.view'>
+
+	<g:HTMLPanel>
+		<div class="menu-bar-padding" />
+		<div class="page-header-general">
+			<h4>
+				<g:Label ui:field="pageTitle">Update your settings:</g:Label>
+			</h4>
+		</div>
+		<div class="row">
+			<div class="main-panel">
+				<form class="form-inline">
+					<h4>
+						<g:Label styleName="spaced-label" ui:field="nameLabel" />
+					</h4>
+				</form>
+				<form class="form-inline">
+					<h5>
+						<g:Label styleName="spaced-label">Privacy
+							Setting:
+						</g:Label>
+					</h5>
+					<g:RadioButton styleName="spaced-radio" ui:field="privacyPublic"
+						name="privacy" checked="true" />
+					<h5>
+						<g:Label styleName="radio-label">Public</g:Label>
+					</h5>
+					<g:RadioButton styleName="spaced-radio" ui:field="privacyPrivate"
+						name="privacy" />
+					<h5>
+						<g:Label styleName="radio-label">Private</g:Label>
+					</h5>
+				</form>
+				<h5>
+					<small>
+						<g:Label styleName="spaced-label">Setting your profile to private will
+							prevent any of your activity on GetFit from appearing on
+							newsfeeds.
+						</g:Label>
+						<g:Label styleName="spaced-label">A public profile will
+							allow users to see your challenge activity when they join the same challenge.
+						</g:Label>
+					</small>
+				</h5>
+				<div class="create-btn-padding" />
+				<div>
+					<g:Button styleName="btn btn-primary" ui:field="saveSettingsBtn">Save
+					</g:Button>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

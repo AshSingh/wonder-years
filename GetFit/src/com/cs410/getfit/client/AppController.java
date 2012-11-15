@@ -16,6 +16,8 @@ import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.event.GoToLoginEventHandler;
 import com.cs410.getfit.client.event.GoToRegisterEvent;
 import com.cs410.getfit.client.event.GoToRegisterEventHandler;
+import com.cs410.getfit.client.event.GoToUserSettingsEvent;
+import com.cs410.getfit.client.event.GoToUserSettingsEventHandler;
 import com.cs410.getfit.client.presenter.ChallengePresenter;
 import com.cs410.getfit.client.presenter.ChallengesPresenter;
 import com.cs410.getfit.client.presenter.CreateChallengePresenter;
@@ -26,6 +28,7 @@ import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
 import com.cs410.getfit.client.presenter.RegisterPresenter;
+import com.cs410.getfit.client.presenter.UserSettingsPresenter;
 import com.cs410.getfit.client.view.ChallengeViewImpl;
 import com.cs410.getfit.client.view.ChallengesView;
 import com.cs410.getfit.client.view.ChallengesViewImpl;
@@ -35,6 +38,8 @@ import com.cs410.getfit.client.view.ErrorViewImpl;
 import com.cs410.getfit.client.view.LoginViewImpl;
 import com.cs410.getfit.client.view.MenuBarViewImpl;
 import com.cs410.getfit.client.view.RegisterViewImpl;
+import com.cs410.getfit.client.view.UserSettingsView;
+import com.cs410.getfit.client.view.UserSettingsViewImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -58,6 +63,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private ChallengeViewImpl challengeView = null;	
 	private ErrorViewImpl errorView = null;	
 	private ChallengesView challengesView = null;
+	private UserSettingsView settingsView = null;
 	
 	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
 	    this.eventBus = eventBus;
@@ -122,6 +128,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				doGoToChallenges();
 			}
 		});  
+		
+		eventBus.addHandler(GoToUserSettingsEvent.TYPE,
+				new GoToUserSettingsEventHandler() {
+			public void onGoToUserSettings(GoToUserSettingsEvent event) {
+				doGoToUserSettings();
+			}
+		}); 
 	}
 	
 	private void doGoToLogin() {
@@ -153,6 +166,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		}
 	}
 	
+	private void doGoToUserSettings() {
+		History.newItem(HistoryValues.SETTINGS.toString());
+	}
+	
 	private void doGoToEditChallenge(String challengeUri) {
 		History.newItem(HistoryValues.EDIT.toString() + challengeUri);
 	}
@@ -163,7 +180,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-	    final String token = event.getValue();
+		DashboardPresenter.cancelRefreshTimer();
+		final String token = event.getValue();
 	    if (token != null) {
 	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
@@ -296,6 +314,24 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        			challengesView.setMenuBar(menuBarView);
 	        			new MenuBarPresenter(eventBus, menuBarView);
 	        			new ChallengesPresenter(eventBus, challengesView).go(container);	 	
+	        		}
+	        	});
+	        }
+	        else if (token.equals(HistoryValues.SETTINGS.toString())) {
+	        	GWT.runAsync(new RunAsyncCallback() {
+	        		public void onFailure(Throwable caught) {
+	        		}
+
+	        		public void onSuccess() {
+	        			if (settingsView == null) {
+	        				settingsView = new UserSettingsViewImpl();
+	        			}
+	        			if (menuBarView == null) {
+	        				menuBarView = new MenuBarViewImpl();
+	        			}
+	        			settingsView.setMenuBar(menuBarView);
+	        			new MenuBarPresenter(eventBus, menuBarView);
+	        			new UserSettingsPresenter(eventBus, settingsView).go(container);	 	
 	        		}
 	        	});
 	        }

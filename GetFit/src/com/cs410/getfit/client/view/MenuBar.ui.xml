@@ -19,7 +19,7 @@
 					</li>
 					<li>
 						<g:Hyperlink styleName="menubar-link"
-							targetHistoryToken="">Settings</g:Hyperlink>
+							targetHistoryToken="settings">Settings</g:Hyperlink>
 					</li>
 					<li>
 						<g:Hyperlink styleName="menubar-link"

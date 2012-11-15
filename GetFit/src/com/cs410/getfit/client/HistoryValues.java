@@ -7,7 +7,8 @@ public enum HistoryValues {
 	CREATECHALLENGE,
 	ERROR,
 	EDIT,
-	CHALLENGES;
+	CHALLENGES,
+	SETTINGS;
 	
 	 @Override 
 	 public String toString() {

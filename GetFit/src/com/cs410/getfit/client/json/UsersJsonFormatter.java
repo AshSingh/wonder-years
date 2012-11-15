@@ -3,13 +3,17 @@ package com.cs410.getfit.client.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs410.getfit.shared.IncomingUserJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 import com.cs410.getfit.shared.UserInfoJsonModel;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
 
 public class UsersJsonFormatter {
 	public enum UserJsonFields {
@@ -52,5 +56,30 @@ public class UsersJsonFormatter {
 			models.add(model);
 		}
 		return models;
+	}
+	
+	public static String formatUserJsonInfo(List<IncomingUserJsonModel> models) {
+		JSONArray usersJson = new JSONArray();
+		// create array of individual challenge json
+		for(IncomingUserJsonModel model: models) {
+		
+			JSONObject userJson = new JSONObject();
+			JSONObject info = new JSONObject();
+	
+			// user setting info
+			info.put(UserJsonFields.isPrivate.toString(), JSONBoolean.getInstance(model.getIsPrivate()));
+			
+			userJson.put(UserJsonFields.info.toString(), info);
+
+			usersJson.set(usersJson.size(), userJson);
+		}
+		
+		// create json with the array of individual challenge json
+		JSONObject requestJson = new JSONObject();
+		requestJson.put(UserJsonFields.users.toString(), usersJson);
+		// Add the accessToken to the json
+		requestJson.put("accessToken", new JSONString(Cookies.getCookie("accessToken")));
+		
+		return requestJson.toString();
 	}
 }

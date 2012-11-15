@@ -27,6 +27,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -40,7 +41,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 	private final DashboardView view;
 
 	// polling variables
-	private Timer refreshTimer;
+	private static Timer refreshTimer;
 	private final int POLL_INTERVAL = 2000;
 
 	private long lastPollDate;
@@ -61,6 +62,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		populateView();
 	}
 
+	public static void cancelRefreshTimer(){
+		if (refreshTimer != null) {
+			refreshTimer.cancel();
+			refreshTimer = null;
+		}
+	}
+	
 	private void setUpNewsfeed(final String newsfeedUri){
 		// reset last poll date
 		lastPollDate = new Long(0);
@@ -80,6 +88,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 			builder.sendRequest(null, new RequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
+					Window.alert(response.getText());
 					if (response.getStatusCode() == 200) {
 						// update last poll date
 						lastPollDate = System.currentTimeMillis();
@@ -135,18 +144,15 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 						}
 					}
 					else {
-						refreshTimer.cancel();
 						eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 					}
 				}
 				@Override
 				public void onError(Request request, Throwable exception) {
-					refreshTimer.cancel();
 					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			});
 		} catch (RequestException e) {
-			refreshTimer.cancel();
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 	}
@@ -187,12 +193,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 					}
 					@Override
 					public void onError(Request request, Throwable exception) {
-						refreshTimer.cancel();
 						eventBus.fireEvent(new GoToErrorEvent());
 					}
 				});
 			} catch (RequestException e) {
-				refreshTimer.cancel();
 				eventBus.fireEvent(new GoToErrorEvent());
 			}
 		}
@@ -230,12 +234,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 				}
 				@Override
 				public void onError(Request request, Throwable exception) {
-					refreshTimer.cancel();
 					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			});
 		} catch (RequestException e) {
-			refreshTimer.cancel();
 			eventBus.fireEvent(new GoToErrorEvent());
 		}	
 	}
@@ -270,18 +272,15 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 						}
 					}
 					else {
-						refreshTimer.cancel();
 						eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 					}
 				}
 				@Override
 				public void onError(Request request, Throwable exception) {
-					refreshTimer.cancel();
 					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			});
 		} catch (RequestException e) {
-			refreshTimer.cancel();
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 	}
@@ -304,18 +303,15 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 						}
 					}
 					else {
-						refreshTimer.cancel();
 						eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
 					}
 				}
 				@Override
 				public void onError(Request request, Throwable exception) {
-					refreshTimer.cancel();
 					eventBus.fireEvent(new GoToErrorEvent());
 				}
 			});
 		} catch (RequestException e) {
-			refreshTimer.cancel();
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 	}
@@ -344,7 +340,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 	}
 
 	public void onNewChallengeButtonClicked(){
-		refreshTimer.cancel();
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}
 }

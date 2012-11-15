@@ -1,11 +1,14 @@
 package com.cs410.getfit.client.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.cs410.getfit.shared.IncomingUserJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
+import com.cs410.getfit.shared.UserInfoJsonModel;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.Cookies;
 
@@ -32,6 +35,11 @@ public class UsersJsonTest extends GWTTestCase {
 			"\"links\":[{\"rel\":\"self\",\"uri\":\"/users/2\",\"type\":\"user\"}," +
 						"{\"rel\":\"/users/2\",\"uri\":\"/newsfeed\",\"type\":\"newsfeed\"}," +
 						"{\"rel\":\"/users/2\",\"uri\":\"/challenges\",\"type\":\"userchallenges\"}]}]}";
+	
+	private String outgoingJson = "{\"users\":"
+			+ "[{\"info\":{\"isPrivate\":true}},"
+			+ "{\"info\":{\"isPrivate\":false}}"
+			+ "], \"accessToken\":\"r109809f\"}";
 	
 	@Test
 	public void testParseUserJsonInfo() {
@@ -78,6 +86,31 @@ public class UsersJsonTest extends GWTTestCase {
 		assertEquals("/users/2", link3.getRel());
 		assertEquals("/challenges", link3.getUri());
 		assertEquals("userchallenges", link3.getType());
+	}
+	
+	@Test
+	public void testFormatUserJsonInfo() {
+		// user 1
+		UserInfoJsonModel info = new UserInfoJsonModel();
+		info.setIsPrivate(true);
+
+		IncomingUserJsonModel model = new IncomingUserJsonModel();
+		model.setUserInfoJsonModel(info);
+
+		// user 2
+		UserInfoJsonModel info2 = new UserInfoJsonModel();
+		info2.setIsPrivate(false);
+
+		IncomingUserJsonModel model2 = new IncomingUserJsonModel();
+		model2.setUserInfoJsonModel(info2);
+		
+		List<IncomingUserJsonModel> models = new ArrayList<IncomingUserJsonModel>();
+		models.add(model);
+		models.add(model2);
+
+		// get formatted challenge json
+		String requestJson = UsersJsonFormatter.formatUserJsonInfo(models);
+		assertEquals(outgoingJson, requestJson);
 	}
 }
 
