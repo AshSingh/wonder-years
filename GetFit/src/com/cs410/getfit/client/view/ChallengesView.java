@@ -7,6 +7,7 @@ public interface ChallengesView {
 	
 	public interface Presenter {
 		void onNewChallengeButtonClicked();
+		void onSortByLocationButtonClicked();
 	}
 	
 	void setPresenter(Presenter presenter);

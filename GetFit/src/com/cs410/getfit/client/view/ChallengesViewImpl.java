@@ -32,6 +32,13 @@ public class ChallengesViewImpl extends Composite implements ChallengesView {
 		}
 	}
 	
+	@UiHandler("sortByLocationBtn")
+	void onSortByLocationClicked(ClickEvent event) {
+		if(presenter != null) {
+			presenter.onSortByLocationButtonClicked();
+		}
+	}
+	
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;

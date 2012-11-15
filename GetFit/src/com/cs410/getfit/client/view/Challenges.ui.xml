@@ -22,8 +22,13 @@
 				</g:VerticalPanel>
 			</div>
 			<div class="span8">
-				<g:Label styleName="subtitle-label">Public Challenges:</g:Label>
-				<g:VerticalPanel ui:field="challengesPanel" />
+				<div class="span4">
+					<g:Label styleName="subtitle-label">Public Challenges:</g:Label>
+					<g:VerticalPanel ui:field="challengesPanel" />
+				</div>
+				<div class="span2">
+					<g:Button ui:field="sortByLocationBtn" styleName="btn btn-primary btn-link closest">Closest to me</g:Button>
+				</div>
 			</div>
 		</div>
 	</g:HTMLPanel>

@@ -6,6 +6,7 @@ import java.util.List;
 public class OutgoingChallengeJsonModel {
 	private ChallengeInfoJsonModel info;
 	private List <ResourceLink> links;
+	private double distance;
 	public void setInfo(ChallengeInfoJsonModel info) {
 		this.info = info;
 	}
@@ -17,6 +18,14 @@ public class OutgoingChallengeJsonModel {
 	}
 	public List<ResourceLink> getLinks(){
 		return links;
+	}
+	
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	
+	public double getDistance() {
+		return this.distance;
 	}
 	
 }

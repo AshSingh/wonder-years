@@ -1,5 +1,7 @@
 package com.cs410.getfit.client.presenter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
@@ -9,18 +11,22 @@ import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.json.ParticipantsJsonFormatter;
 import com.cs410.getfit.client.json.UsersJsonFormatter;
 import com.cs410.getfit.client.view.ChallengesView;
+import com.cs410.getfit.client.view.PositionCallback;
 import com.cs410.getfit.shared.ChallengeInfoJsonModel;
 import com.cs410.getfit.shared.LinkTypes;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.geolocation.client.Geolocation;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.maps.client.geometrylib.SphericalUtils;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -248,5 +254,18 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 
 	public void onNewChallengeButtonClicked(){
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
+	}
+	
+	public void onSortByLocationButtonClicked() {
+		view.getChallengesPanel().clear();
+		Geolocation userLocation = Geolocation.getIfSupported();
+		if(userLocation != null) {
+			PositionSortCallback posCallback = new PositionSortCallback(eventBus, this);
+			userLocation.getCurrentPosition((Callback) posCallback);
+		}
+	}
+	
+	public void receiveSortedModels(OutgoingChallengeJsonModel model) {
+		addChallengeToView(model);
 	}
 }
