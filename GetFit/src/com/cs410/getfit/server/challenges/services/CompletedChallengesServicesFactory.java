@@ -11,14 +11,20 @@ import com.cs410.getfit.server.models.CompletedChallenge;
 
 public class CompletedChallengesServicesFactory {
 	WebApplicationContext ctx;
-	ChallengeUriParser parser;
+	int resource;
+	long challengeId;
+	long completedChallengeId;
 
-	public CompletedChallengesServicesFactory(WebApplicationContext ctx, ChallengeUriParser parser) {
+	public CompletedChallengesServicesFactory(WebApplicationContext ctx,
+			int resource, long challengeId, long completedChallengeId) {
 		this.ctx = ctx;
-		this.parser = parser;
+		this.resource = resource;
+		this.challengeId = challengeId;
+		this.completedChallengeId = completedChallengeId;
 	}
 
-	public CompletedChallengeResourceServices getCompletedChallengeServices(List<CompletedChallenge> challenges) throws ServletException {
+	public CompletedChallengeResourceServices getCompletedChallengeServices(
+			List<CompletedChallenge> challenges) throws ServletException {
 		return getService(challenges);
 	}
 
@@ -26,9 +32,9 @@ public class CompletedChallengesServicesFactory {
 			throws ServletException {
 		return getService(null);
 	}
-	private CompletedChallengeResourceServices getService(List<CompletedChallenge> challenges)
-			throws ServletException {
-		int resource = parser.getResource();
+
+	private CompletedChallengeResourceServices getService(
+			List<CompletedChallenge> challenges) throws ServletException {
 		switch (resource) {
 		case ChallengeUriParser.INVALID_URI:
 			throw new ServletException("Invalid URI");
@@ -42,17 +48,19 @@ public class CompletedChallengesServicesFactory {
 
 	private CompletedChallengeResourceServices getCompletedChallengesServices(
 			List<CompletedChallenge> challenges) {
-		CompletedChallengesServices services = (CompletedChallengesServices) ctx.getBean("completedChallengesService");
-		
+		CompletedChallengesServices services = (CompletedChallengesServices) ctx
+				.getBean("completedChallengesService");
+
 		services.setChallenges(challenges);
-		services.setChallengeId(parser.getChallengeId());
-		
+		services.setChallengeId(challengeId);
+
 		return services;
 	}
 
 	private CompletedChallengeResourceServices getCompletedChallengeIdServices() {
-		CompletedChallengeIdServices services = (CompletedChallengeIdServices) ctx.getBean("completedChallengesIdService");
-		services.setCompletedChallengeId(parser.getCompletedChallengeId());		
+		CompletedChallengeIdServices services = (CompletedChallengeIdServices) ctx
+				.getBean("completedChallengesIdService");
+		services.setCompletedChallengeId(completedChallengeId);
 		return services;
 	}
 }

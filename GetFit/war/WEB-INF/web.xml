@@ -16,7 +16,7 @@
 	
 	<!-- listeners-->
 	<listener>
-		 <listener-class>com.cs410.getfit.server.listeners.HistoryObserverListener</listener-class>
+		 <listener-class>com.cs410.getfit.server.listeners.ObserverRegistrationListener</listener-class>
 	</listener>
 
 	<listener>

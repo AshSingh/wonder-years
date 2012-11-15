@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.cs410.getfit.server.models.User;
-import com.cs410.getfit.server.users.UserNewsfeedObservable;
+import com.cs410.getfit.server.users.UserPrivacySettingsObservable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 
@@ -78,7 +78,7 @@ public class UsersServicesImpl implements UsersServices {
 			rowsUpdated = transactionManager.callInTransaction(new Callable<Integer>() {
 					public Integer call() throws Exception {
 						Integer updated = userDao.update(user);
-						UserNewsfeedObservable.getInstance().notifyHistorySource(Calendar.getInstance().getTimeInMillis());
+						UserPrivacySettingsObservable.getInstance().notifyMyObservers(Calendar.getInstance().getTimeInMillis());
 						return updated;
 					}
 				});

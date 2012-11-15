@@ -32,6 +32,7 @@ public class ChallengesServlet extends HttpServlet {
 	private static final long serialVersionUID = 8032611514671727168L;
 
 	private WebApplicationContext ctx = null;
+	ChallengeUriParser parser;
 
 	@Override
 	public void init() throws ServletException {
@@ -44,13 +45,14 @@ public class ChallengesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String pathURI = req.getRequestURI();
-		ChallengeUriParser parser = new ChallengeUriParser(pathURI);
+		parser = new ChallengeUriParser(pathURI);
 		PrintWriter writer = resp.getWriter();
 		resp.setHeader("Content-Type", "application/json");
 
 		if (parser.isChallengeURI()) {
-			ChallengesJsonFormatter formatter = new ChallengesJsonFormatter(); 
-			ChallengesServicesFactory factory = new ChallengesServicesFactory(ctx, parser);
+			ChallengesJsonFormatter formatter = new ChallengesJsonFormatter();
+			ChallengesServicesFactory factory = new ChallengesServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId());
 			ChallengeResourceServices services = factory.getChallengeServices();
 			List<Challenge> challenges;
 			try {
@@ -59,7 +61,8 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (challenges != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(challenges));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(challenges));
 				writer.flush();
 				resp.setStatus(200);
 			} else {
@@ -67,8 +70,11 @@ public class ChallengesServlet extends HttpServlet {
 			}
 		} else if (parser.isParticipantURI()) {
 			ParticipantJsonFormatter formatter = new ParticipantJsonFormatter();
-			ParticipantServicesFactory factory = new ParticipantServicesFactory(ctx, parser);
-			ParticipantResourceServices services = factory.getPaticipantServices();
+			ParticipantServicesFactory factory = new ParticipantServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(),
+					parser.getParticipantId());
+			ParticipantResourceServices services = factory
+					.getPaticipantServices();
 			List<ChallengeUser> participants;
 			try {
 				participants = services.get();
@@ -76,7 +82,8 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (participants != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(participants));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(participants));
 				writer.flush();
 				resp.setStatus(200);
 			} else {
@@ -84,8 +91,11 @@ public class ChallengesServlet extends HttpServlet {
 			}
 		} else if (parser.isCompletedChallengeURI()) {
 			CompletedChallengesJsonFormatter formatter = new CompletedChallengesJsonFormatter();
-			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(ctx, parser);
-			CompletedChallengeResourceServices services = factory.getCompletedChallengeServices();
+			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(),
+					parser.getCompletedChallengeId());
+			CompletedChallengeResourceServices services = factory
+					.getCompletedChallengeServices();
 			List<CompletedChallenge> c_challenges;
 			try {
 				c_challenges = services.get();
@@ -93,7 +103,8 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (c_challenges != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(c_challenges));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(c_challenges));
 				writer.flush();
 				resp.setStatus(200);
 			} else {
@@ -108,18 +119,21 @@ public class ChallengesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String pathURI = request.getRequestURI();
-		ChallengeUriParser parser = new ChallengeUriParser(pathURI);
-		
+		parser = new ChallengeUriParser(pathURI);
+
 		PrintWriter writer = resp.getWriter();
 		resp.setHeader("Content-Type", "application/json");
-		
+
 		String requestBody = request.getParameter("json_body");
-		
-		if(parser.isChallengeURI()) {
+
+		if (parser.isChallengeURI()) {
 			ChallengesJsonFormatter formatter = new ChallengesJsonFormatter();
-			ChallengesServicesFactory factory = new ChallengesServicesFactory(ctx, parser);
-			final List<Challenge> challenges = formatter.getResourcesFromJSONFormattedString(requestBody);
-			ChallengeResourceServices services = factory.getChallengeServices(challenges);
+			ChallengesServicesFactory factory = new ChallengesServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId());
+			final List<Challenge> challenges = formatter
+					.getResourcesFromJSONFormattedString(requestBody);
+			ChallengeResourceServices services = factory
+					.getChallengeServices(challenges);
 			List<Challenge> created;
 			try {
 				created = services.create();
@@ -127,15 +141,20 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (created != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(created));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(created));
 				writer.flush();
-			} 
+			}
 			resp.setStatus(200);
-		} else if(parser.isParticipantURI()) {
+		} else if (parser.isParticipantURI()) {
 			ParticipantJsonFormatter formatter = new ParticipantJsonFormatter();
-			ParticipantServicesFactory factory = new ParticipantServicesFactory(ctx, parser);
-			final List<ChallengeUser> participants = formatter.getResourcesFromJSONFormattedString(requestBody);
-			ParticipantResourceServices services = factory.getParticipantServices(participants);
+			ParticipantServicesFactory factory = new ParticipantServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(),
+					parser.getParticipantId());
+			final List<ChallengeUser> participants = formatter
+					.getResourcesFromJSONFormattedString(requestBody);
+			ParticipantResourceServices services = factory
+					.getParticipantServices(participants);
 			List<ChallengeUser> created;
 			try {
 				created = services.create();
@@ -143,15 +162,19 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (created != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(created));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(created));
 				writer.flush();
 			}
 			resp.setStatus(200);
-		} else if(parser.isCompletedChallengeURI()) {
+		} else if (parser.isCompletedChallengeURI()) {
 			CompletedChallengesJsonFormatter formatter = new CompletedChallengesJsonFormatter();
-			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(ctx, parser);
-			final List<CompletedChallenge> c_challenges = formatter.getResourcesFromJSONFormattedString(requestBody);
-			CompletedChallengeResourceServices services = factory.getCompletedChallengeServices(c_challenges);
+			CompletedChallengesServicesFactory factory = new CompletedChallengesServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(), parser.getCompletedChallengeId());
+			final List<CompletedChallenge> c_challenges = formatter
+					.getResourcesFromJSONFormattedString(requestBody);
+			CompletedChallengeResourceServices services = factory
+					.getCompletedChallengeServices(c_challenges);
 			List<CompletedChallenge> created;
 			try {
 				created = services.create();
@@ -159,7 +182,8 @@ public class ChallengesServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 			if (created != null) {
-				writer.write(formatter.getJSONFormattedStringOfResource(created));
+				writer.write(formatter
+						.getJSONFormattedStringOfResource(created));
 				writer.flush();
 			}
 			resp.setStatus(200);
@@ -172,18 +196,21 @@ public class ChallengesServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String pathURI = request.getRequestURI();
-		ChallengeUriParser parser = new ChallengeUriParser(pathURI);
-		
+		parser = new ChallengeUriParser(pathURI);
+
 		resp.setHeader("Content-Type", "application/json");
-		
+
 		String requestBody = request.getParameter("json_body");
-		
+
 		boolean updated = false;
-		if(parser.isChallengeURI()) {
+		if (parser.isChallengeURI()) {
 			ChallengesJsonFormatter formatter = new ChallengesJsonFormatter();
-			ChallengesServicesFactory factory = new ChallengesServicesFactory(ctx, parser);
-			final List<Challenge> challenges = formatter.getResourcesFromJSONFormattedString(requestBody);
-			ChallengeResourceServices services = factory.getChallengeServices(challenges);
+			ChallengesServicesFactory factory = new ChallengesServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId());
+			final List<Challenge> challenges = formatter
+					.getResourcesFromJSONFormattedString(requestBody);
+			ChallengeResourceServices services = factory
+					.getChallengeServices(challenges);
 
 			try {
 				updated = services.update();
@@ -191,21 +218,25 @@ public class ChallengesServlet extends HttpServlet {
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-		} else if(parser.isParticipantURI()) {
+		} else if (parser.isParticipantURI()) {
 			ParticipantJsonFormatter formatter = new ParticipantJsonFormatter();
-			ParticipantServicesFactory factory = new ParticipantServicesFactory(ctx, parser);
-			final List<ChallengeUser> participants = formatter.getResourcesFromJSONFormattedString(requestBody);
-			ParticipantResourceServices services = factory.getParticipantServices(participants);
-		
+			ParticipantServicesFactory factory = new ParticipantServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(),
+					parser.getParticipantId());
+			final List<ChallengeUser> participants = formatter
+					.getResourcesFromJSONFormattedString(requestBody);
+			ParticipantResourceServices services = factory
+					.getParticipantServices(participants);
+
 			try {
 				updated = services.update();
 
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			}
-		
-		}else {
-			resp.setStatus(404); //invalid url
+
+		} else {
+			resp.setStatus(404); // invalid url
 		}
 		if (updated) {
 			resp.setStatus(200);

@@ -11,11 +11,13 @@ import com.cs410.getfit.server.models.Challenge;
 
 public class ChallengesServicesFactory {
 	WebApplicationContext ctx;
-	ChallengeUriParser parser;
+	int resource = -1;
+	long challengeId;
 
-	public ChallengesServicesFactory(WebApplicationContext ctx, ChallengeUriParser parser) {
+	public ChallengesServicesFactory(WebApplicationContext ctx, int resource, long challengeId) {
 		this.ctx = ctx;
-		this.parser = parser;
+		this.resource = resource;
+		this.challengeId = challengeId;
 	}
 
 	public ChallengeResourceServices getChallengeServices(List<Challenge> challenges) throws ServletException {
@@ -28,14 +30,13 @@ public class ChallengesServicesFactory {
 	}
 	private ChallengeResourceServices getService(List<Challenge> challenges)
 			throws ServletException {
-		int resource = parser.getResource();
 		switch (resource) {
 		case ChallengeUriParser.INVALID_URI:
 			throw new ServletException("Invalid URI");
 		case ChallengeUriParser.CHALLENGES:
 			return getChallengesServices(challenges);
 		case ChallengeUriParser.CHALLENGESID:
-			return getChallengeIdServices(parser.getChallengeId(), challenges);
+			return getChallengeIdServices(challengeId, challenges);
 		}
 		throw new ServletException("Invalid URI for this Factory. Server Error");
 	}

@@ -2,7 +2,7 @@ package com.cs410.getfit.server.models;
 
 import java.util.Calendar;
 
-import com.cs410.getfit.server.users.UserNewsfeedObservable;
+import com.cs410.getfit.server.challenges.ChallengeObservable;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -30,7 +30,7 @@ public class ChallengeHistoryImpl implements ChallengeHistory {
 		setChallenge(challenge);
 		this.historyDescription = desc;
 		this.datemodified = Calendar.getInstance().getTimeInMillis();
-		UserNewsfeedObservable.getInstance().notifyHistorySource(datemodified);
+		ChallengeObservable.getInstance().notifyMyObservers(datemodified);
 	}
 	public ChallengeHistoryImpl() {
 		//bean impl
