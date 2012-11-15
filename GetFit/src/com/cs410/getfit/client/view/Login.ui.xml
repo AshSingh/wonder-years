@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ui:UiBinder 
-	xmlns:ui='urn:ui:com.google.gwt.uibinder'
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:webapplication='urn:import:com.cs410.getfit.client'>
-  	
+
 	<g:HTMLPanel>
 		<center>
-			<div class="hero-unit-login-header">
-				<div class="page-header-login">
-					<h1>Get Fit! 
-						<p><small>Anything you can do I can do (better).</small></p>
-					</h1>
-				</div>
-			</div>
+			<g:Image url="images/getFitLogo.jpg" />
 		</center>
 		<center>
-			<div class="hero-unit-login">
-				<form class="form-horizontal">
-		        	<div class="control-group" align="left">
-		        	    <div class="controls">
-	          			    <div id="facebook-login-btb">
-								<g:Anchor href="#" ui:field="loginBtn">
-									login with <span>facebook</span>
-								</g:Anchor>
-							</div>
-		          		</div>
-		          	</div>
-	        	</form>
-	        </div>
-	    </center>
-    </g:HTMLPanel>
+			<h1>
+				<small>Prove it:</small>
+			</h1>
+			<div id="facebook-login-btb">
+				<g:Anchor href="#" ui:field="loginBtn">
+					login with
+					<span>facebook</span>
+				</g:Anchor>
+			</div>
+		</center>
+	</g:HTMLPanel>
 </ui:UiBinder>

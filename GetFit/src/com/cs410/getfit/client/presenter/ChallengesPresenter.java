@@ -1,7 +1,5 @@
 package com.cs410.getfit.client.presenter;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.cs410.getfit.client.event.GoToCreateChallengeEvent;
@@ -11,7 +9,6 @@ import com.cs410.getfit.client.json.HTTPRequestBuilder;
 import com.cs410.getfit.client.json.ParticipantsJsonFormatter;
 import com.cs410.getfit.client.json.UsersJsonFormatter;
 import com.cs410.getfit.client.view.ChallengesView;
-import com.cs410.getfit.client.view.PositionCallback;
 import com.cs410.getfit.shared.ChallengeInfoJsonModel;
 import com.cs410.getfit.shared.LinkTypes;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
@@ -26,7 +23,6 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.maps.client.geometrylib.SphericalUtils;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
