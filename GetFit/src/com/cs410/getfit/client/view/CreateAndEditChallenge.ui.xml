@@ -25,6 +25,9 @@
 						<g:Label styleName="spaced-label" ui:field="locationLabel">Location: </g:Label>
 					</h5>
 					<g:TextBox styleName="spaced-label" ui:field="locationBox" />
+					
+					<g:HorizontalPanel ui:field="gMapsPanel" styleName="gMapsPanel">
+    				</g:HorizontalPanel>
 				</form>
 				<div>
 					<form class="form-inline">

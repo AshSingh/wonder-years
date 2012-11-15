@@ -1,5 +1,6 @@
 package com.cs410.getfit.client.view;
 
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
@@ -27,4 +28,6 @@ public interface CreateAndEditChallengeView {
 	TextArea getDescriptionBox();
 	RadioButton getPrivacyPrivateRadioButton();
 	RadioButton getPrivacyPublicRadioButton();
+	void createMap();
+	public HorizontalPanel getMap();
 }

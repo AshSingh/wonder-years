@@ -36,8 +36,9 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(view.getMenuBar().asWidget());
 		resetFields();
+		container.add(view.getMenuBar().asWidget());
+		view.createMap();
 		container.add(view.asWidget());
 	}
 

@@ -67,7 +67,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/login</url-pattern>
+		<url-pattern>/getfit/login</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
