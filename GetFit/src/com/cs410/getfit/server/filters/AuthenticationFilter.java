@@ -67,7 +67,6 @@ public class AuthenticationFilter implements Filter{
 
 			String body= jb.toString();
 			
-			System.out.println(body);
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(body);
 			if(element.isJsonObject()) {

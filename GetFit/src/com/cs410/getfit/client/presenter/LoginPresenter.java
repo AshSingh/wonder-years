@@ -45,7 +45,6 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
                 public void onResponseReceived(Request request, Response response) {
                     loginStatus = response.getStatusCode();
                     getResponseStr = response.getText();
-                    System.out.println(getResponseStr);
                     JSONObject jsonBody = (JSONObject) JSONParser.parse(getResponseStr);
                     
                     if(loginStatus == 200) {
