@@ -27,7 +27,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -40,6 +39,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 	private final HandlerManager eventBus;
 	private final DashboardView view;
 
+	private final String NO_NEWSFEED_MSG = "There is currently no newsfeed to display.";
+	private final String NO_USERCHALLENGES_MSG = "You have not joined any challenges yet.";
+	
 	// polling variables
 	private static Timer refreshTimer;
 	private final int POLL_INTERVAL = 2000;
@@ -89,6 +91,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					if (response.getStatusCode() == 200) {
+						long pollTime = lastPollDate;
 						// update last poll date
 						lastPollDate = System.currentTimeMillis();
 						List<OutgoingChallengeHistoryJsonModel> models = ChallengeHistoryJsonFormatter.parseChallengeHistoryJsonInfo(response.getText());
@@ -139,6 +142,14 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 								displayUserForNewsfeedItem(model, userLabel);
 								// set challenge hyperlink
 								displayChallengeForNewsfeedItem(model, challengeHyperlink);
+							}
+						}
+						else {
+							// if no models returned on first poll, no newsfeed to display
+							// else no new newsfeed items to display - no action needed
+							if (pollTime == 0) {
+								view.getNewsFeedPanel().clear();
+								view.getNewsFeedPanel().add(new Label(NO_NEWSFEED_MSG));
 							}
 						}
 					}
@@ -299,6 +310,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 							for (OutgoingChallengeJsonModel model : models) {
 								addChallengeToView(model);
 							}
+						}
+						else {
+							view.getUserChallengesPanel().add(new Label(NO_USERCHALLENGES_MSG));
 						}
 					}
 					else {

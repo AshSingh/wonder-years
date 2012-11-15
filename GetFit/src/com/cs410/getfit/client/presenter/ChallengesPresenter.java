@@ -34,6 +34,9 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	private final HandlerManager eventBus;
 	private final ChallengesView view;
 
+	private final String NO_CHALLENGES_MSG = "There are currently no challenges to display.";
+	private final String NO_USERCHALLENGES_MSG = "You have not joined any challenges yet.";
+
 	public ChallengesPresenter(HandlerManager eventBus, ChallengesView view){
 		this.eventBus = eventBus;
 		this.view = view;
@@ -55,7 +58,7 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		view.getChallengesPanel().clear();
 		view.getUserChallengesPanel().clear();
 	}
-	
+
 	// display a list of challenges
 	private void displayChallenges(){
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest("/challenges"); 
@@ -69,6 +72,9 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 							for (OutgoingChallengeJsonModel model : models) {
 								addChallengeToView(model);
 							}
+						}
+						else {
+							view.getChallengesPanel().add(new Label(NO_CHALLENGES_MSG));
 						}
 					}
 					else {
@@ -198,6 +204,9 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 							for (OutgoingChallengeJsonModel model : models) {
 								addUserChallengeToView(model);
 							}
+						}
+						else {
+							view.getUserChallengesPanel().add(new Label(NO_USERCHALLENGES_MSG));
 						}
 					}
 					else {
