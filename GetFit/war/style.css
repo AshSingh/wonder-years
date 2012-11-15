@@ -45,6 +45,17 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	line-height: 20px;
 }
 
+.subtitle-label-no-bottom-space {
+	margin-top: 10px;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	font-size: 16px;
+	line-height: 20px;
+}
+
 .side-panel {
 	padding-left: 10px;
 }
