@@ -88,7 +88,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 			builder.sendRequest(null, new RequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
-					Window.alert(response.getText());
 					if (response.getStatusCode() == 200) {
 						// update last poll date
 						lastPollDate = System.currentTimeMillis();
