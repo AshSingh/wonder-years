@@ -151,7 +151,7 @@ public class TestDBSetup {
 			while ((strLine = br.readLine()) != null) {
 
 				ArrayList<String> challengeProperties = new ArrayList<String>();
-				challengeProperties.addAll(Arrays.asList(strLine.split(",")));
+				challengeProperties.addAll(Arrays.asList(strLine.split(";")));
 				
 				String title = challengeProperties.get(0);
 				boolean isPrivate = Boolean.valueOf(challengeProperties.get(1));
