@@ -24,21 +24,35 @@ public class AuthenticationFilter implements Filter{
 
 	private FilterConfig filterConfig = null;
 	
+	/* Delete Filter
+	 * @see javax.servlet.Filter#destroy()
+	 */
 	@Override
 	public void destroy() {
 		this.filterConfig = null;
 		
 	}
 
+	/*
+	 * Initialize Filter
+	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
 	}
 	
+	/*
+	 * Authentication Filter
+	 * @param request: incoming request
+	 * @param response: wrapped response sent to server
+	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		
+		// No Filter Configuration
 		if(filterConfig == null){
 			return;
 		}
@@ -52,6 +66,7 @@ public class AuthenticationFilter implements Filter{
 		String requestMethod = httpRequest.getMethod();
 		String token = "";
 		
+		//Obtain FB access token from request
 		if(requestMethod.equals("GET")) {
 			token = (String) request.getParameter("access_token");
 		} else if (requestMethod.equals("POST") || requestMethod.equals("PUT")) {
@@ -67,6 +82,7 @@ public class AuthenticationFilter implements Filter{
 
 			String body= jb.toString();
 			
+			//Parse JSON to get access token
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(body);
 			if(element.isJsonObject()) {
@@ -89,7 +105,7 @@ public class AuthenticationFilter implements Filter{
 		String result = null;
 		
 		try{
-			// Send data
+			// Send data to Facebook to confirm user
 			String urlStr = FB_url + "?" + query;
 			URL url = new URL(urlStr);
 

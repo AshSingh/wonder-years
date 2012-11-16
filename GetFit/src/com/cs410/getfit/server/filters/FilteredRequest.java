@@ -11,12 +11,20 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 	private String FB_id;
 	private String json_body;
 	
+	/**
+	 * @param request Client's http request
+	 */
 	public FilteredRequest(ServletRequest request) {
 		super((HttpServletRequest)request);
 		this.FB_id = null;
 		this.json_body = null;
 	}
 	
+	/**
+	 * Validates input
+	 * @param input
+	 * @return valid result
+	 */
 	public String sanitize(String input){
 		String result = "";
 		for(int i = 0; i < input.length(); i++){
@@ -27,6 +35,9 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 		return result;
 	}
 	
+	/* Obtain FB_id parameter from message
+	 * @see javax.servlet.ServletRequestWrapper#getParameter(java.lang.String)
+	 */
 	public String getParameter (String paramName){
 		String value = null;
 		if("FB_id".equals(paramName)) {
@@ -41,6 +52,9 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 		return value;
 	}
 	
+	/* Parse access token in message
+	 * @see javax.servlet.ServletRequestWrapper#getParameterValues(java.lang.String)
+	 */
 	public String[] getParameterValues(String paramName){
 		String values[] = super.getParameterValues(paramName);
 		if("FB_id".equals(paramName)){
@@ -51,10 +65,16 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 		return values;
 	}
 	
+	/**
+	 * @param value set FB_id
+	 */
 	public void setFB_id(String value){
 		this.FB_id = value;
 	}
 	
+	/**
+	 * @param body set JSON message body
+	 */
 	public void setJson_body(String body) {
 		this.json_body = body;
 	}
