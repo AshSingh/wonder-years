@@ -103,6 +103,7 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 
 	@Override
 	public TextBox getLocationBox() {
+		locationBox.setReadOnly(true);
 		return locationBox;
 	}
 
