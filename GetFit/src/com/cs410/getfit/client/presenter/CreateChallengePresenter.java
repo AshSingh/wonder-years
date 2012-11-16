@@ -44,7 +44,7 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 
 	private void resetFields(){
 		view.getChallengeNameBox().setText("");
-		view.getLocationBox().setText("");
+		view.getLocationBox().setValue("");
 		view.getDescriptionBox().setText("");
 		view.getPrivacyPrivateRadioButton().setValue(false);
 		view.getPrivacyPublicRadioButton().setValue(true);

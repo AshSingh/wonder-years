@@ -11,6 +11,7 @@ import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.maps.client.overlays.Marker;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -20,9 +21,9 @@ public class PositionCallback implements Callback<Object, Object>{
 	
 	private MapWidget mapWidget;
 	private HorizontalPanel gMapsPanel;
-	private TextBox locationBox;
+	private Hidden locationBox;
 	
-	public PositionCallback(MapWidget mapWidget, HorizontalPanel gMapsPanel, TextBox locationBox) {
+	public PositionCallback(MapWidget mapWidget, HorizontalPanel gMapsPanel, Hidden locationBox) {
 		this.mapWidget = mapWidget;
 		this.gMapsPanel = gMapsPanel;
 		this.locationBox = locationBox;
@@ -42,7 +43,7 @@ public class PositionCallback implements Callback<Object, Object>{
 		// Marker overlay to show user's position on map
 		final Marker userPosMarker = Marker.newInstance(null);
 		userPosMarker.setPosition(userPoint);
-		locationBox.setText(userPoint.getToString());
+		locationBox.setValue(userPoint.getToString());
 		userPosMarker.setTitle("Your Location");
 		
 		
@@ -69,7 +70,7 @@ public class PositionCallback implements Callback<Object, Object>{
 	    	public void onEvent(ClickMapEvent event) {
 	    		LatLng point = event.getMouseEvent().getLatLng();
 	    		userPosMarker.setPosition(point);
-	    		locationBox.setText(point.getToString());
+	    		locationBox.setValue(point.getToString());
 	    		// Get distance between two points
 	    		// LatLng toPoint = LatLng.newInstance(25.792194, -108.996220);
 	    		// System.out.println("Distance: " + SphericalUtils.computeDistanceBetween(point, toPoint) / 1000 + " km");

@@ -20,6 +20,7 @@ import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
 import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
 import com.cs410.getfit.shared.ParticipantInfoJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -28,6 +29,14 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.services.Geocoder;
+import com.google.gwt.maps.client.services.GeocoderRequest;
+import com.google.gwt.maps.client.services.GeocoderRequestHandler;
+import com.google.gwt.maps.client.services.GeocoderResult;
+import com.google.gwt.maps.client.services.GeocoderStatus;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -113,24 +122,45 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	private void displayChallenge(OutgoingChallengeJsonModel model) {
+	private void displayChallenge(final OutgoingChallengeJsonModel model) {
 		// clear subpanel
 		view.getChallengeInfoPanel().clear();
 		// challenge info
 		ChallengeInfoJsonModel info = model.getInfo();
 		view.getTitleLabel().setText("Challenge: " + info.getTitle());
-		VerticalPanel infoPanel = view.getChallengeInfoPanel();
+		final VerticalPanel infoPanel = view.getChallengeInfoPanel();
 		infoPanel.addStyleName("text-panel");
 		// only display location if set
 		if (info.getLocation() != null) {
-			Label locationLabel = new Label("Location: ");
-			Label locationText = new Label(info.getLocation());
-			locationLabel.addStyleName("details-label");
-			locationText.addStyleName("details-text");
-			HorizontalPanel locationPanel = new HorizontalPanel();
-			locationPanel.add(locationLabel);
-			locationPanel.add(locationText);
-			infoPanel.add(locationPanel);
+			// Regular expresion for latitude and longitude as stored in DATABASE
+			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
+			MatchResult match = regexp.exec(info.getLocation());
+			LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
+			// Get the name of the city on the location of the challenge
+			Geocoder geocoder = Geocoder.newInstance();
+			GeocoderRequest request = GeocoderRequest.newInstance();
+			request.setLocation(challengePoint);
+			geocoder.geocode(request, new GeocoderRequestHandler() {
+
+				@Override
+				public void onCallback(JsArray<GeocoderResult> results,
+						GeocoderStatus status) {
+					// Get the full location
+					String formattedAddress = results.get(0).getFormatted_Address();
+					String cityLocation = (formattedAddress != "" && formattedAddress != null) ? formattedAddress : "Unknown";
+					Label locationLabel = new Label("Location: ");
+					Label locationText = new Label(cityLocation);
+					locationLabel.addStyleName("details-label");
+					locationText.addStyleName("details-text");
+					HorizontalPanel locationPanel = new HorizontalPanel();
+					locationPanel.add(locationLabel);
+					locationPanel.add(locationText);
+					infoPanel.add(locationPanel);
+					// action button (join, complete(d), edit)
+					displayActionButtons(model, infoPanel);
+				}
+				
+			});
 		}
 		// total participants
 		Label participantsLabel = new Label("Total Participants: ");
@@ -149,8 +179,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		descriptionText.addStyleName("details-text");
 		infoPanel.add(descriptionLabel);
 		infoPanel.add(descriptionText);
-		// action button (join, complete(d), edit)
-		displayActionButtons(model, infoPanel);
+		
 	}
 
 	// helper method for http request to get number of participants and set text in view

@@ -10,6 +10,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -19,7 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CreateAndEditChallengeViewImpl extends Composite implements CreateAndEditChallengeView {
 	@UiField static TextBox challengeNameBox;
-	@UiField static TextBox locationBox;
+	@UiField static Hidden locationBox;
 	@UiField static TextArea descriptionBox;
 	@UiField static RadioButton privacyPrivate;
 	@UiField static RadioButton privacyPublic;
@@ -68,7 +69,7 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 
 	@Override
 	public String getLocation() {
-		return locationBox.getText().toString();
+		return locationBox.getValue().toString();
 	}
 
 	@Override
@@ -102,8 +103,7 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 	}
 
 	@Override
-	public TextBox getLocationBox() {
-		locationBox.setReadOnly(true);
+	public Hidden getLocationBox() {
 		return locationBox;
 	}
 

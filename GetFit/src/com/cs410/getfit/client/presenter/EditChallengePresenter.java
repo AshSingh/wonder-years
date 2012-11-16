@@ -159,7 +159,7 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 								ChallengeInfoJsonModel infoModel = model.getInfo();
 								// set current details
 								view.getChallengeNameBox().setText(infoModel.getTitle());
-								view.getLocationBox().setText(infoModel.getLocation());
+								view.getLocationBox().setValue(infoModel.getLocation());
 								view.getDescriptionBox().setText(infoModel.getDescription());
 								view.getPrivacyPrivateRadioButton().setValue(infoModel.getIsprivate());
 								view.getPrivacyPublicRadioButton().setValue(!infoModel.getIsprivate());
