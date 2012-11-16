@@ -22,7 +22,6 @@ public class CompletedChallengeIdServices implements CompletedChallengeResourceS
 
 	@Override
 	public List<CompletedChallenge> create() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -30,12 +29,7 @@ public class CompletedChallengeIdServices implements CompletedChallengeResourceS
 	public List<CompletedChallenge> get() throws SQLException {
 		List<CompletedChallenge> c_challenges = new ArrayList<CompletedChallenge>();
 		CompletedChallenge c_challenge;
-		try {
-			c_challenge = completedChallengesDao.queryForId(completedChallengeId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return new ArrayList<CompletedChallenge>();
-		}
+		c_challenge = completedChallengesDao.queryForId(completedChallengeId);
 		c_challenges.add(c_challenge);
 		return c_challenges;
 	}

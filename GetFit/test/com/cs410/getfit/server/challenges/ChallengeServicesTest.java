@@ -17,7 +17,6 @@ import org.springframework.test.annotation.ExpectedException;
 
 import com.cs410.getfit.server.challenges.services.ChallengeIdServices;
 import com.cs410.getfit.server.models.Challenge;
-import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
@@ -155,7 +154,10 @@ public class ChallengeServicesTest {
 				allowing(challenge2).isPrivate(); will(returnValue(true));
 				allowing(challenge2).getDescription(); will(returnValue(DESCRIPTION2));
 				allowing(challenge2).getTitle(); will(returnValue(TITLE2));
-				oneOf(challengeDao).queryForId(CHALLENGE2GUID); will(returnValue(challenge));	
+				allowing(chUser1).isAdmin(); will(returnValue(true));
+				ignoring(chUser1).getUser();
+				oneOf(challengeDao).queryForId(CHALLENGE2GUID); will(returnValue(challenge));
+				oneOf(challengeUserDao).queryForEq("challenge_id", CHALLENGE2GUID); will(returnValue(chUsers));
 			}
 		});
 		service.setChallenge(challenge2);
@@ -164,26 +166,16 @@ public class ChallengeServicesTest {
 		assertEquals("should return true on update", true, updated);
 	}
 	@Test
-	public void testUpdateNoFieldsInChallenge() throws SQLException {
-		Challenge emptyChallenge = new ChallengeImpl();
+	public void testNoExistingChallenge() throws SQLException {
 		context.checking(new Expectations () {
 			{
-				allowing(challenge).getGuid(); will(returnValue(CHALLENGEGUID));
-				allowing(challenge).getLocation(); will(returnValue(LOCATION));
-				allowing(challenge).isPrivate(); will(returnValue(true));
-				allowing(challenge).getDescription(); will(returnValue(DESCRIPTION));
-				allowing(challenge).getTitle(); will(returnValue(TITLE));
-				oneOf(challengeDao).queryForId(CHALLENGEGUID); will(returnValue(challenge));	
+				ignoring(challenge2).setGuid(CHALLENGE2GUID);
+				oneOf(challengeDao).queryForId(CHALLENGE2GUID); will(returnValue(null));
 			}
 		});
-		service.setChallenge(emptyChallenge);
-		service.setChallengeId(CHALLENGEGUID);
+		service.setChallenge(challenge2);
+		service.setChallengeId(CHALLENGE2GUID);
 		boolean updated = service.update();
-		assertEquals("should return true on update", true, updated);
-		Challenge expectedChallenge = emptyChallenge;
-		assertEquals("empty object should have set location", LOCATION, expectedChallenge.getLocation());
-		assertEquals("empty object should have set isprivate", true, expectedChallenge.isPrivate());
-		assertEquals("empty object should have a description", DESCRIPTION, expectedChallenge.getDescription());
-		assertEquals("empty object should have set title", TITLE, expectedChallenge.getTitle());
+		assertEquals("should return false on update", false, updated);
 	}
 }

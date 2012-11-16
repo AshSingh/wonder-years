@@ -100,7 +100,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 	}
 	@Override
 	public List<Challenge> get() throws SQLException {
-			List<Challenge> challenges = challengeDao.query(challengeDao.queryBuilder().orderBy("title", true).prepare());
+			List<Challenge> challenges = getChallengesOrderedByTitle();
 			for (Challenge challenge : challenges) {
 				List<ChallengeUser> participants = challengeUserDao.queryForEq(
 						"challenge_id", challenge.getGuid());
@@ -114,6 +114,13 @@ public class ChallengesServices implements ChallengeResourceServices {
 			return challenges;
 	}
 
+	/*
+	 * A method that returns all the challenges in the database ordered by title
+	 */
+	protected List<Challenge> getChallengesOrderedByTitle() throws SQLException {
+		return challengeDao.query(challengeDao.queryBuilder().orderBy("title", true).prepare());
+	}
+	
 	@Override
 	public boolean update() {
 		return false; // For now no bulk updates
