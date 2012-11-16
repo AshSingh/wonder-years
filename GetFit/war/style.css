@@ -258,6 +258,10 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	color: #777777;
 }
 
+.logout:hover {
+	cursor: pointer;
+}
+
 /*
  * dashboard
  */
