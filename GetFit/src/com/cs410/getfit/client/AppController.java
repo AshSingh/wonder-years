@@ -14,8 +14,6 @@ import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.event.GoToErrorEventHandler;
 import com.cs410.getfit.client.event.GoToLoginEvent;
 import com.cs410.getfit.client.event.GoToLoginEventHandler;
-import com.cs410.getfit.client.event.GoToRegisterEvent;
-import com.cs410.getfit.client.event.GoToRegisterEventHandler;
 import com.cs410.getfit.client.event.GoToUserSettingsEvent;
 import com.cs410.getfit.client.event.GoToUserSettingsEventHandler;
 import com.cs410.getfit.client.presenter.ChallengePresenter;
@@ -27,7 +25,6 @@ import com.cs410.getfit.client.presenter.ErrorPresenter;
 import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.cs410.getfit.client.presenter.Presenter;
-import com.cs410.getfit.client.presenter.RegisterPresenter;
 import com.cs410.getfit.client.presenter.UserSettingsPresenter;
 import com.cs410.getfit.client.view.ChallengeViewImpl;
 import com.cs410.getfit.client.view.ChallengesView;
@@ -37,7 +34,6 @@ import com.cs410.getfit.client.view.DashboardViewImpl;
 import com.cs410.getfit.client.view.ErrorViewImpl;
 import com.cs410.getfit.client.view.LoginViewImpl;
 import com.cs410.getfit.client.view.MenuBarViewImpl;
-import com.cs410.getfit.client.view.RegisterViewImpl;
 import com.cs410.getfit.client.view.UserSettingsView;
 import com.cs410.getfit.client.view.UserSettingsViewImpl;
 import com.google.gwt.core.client.GWT;
@@ -45,7 +41,6 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -56,7 +51,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private HasWidgets container;
 	
 	private LoginViewImpl loginView = null;
-	private RegisterViewImpl registerView = null;
 	private MenuBarViewImpl menuBarView = null;
 	private DashboardViewImpl dashboardView = null;
 	private CreateAndEditChallengeViewImpl createAndEditChallengeView = null;
@@ -85,13 +79,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				new GoToLoginEventHandler() {
 			public void onGoToLogin(GoToLoginEvent event) {
 				doGoToLogin();
-			}
-		});  
-		
-		eventBus.addHandler(GoToRegisterEvent.TYPE,
-				new GoToRegisterEventHandler() {
-			public void onGoToRegister(GoToRegisterEvent event) {
-				doGoToRegister();
 			}
 		});  
 		
@@ -151,10 +138,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	 */
 	private void doGoToLogin() {
 	    History.newItem(HistoryValues.LOGIN.toString());
-	}
-
-	private void doGoToRegister() {
-	    History.newItem(HistoryValues.REGISTER.toString());
 	}
 	
 	/**
@@ -252,19 +235,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        		}
 	        	});
 	        }    
-	        else if (token.equals(HistoryValues.REGISTER.toString())) {
-	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
-	        		}
-
-	        		public void onSuccess() {
-	        			if (registerView == null) {
-	        				registerView = new RegisterViewImpl();
-	        			}
-	        			new RegisterPresenter(eventBus, registerView).go(container);	 	
-	        		}
-	        	});
-	        }
 	        else if (token.equals(HistoryValues.LOGIN.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
 	        		public void onFailure(Throwable caught) {
