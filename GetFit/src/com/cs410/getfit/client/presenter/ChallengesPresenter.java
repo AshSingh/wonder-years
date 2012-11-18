@@ -38,12 +38,24 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 
 	private final String NO_CHALLENGES_MSG = "There are currently no challenges to display.";
 
+	/**
+	 * Constructor for presenter for challenges page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public ChallengesPresenter(HandlerManager eventBus, ChallengesView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the challenges page 
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
@@ -54,13 +66,17 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		displayUserChallenges();
 	}
 
-	// clear panels to avoid duplicated information
+	/**
+	 * Clear panels to avoid duplicated information
+	 */
 	private void cleanPanels(){
 		view.getChallengesPanel().clear();
 		view.getUserChallengesPanel().clear();
 	}
 
-	// display a list of challenges
+	/**
+	 * Retrieves the list of public challenges to be displayed
+	 */
 	private void displayChallenges(){
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest("/challenges"); 
 		try {
@@ -92,6 +108,9 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		}
 	}
 
+	/**
+	 * Displays a list of challenges in which the current user is involved
+	 */
 	private void displayUserChallenges() {
 		// GET request on user guid 
 		long userGuid = Long.parseLong(Cookies.getCookie("guid"));
@@ -124,6 +143,12 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 	}
+	
+	/**
+	 * Helper method - displays a challenge for the public challenges list with its info
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 */
 	private void addChallengeToView(OutgoingChallengeJsonModel model) {
 		// only display public challenges
 		if (!model.getInfo().getIsprivate()) {
@@ -166,7 +191,12 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		}
 	}
 
-	// get number of participants in a challenge and edit label accordingly
+	/**
+	 * Helper method - displays the number of participants for a challenge
+	 * 
+	 * @param participants - UI label to be set
+	 * @param participantsUri - uri for HTTP request
+	 */
 	private void setParticipantCountLabel(final Label participants, String participantsUri) {
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(participantsUri); 
 		try {
@@ -191,10 +221,16 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		}
 	}
 
+	/**
+	 * Redirects user to create challenge page when corresponding button is clicked
+	 */
 	public void onNewChallengeButtonClicked(){
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}
 	
+	/**
+	 * Sorts list of public challenges based on proximity to current user
+	 */
 	public void onSortByLocationButtonClicked() {
 		view.getChallengesPanel().clear();
 		Geolocation userLocation = Geolocation.getIfSupported();
@@ -204,6 +240,11 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 		}
 	}
 	
+	/**
+	 * Helper method - displays the sorted by proximity list of challenges
+	 * 
+	 * @param model - the model of a challenge to be displayed
+	 */
 	public void receiveSortedModels(OutgoingChallengeJsonModel model) {
 		addChallengeToView(model);
 	}

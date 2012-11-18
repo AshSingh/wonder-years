@@ -25,12 +25,24 @@ public class UserSettingsPresenter implements Presenter, UserSettingsView.Presen
 	private final HandlerManager eventBus;
 	private final UserSettingsView view;
 
+	/**
+	 * Constructor for presenter for user settings page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public UserSettingsPresenter(HandlerManager eventBus, UserSettingsView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the user settings page 
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
@@ -39,7 +51,9 @@ public class UserSettingsPresenter implements Presenter, UserSettingsView.Presen
 		setCurrentInfo();
 	}
 
-	// set user's name and current privacy setting
+	/**
+	 * Display user's name and current privacy setting
+	 */
 	private void setCurrentInfo(){
 		// GET request on user guid
 		long currentUser = Long.parseLong(Cookies.getCookie("guid"));
@@ -74,6 +88,9 @@ public class UserSettingsPresenter implements Presenter, UserSettingsView.Presen
 		}
 	}
 
+	/**
+	 * Saves the user's updated preferences
+	 */
 	@Override
 	public void onSaveSettingsButtonClicked() {
 		long currentUser = Long.parseLong(Cookies.getCookie("guid"));

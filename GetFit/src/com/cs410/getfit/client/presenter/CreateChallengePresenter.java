@@ -27,12 +27,24 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 	private final HandlerManager eventBus;
 	private final CreateAndEditChallengeView view;
 
+	/**
+	 * Constructor for presenter for create challenge page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public CreateChallengePresenter(HandlerManager eventBus, CreateAndEditChallengeView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the create challenge page 
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
@@ -42,6 +54,9 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 		container.add(view.asWidget());
 	}
 
+	/**
+	 * Helper method - resets possible previous set text in the form fields
+	 */
 	private void resetFields(){
 		view.getChallengeNameBox().setText("");
 		view.getLocationBox().setValue("");
@@ -50,6 +65,9 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 		view.getPrivacyPublicRadioButton().setValue(true);
 	}
 	
+	/**
+	 * Creates new challenge from user input if input passes verification
+	 */
 	@Override
 	public void onSaveChallengeButtonClicked() {
 		Boolean fieldsPass = CreateAndEditChallengeHelper.verifyFields(view);

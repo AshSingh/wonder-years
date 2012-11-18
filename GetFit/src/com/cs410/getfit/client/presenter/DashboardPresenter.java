@@ -46,13 +46,25 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 
 	private long lastPollDate;
 	private final String dateFormat = "MMM d, yyyy 'at' hh:mm:ss a";
-	
+
+	/**
+	 * Constructor for presenter for dashboard page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public DashboardPresenter(HandlerManager eventBus, DashboardView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the dashboard page 
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
@@ -62,6 +74,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		populateView();
 	}
 
+	/**
+	 * Stops polling once user has navigated away from the dashboard page
+	 */
 	public static void cancelRefreshTimer(){
 		if (refreshTimer != null) {
 			refreshTimer.cancel();
@@ -69,6 +84,11 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		}
 	}
 	
+	/**
+	 * Initializes timer and starts polling 
+	 * 
+	 * @param newsfeedUri - the uri for newsfeed
+	 */
 	private void setUpNewsfeed(final String newsfeedUri){
 		// reset last poll date
 		lastPollDate = new Long(0);
@@ -82,6 +102,17 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		refreshTimer.scheduleRepeating(POLL_INTERVAL);
 	}
 
+	/**
+	 * Helper method - called during polling
+	 * Checks to see if there is any new newsfeed items
+	 * 
+	 * Scenarios
+	 * json returned is empty, no new info to display
+	 * json returned is empty on first poll - no newsfeed to display, display appropriate msg
+	 * json returned has content, update newsfeed panel
+	 * 
+	 * @param newsfeedUri - the uri for newsfeed
+	 */
 	private void checkForNewsfeedUpdates(String newsfeedUri) {
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(newsfeedUri + "?lastPolled=" + lastPollDate); 
 		try {
@@ -165,6 +196,12 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		}
 	}
 
+	/**
+	 * Helper method - displays the name of the user involved in a newsfeed item
+	 * 
+	 * @param model - a single challenge history model for the newsfeed item
+	 * @param userLabel - the label to set the name to
+	 */
 	private void displayUserForNewsfeedItem(OutgoingChallengeHistoryJsonModel model, final Label userLabel){
 		List<ResourceLink> links = model.getLinks();
 		String userUri = null; 
@@ -210,6 +247,12 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		}
 	}
 
+	/**
+	 * Helper method - displays a hyperlink to the challenge involved in a newsfeed item
+	 * 
+	 * @param model - a single challenge history model for the newsfeed item
+	 * @param challengeHyperlink - the hyperlink to set the challenge to
+	 */
 	private void displayChallengeForNewsfeedItem(OutgoingChallengeHistoryJsonModel model, final Hyperlink challengeHyperlink){
 		List<ResourceLink> links = model.getLinks();
 		String challengeUri = null; 
@@ -250,6 +293,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		}	
 	}
 
+	/**
+	 * Helper method - populates view with user specific information (user's challenges and newsfeed)
+	 */
 	private void populateView() {
 		// GET request on user guid
 		long userGuid = Long.parseLong(Cookies.getCookie("guid"));
@@ -293,6 +339,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 		}
 	}
 
+	/**
+	 * Redirects user to create challenge page when corresponding button is clicked
+	 */
 	public void onNewChallengeButtonClicked(){
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}

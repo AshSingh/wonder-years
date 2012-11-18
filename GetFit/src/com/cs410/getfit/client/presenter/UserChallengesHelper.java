@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/*
+/**
  * Helper class for displaying and organizing a list of challenges that the current user belongs to
  * Used by ChallengesPresenter and DashboardPresenter
  */
@@ -40,7 +40,14 @@ public class UserChallengesHelper {
 
 	private static HandlerManager eventBus;
 
-	// display a list of challenges that user is participating in
+	/**
+	 * Displays a list of challenges that user is involved 
+	 * List formed from hyperlinks that direct to specific challenge page
+	 * 
+	 * @param userChallengesUri - uri to retrieve all of user's challenges
+	 * @param panel - UI panel to display challenges
+	 * @param eventsBus - handles redirect of views (in case of error)
+	 */
 	public static void displayUserChallenges(String userChallengesUri, final VerticalPanel panel, final HandlerManager eventsBus){
 		eventBus = eventsBus;
 		// clean panel
@@ -114,6 +121,18 @@ public class UserChallengesHelper {
 		}
 	}
 
+	/**
+	 * Displays user challenge under the appropriate UI heading
+	 * 
+	 * Scenarios:
+	 * User has completed challenge - display in UI under the completed challenges list
+	 * User has not completed challenge - display in UI under the current challenges list
+	 * 
+	 * @param completedUri - the uri of the completed challenges for a certain challenge
+	 * @param challengeHorzPanel - the UI panel of the user's challenge
+	 * @param completedPanel - the UI panel for the list of completed challenges
+	 * @param currentPanel - the UI panel for the list of current challenges
+	 */
 	private static void addToCorrectSubPanel(String completedUri, final HorizontalPanel challengeHorzPanel, final VerticalPanel completedPanel, final VerticalPanel currentPanel) {
 		final long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(completedUri); 
@@ -175,6 +194,12 @@ public class UserChallengesHelper {
 		}
 	}
 
+	/**
+	 * Displays an indicator label if user is an admin of a challenge 
+	 * 
+	 * @param participantsUri - uri for participants of a specific challenge
+	 * @param challengeHorzPanel - the UI panel of the user's challenge
+	 */
 	private static void addPossibleAdminTag(String participantsUri, final HorizontalPanel challengeHorzPanel) {
 		final long currentUser = Long.parseLong(Cookies.getCookie("guid"));
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(participantsUri); 

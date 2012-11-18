@@ -10,22 +10,28 @@ public class MenuBarPresenter implements Presenter, MenuBarView.Presenter{
 	private final HandlerManager eventBus;
 	private final MenuBarView view;
 	
+	/**
+	 * Constructor for presenter for menu bar
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public MenuBarPresenter(HandlerManager eventBus, MenuBarView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the menu bar
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 	    container.add(view.asWidget());
-	}
-
-	@Override
-	public void onSearchOptionClicked() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override

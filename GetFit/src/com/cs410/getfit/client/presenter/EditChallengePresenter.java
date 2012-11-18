@@ -32,19 +32,37 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 
 	private String challengeUri;
 	
-
+	/**
+	 * Constructor for presenter for edit challenge page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public EditChallengePresenter(HandlerManager eventBus, CreateAndEditChallengeView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Should not be called without a uri parameter, redirect to an error page
+	 * 
+	 * @param container - the root container of the app          
+	 */
 	@Override
 	// should not be called without challengeId parameter, redirect to error page
 	public void go(HasWidgets container) {
 		eventBus.fireEvent(new GoToErrorEvent());
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the challenge page 
+	 * 
+	 * @param container - the root container of the app
+	 * @param uri - the uri that provides the info for the specific challenge          
+	 */	
 	public void go(HasWidgets container, String uri) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
@@ -57,6 +75,10 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 		checkUserIsAdmin();
 	}
 
+	/**
+	 * Security check to see if user is actually admin of challenge
+	 * Retrieves uri to list of participants
+	 */
 	private void checkUserIsAdmin() {
 		// GET request on challenge uri to get rel to participants
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(challengeUri); 
@@ -94,6 +116,16 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 		}
 	}
 
+	/**
+	 * Security check to see if user is actually admin of challenge
+	 * 
+	 * Scenarios:
+	 * user is part of participants list and is admin - continue to display edit challenge page
+	 * user is part of participants list and is not admin - redirect to an error page
+	 * user is not part of participants lsit - redirect to an error page
+	 * 
+	 * @param participantsUri - uri to retrieve list of participants
+	 */
 	private void checkParticipants(String participantsUri) {
 		// GET request on challenge uri to get rel to participants
 		RequestBuilder builder = HTTPRequestBuilder.getGetRequest(participantsUri); 
@@ -140,7 +172,9 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 		}
 	}
 	
-	// fill in the fields with current challenge details
+	/**
+	 * Populate the form with the challenge's current details
+	 */
 	private void populateFields() {
 		if (challengeUri.equals("")) {
 			eventBus.fireEvent(new GoToErrorEvent());
@@ -183,6 +217,9 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 		}
 	}
 
+	/**
+	 * Saves edited challenge if input passes verification
+	 */
 	@Override
 	public void onSaveChallengeButtonClicked() {
 		Boolean fieldsPass = CreateAndEditChallengeHelper.verifyFields(view);

@@ -22,12 +22,24 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	private static String getResponseStr = null;
 	private static RequestBuilder rb;
 	
+	/**
+	 * Constructor for presenter for login page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public LoginPresenter(HandlerManager eventBus, LoginView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the login page 
+	 * 
+	 * @param container - the root container of the app         
+	 */	
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();

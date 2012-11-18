@@ -51,18 +51,36 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 
 	private final String privateChallengeMsg = "Permission denied: The challenge you are trying to view is set to private.";
 
+	/**
+	 * Constructor for presenter for challenge page
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 * @param view - the view to display
+	 */
 	public ChallengePresenter(HandlerManager eventBus, ChallengeView view){
 		this.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Should not be called without a challengeId parameter, redirect to an error page
+	 * 
+	 * @param container - the root container of the app          
+	 */
 	@Override
-	// should not be called without challengeId parameter, redirect to error page
 	public void go(HasWidgets container) {
 		eventBus.fireEvent(new GoToErrorEvent());
 	}
 
+	/**
+	 * Standard method for displaying the page 
+	 * Displays the challenge page 
+	 * 
+	 * @param container - the root container of the app
+	 * @param challengeUri - the uri that provides the info for the specific challenge          
+	 */	
 	public void go(HasWidgets container, String challengeUri) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
@@ -74,10 +92,15 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		populateMainPanel(challengeUri);
 	}
 
-	/* scenarios: 
+	/**
+	 * Populates the challenge page the specific challenge's info
+	 * 
+	 * Scenarios: 
 	 * challengeId was not set - display error message in view 
 	 * challenge is private and user is not participant - display private challenge message
 	 * user is a participant of challenge - display challenge 
+	 * 
+	 * @param challengeUri - the uri that provides the info for the specific challenge
 	 */
 	private void populateMainPanel(String challengeUri) {
 		if (challengeUri == null) {
@@ -122,6 +145,12 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
+	/**
+	 * Helper method - Displays challenge contents once it has been verified that challenge
+	 * is public or user is a participant of a private challenge
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 */
 	private void displayChallenge(final OutgoingChallengeJsonModel model) {
 		// clear subpanel
 		view.getChallengeInfoPanel().clear();
@@ -182,7 +211,12 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		
 	}
 
-	// helper method for http request to get number of participants and set text in view
+	/**
+	 * Helper method - display the number of participants
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 * @param label - the UI label for number of participants
+	 */
 	private void displayTotalParticipants(OutgoingChallengeJsonModel model, final Label label){
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
@@ -209,10 +243,17 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	/* scenarios: 
+	/**
+	 * Displays the appropriate buttons on the challenge page depending on 
+	 * user's relation to the challenge
+	 * 
+	 * Scenarios: 
 	 * user is a nonparticipant - display join button
 	 * user is admin - display an edit button
 	 * user is participant - display complete button
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 * @param panel - the UI panel to display the buttons in
 	 */
 	private void displayActionButtons(final OutgoingChallengeJsonModel model, final VerticalPanel panel){
 		List<ResourceLink> links = model.getLinks();
@@ -278,9 +319,15 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	/* scenarios: 
+	/**
+	 * Helper method - displays the correct version of the complete button 
+	 * 
+	 * Scenarios: 
 	 * user is participant and hasn't completed challenge -	display mark complete button
 	 * user is participant and completed challenge - display disabled complete button with "Completed" text
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 * @param completeBtn - the UI button for marking a challenge complete
 	 */
 	private void displayCompleteButton(OutgoingChallengeJsonModel model, final Button completeBtn){
 		List<ResourceLink> links = model.getLinks();
@@ -328,7 +375,15 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	// challenge is private, check if user is a participant before displaying content
+	/**
+	 * Security check for when challenge's setting is private
+	 * 
+	 * Scenarios:
+	 * user is not a participant - display an error message and do not display the challenge info
+	 * user is a participant - display challenge as usual
+	 * 
+	 * @param model - the model of the challenge to be displayed
+	 */
 	private void displayPrivateChallenge(final OutgoingChallengeJsonModel model){
 		List<ResourceLink> links = model.getLinks();
 		for (ResourceLink link : links) {
@@ -375,7 +430,13 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		}
 	}
 
-	// "Mark Complete" button functionality
+	/**
+	 * Adds functionality to "Mark Complete" button
+	 * When clicked, should send a http post to create a new completed challenge instance 
+	 * 
+	 * @param completeBtn - UI button to add functionality to
+	 * @param model - the model of the challenge to be displayed 
+	 */
 	private void addCompleteBtnFunctionality(final Button completeBtn, final OutgoingChallengeJsonModel model) {
 		completeBtn.addClickHandler(new ClickHandler(){
 			@Override
@@ -424,7 +485,13 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		});
 	}
 
-	// "Join Challenge" button functionality
+	/**
+	 * Adds functionality to "Join" button
+	 * When clicked, should send a http post to create a new participant instance 
+	 * 
+	 * @param joinBtn - UI button to add functionality to
+	 * @param model - the model of the challenge to be displayed 
+	 */
 	private void addJoinBtnFunctionality(final Button joinBtn, final OutgoingChallengeJsonModel model) {
 		joinBtn.addClickHandler(new ClickHandler(){
 			@Override
@@ -474,7 +541,13 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		});
 	}
 
-	// "Edit" button functionality
+	/**
+	 * Adds functionality to "Edit" button
+	 * When clicked, should redirect user to the edit challenge page
+	 * 
+	 * @param editBtn - UI button to add functionality to
+	 * @param model - the model of the challenge to be displayed 
+	 */
 	private void addEditBtnFunctionality(final Button editBtn, final OutgoingChallengeJsonModel model) {
 		editBtn.addClickHandler(new ClickHandler(){
 			@Override
