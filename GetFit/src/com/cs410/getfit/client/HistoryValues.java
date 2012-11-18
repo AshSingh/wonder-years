@@ -10,6 +10,11 @@ public enum HistoryValues {
 	CHALLENGES,
 	SETTINGS;
 	
+	/**
+	 * Converts string value to lowercase
+	 * 
+	 * @return string in lowercase
+	 */
 	 @Override 
 	 public String toString() {
 		  //lowercase

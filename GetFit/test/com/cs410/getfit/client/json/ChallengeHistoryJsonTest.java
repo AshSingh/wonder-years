@@ -18,7 +18,6 @@ public class ChallengeHistoryJsonTest extends GWTTestCase {
 	private long userId = 1;
 	private long dateModified = System.currentTimeMillis();
 	private String type = "CREATE";
-	private long newsFeedId = 1;
 
 	String incomingJson = "{\"user_newsfeed\":[{\"info\":" +
 			"{\"datemodified\":"+dateModified+"," +

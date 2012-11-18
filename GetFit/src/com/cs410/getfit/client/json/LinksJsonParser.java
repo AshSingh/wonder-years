@@ -13,12 +13,23 @@ public class LinksJsonParser {
 		URI,
 		TYPE;
 
+		/**
+		 * Converts string value to lowercase
+		 * 
+		 * @return string in lowercase
+		 */
 		@Override public String toString() {
-			// return lower case string
 			return super.toString().toLowerCase();
 		}
 	}
 	
+	/**
+	 * Parses json from the server containing rels for other HTTP requests
+	 * 
+	 * @param json - rels json returned from server
+	 * @return list of ResourceLink - each link contains info 
+	 * for the rel, uri, and type
+	 */
 	public static List<ResourceLink> getLinks(JSONArray linksArray) {
 		List<ResourceLink> links = new ArrayList<ResourceLink>();
 		for (int i=0; i < linksArray.size(); i++) {

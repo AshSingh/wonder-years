@@ -16,15 +16,26 @@ public class MenuBarViewImpl extends Composite implements MenuBarView {
 	interface Binder extends UiBinder<Widget, MenuBarViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 	
+	/**
+	 * Initializes and binds widgets from xml 
+	 */
 	public MenuBarViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	/** 
+	 * Set the presenter for the view
+	 */
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 	
+	/**
+	 * Logout button clicked - call presenter to handle
+	 * 
+	 * @param event - click event
+	 */
 	@UiHandler("logoutBtn")
 	void addClickHandler(ClickEvent event) {
 		event.preventDefault();

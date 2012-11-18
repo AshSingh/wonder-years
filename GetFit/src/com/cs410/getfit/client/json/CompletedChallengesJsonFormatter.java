@@ -24,6 +24,12 @@ public class CompletedChallengesJsonFormatter {
 		links;
 	}
 
+	/**
+	 * Formats json to send to server containing info for completed challenges
+	 * 
+	 * @param models - completed challenge model(s) to parse into json
+	 * @return string of json of completed challenge(s) info
+	 */
 	public static String formatCompletedChallengeJsonInfo(List<IncomingCompletedChallengeJsonModel> models) {
 		JSONArray completedChallengesJson = new JSONArray();
 		// create array of individual challenge json
@@ -49,6 +55,13 @@ public class CompletedChallengesJsonFormatter {
 		return requestJson.toString();
 	}
 	
+	/**
+	 * Parses json from the server containing completed challenges info
+	 * 
+	 * @param json - json returned from server
+	 * @return list of OutgoingCompletedChallengeJsonModel - each model contains info 
+	 * for a completed challenge and rels for related HTTP requests
+	 */
 	public static List<OutgoingCompletedChallengeJsonModel> parseCompletedChallengesJsonInfo(String json) {
 		List<OutgoingCompletedChallengeJsonModel> models = new ArrayList<OutgoingCompletedChallengeJsonModel>();
 		// entire json string

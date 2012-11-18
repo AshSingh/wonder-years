@@ -65,11 +65,19 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private ChallengesView challengesView = null;
 	private UserSettingsView settingsView = null;
 	
-	public AppController(RequestBuilder requestBuilder, HandlerManager eventBus) {
+	/**
+	 * Creates AppController to handle the switching of views within the app
+	 * 
+	 * @param eventBus - manages changing views within the application
+	 */
+	public AppController(HandlerManager eventBus) {
 	    this.eventBus = eventBus;
 	    bind();
 	  }
 
+	/**
+	 * Binds all the possible events sent from the eventBus to the appropriate response method
+	 */
 	private void bind() {
 		History.addValueChangeHandler(this);
 
@@ -137,26 +145,48 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		}); 
 	}
 	
+	/**
+	 * Adds new history item - login
+	 * Redirects view to login page
+	 */
 	private void doGoToLogin() {
 	    History.newItem(HistoryValues.LOGIN.toString());
 	}
-	
+
 	private void doGoToRegister() {
 	    History.newItem(HistoryValues.REGISTER.toString());
 	}
 	
+	/**
+	 * Adds new history item - dashboard
+	 * Redirects view to dashboard page
+	 */
 	private void doGoToDashboard() {
 		History.newItem(HistoryValues.DASHBOARD.toString());
 	}
-	
+
+	/**
+	 * Adds new history item - create challenge
+	 * Redirects view to create challenge page
+	 */
 	private void doGoToCreateChallenge() {
 		History.newItem(HistoryValues.CREATECHALLENGE.toString());
 	}
 	
+	/**
+	 * Adds new history item - challenge uri
+	 * 
+	 * @param challengeUri - uri pertaining to a specific challenge
+	 */
 	private void doGoToChallenge(String challengeUri) {
 		History.newItem(challengeUri);
 	}
-	
+		
+	/**
+	 * Adds new history item - error
+	 * 
+	 * @param errorType - possible specific error type
+	 */
 	private void doGoToError(int errorType) {
 		if (errorType != -1) {
 			History.newItem(errorType + HistoryValues.ERROR.toString());
@@ -166,18 +196,39 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		}
 	}
 	
+	/**
+	 * Adds new history item - settings
+	 * Redirects view to user settings page
+	 */
 	private void doGoToUserSettings() {
 		History.newItem(HistoryValues.SETTINGS.toString());
 	}
 	
+	/**
+	 * Adds new history item - edit
+	 * Redirects view to edit challenge page
+	 * 
+	 * @param challengeUri - uri pertaining to a specific challenge
+	 */
 	private void doGoToEditChallenge(String challengeUri) {
 		History.newItem(HistoryValues.EDIT.toString() + challengeUri);
 	}
 	
+	/**
+	 * Adds new history item - challenges
+	 * Redirects view to challenges page
+	 */
 	private void doGoToChallenges() {
 		History.newItem(HistoryValues.CHALLENGES.toString());
 	}
 	
+	/**
+	 * Saves history items onto a stack to allow forward/back browser naviagtion
+	 * Also triggered when a new item is added to history
+	 * Causes the redirect of views depending on history item
+	 * 
+	 * @param event - the event that causes views to change
+	 */
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		DashboardPresenter.cancelRefreshTimer();
@@ -346,6 +397,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    }
 	}
 
+	/**
+	 * Allows user to resume session from last view if session is still active
+	 * If session is not active or no view history exists, redirect to login page
+	 * 
+	 * @param container - the root container of the app 
+	 */
 	@Override
 	public void go(final HasWidgets container) {
 		this.container = container;

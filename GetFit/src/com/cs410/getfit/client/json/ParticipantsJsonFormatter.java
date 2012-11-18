@@ -27,6 +27,12 @@ public class ParticipantsJsonFormatter {
 		links;
 	}
 
+	/**
+	 * Formats json to send to server containing info for challenge participants
+	 * 
+	 * @param models - participant model(s) to parse into json
+	 * @return string of json of participant(s) info
+	 */
 	public static String formatParticipantsJsonInfo(List<IncomingParticipantJsonModel> models) {
 		JSONArray participantsJson = new JSONArray();
 		// create array of individual challenge json
@@ -52,6 +58,13 @@ public class ParticipantsJsonFormatter {
 		return requestJson.toString();
 	}
 	
+	/**
+	 * Parses json from the server containing participant info
+	 * 
+	 * @param json - json returned from server
+	 * @return list of OutgoingParticipantJsonModel - each model contains info 
+	 * for a participant and rels for related HTTP requests
+	 */
 	public static List<OutgoingParticipantJsonModel> parseParticipantsJsonInfo(String json) {
 		List<OutgoingParticipantJsonModel> models = new ArrayList<OutgoingParticipantJsonModel>();
 		// entire json string

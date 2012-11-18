@@ -16,15 +16,26 @@ public class LoginViewImpl extends Composite implements LoginView {
 	interface Binder extends UiBinder<Widget, LoginViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 	
+	/**
+	 * Initializes and binds widgets from xml 
+	 */
 	public LoginViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
+	/** 
+	 * Set the presenter for the view
+	 */
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 	
+	/**
+	 * Login button clicked - call presenter to handle
+	 * 
+	 * @param event - click event
+	 */
 	@UiHandler("loginBtn")
 	void addClickHandler(ClickEvent event) {
 		event.preventDefault();

@@ -10,10 +10,9 @@ public class GetFit implements EntryPoint{
 	 
 	@Override
 	public void onModuleLoad() {
-		LoginPresenter.exportLoginRequest(); // this will assign the function to a variable in the window object called loginRequest()
-		RequestBuilder requestBuilder = null;    
+		LoginPresenter.exportLoginRequest(); // this will assign the function to a variable in the window object called loginRequest()  
 	    HandlerManager eventBus = new HandlerManager(null);
-	    AppController appViewer = new AppController(requestBuilder, eventBus);
+	    AppController appViewer = new AppController(eventBus);
 	    appViewer.go(RootPanel.get());
 	}
 	

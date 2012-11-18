@@ -27,12 +27,22 @@ public class ChallengesJsonFormatter {
 		ADMIN,
 		LINKS;
 
+		/**
+		 * Converts string value to lowercase
+		 * 
+		 * @return string in lowercase
+		 */
 		@Override public String toString() {
-			// return lower case string
 			return super.toString().toLowerCase();
 		}
 	}
 	
+	/**
+	 * Formats json to send to server containing info for challenges
+	 * 
+	 * @param models - challenge model(s) to parse into json
+	 * @return string of json of challenge(s) info
+	 */
 	public static String formatChallengeJsonInfo(List<IncomingChallengeJsonModel> models) {
 		JSONArray challengesJson = new JSONArray();
 		// create array of individual challenge json
@@ -63,6 +73,13 @@ public class ChallengesJsonFormatter {
 		return requestJson.toString();
 	}
 	
+	/**
+	 * Parses json from the server containing challenges info
+	 * 
+	 * @param json - json returned from server
+	 * @return list of OutgoingChallengeJsonModel - each model contains info 
+	 * for a challenge and rels for related HTTP requests
+	 */
 	public static List<OutgoingChallengeJsonModel> parseChallengeJsonInfo(String json) {
 		List<OutgoingChallengeJsonModel> models = new ArrayList<OutgoingChallengeJsonModel>();
 		// entire json string

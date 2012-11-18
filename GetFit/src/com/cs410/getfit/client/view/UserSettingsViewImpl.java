@@ -23,25 +23,44 @@ public class UserSettingsViewImpl extends Composite implements UserSettingsView 
 	interface Binder extends UiBinder<Widget, UserSettingsViewImpl> {}
 	private static final Binder uiBinder = GWT.create(Binder.class);
 
+	/**
+	 * Initializes and binds widgets from xml 
+	 */
 	public UserSettingsViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	/** 
+	 * Set the presenter for the view
+	 */
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 
+	/** 
+	 * Set the menu bar for the view
+	 */
 	@Override
 	public void setMenuBar(MenuBarView menuBar) {
 		this.menuBar = menuBar;
 	}
 
+	/**
+	 * Get the menu bar for the view
+	 * 
+	 * @return menu bar widget
+	 */
 	@Override
 	public MenuBarView getMenuBar() {
 		return menuBar;
 	}
 	
+	/**
+	 * Save settings button clicked - call presenter to handle
+	 * 
+	 * @param event - click event
+	 */
 	@UiHandler("saveSettingsBtn")
 	void onCreateChallengeClicked(ClickEvent event) {
 		if (presenter != null) {
@@ -49,21 +68,42 @@ public class UserSettingsViewImpl extends Composite implements UserSettingsView 
 		}
 	}
 	
+	/**
+	 * Get the input for privacy setting
+	 * 
+	 * @return true - setting is private
+	 * 		   false - setting is public
+	 */
 	@Override
 	public boolean getIsPrivate() {
 		return privacyPrivate.getValue();
 	}
 
+	/**
+	 * Get the name label 
+	 * 
+	 * @return name widget
+	 */
 	@Override
 	public Label getNameLabel() {
 		return nameLabel;
 	}
 
+	/**
+	 * Get the privacy radio button - private
+	 * 
+	 * @return radio button for private privacy setting
+	 */	
 	@Override
 	public RadioButton getPrivacyPrivateRadioButton() {
 		return privacyPrivate;
 	}
 
+	/**
+	 * Get the privacy radio button - public
+	 * 
+	 * @return radio button for public privacy setting
+	 */	
 	@Override
 	public RadioButton getPrivacyPublicRadioButton() {
 		return privacyPublic;

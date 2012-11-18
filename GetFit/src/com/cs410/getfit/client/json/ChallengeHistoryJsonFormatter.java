@@ -20,6 +20,13 @@ public class ChallengeHistoryJsonFormatter {
 		links;
 	}
 
+	/**
+	 * Parses json from the server containing challenge history for the newsfeed
+	 * 
+	 * @param json - json returned from server
+	 * @return list of OutgoingChallengeHistoryJsonModel - each model contains info 
+	 * for a challenge history item and rels for related HTTP requests
+	 */
 	public static List<OutgoingChallengeHistoryJsonModel> parseChallengeHistoryJsonInfo(String json) {
 		List<OutgoingChallengeHistoryJsonModel> models = new ArrayList<OutgoingChallengeHistoryJsonModel>();
 		// entire json string

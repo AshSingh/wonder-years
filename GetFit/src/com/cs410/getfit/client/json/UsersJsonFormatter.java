@@ -25,6 +25,13 @@ public class UsersJsonFormatter {
 		links;
 	}
 	
+	/**
+	 * Parses json from the server containing user info
+	 * 
+	 * @param json - json returned from server
+	 * @return list of OutgoingUserJsonModel - each model contains info 
+	 * for a user and rels for related HTTP requests
+	 */
 	public static List<OutgoingUserJsonModel> parseUserJsonInfo(String json) {
 		List<OutgoingUserJsonModel> models = new ArrayList<OutgoingUserJsonModel>();
 		// entire json string
@@ -58,6 +65,12 @@ public class UsersJsonFormatter {
 		return models;
 	}
 	
+	/**
+	 * Formats json to send to server containing info for users
+	 * 
+	 * @param models - user(s) to parse into json
+	 * @return string of json of user(s) info
+	 */
 	public static String formatUserJsonInfo(List<IncomingUserJsonModel> models) {
 		JSONArray usersJson = new JSONArray();
 		// create array of individual challenge json
