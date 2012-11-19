@@ -65,9 +65,9 @@ public class AuthenticationFilter implements Filter{
 		
 		String requestMethod = httpRequest.getMethod();
 		String token = "";
-		
-		//Obtain FB access token from request
-		if(requestMethod.equals("GET")) {
+
+		//obtain FB token from request
+		if(requestMethod.equals("GET") || requestMethod.equals("DELETE")) {
 			token = (String) request.getParameter("access_token");
 		} else if (requestMethod.equals("POST") || requestMethod.equals("PUT")) {
 			StringBuffer jb = new StringBuffer();

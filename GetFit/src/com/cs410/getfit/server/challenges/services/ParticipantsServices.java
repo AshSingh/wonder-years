@@ -108,4 +108,9 @@ public class ParticipantsServices implements ParticipantResourceServices {
 	public void setParticipants(List<ChallengeUser> participants) {
 		this.participants = participants;
 	}
+
+	@Override
+	public boolean delete() throws SQLException {
+		return false;
+	}
 }

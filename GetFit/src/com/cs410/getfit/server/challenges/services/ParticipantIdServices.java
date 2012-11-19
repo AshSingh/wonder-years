@@ -93,4 +93,15 @@ public class ParticipantIdServices implements ParticipantResourceServices {
 	public void setUserDao(Dao <User, Long> userDao) {
 		this.userDao = userDao;
 	}
+
+	@Override
+	public boolean delete() throws SQLException {
+		int rowsDeleted = 0;
+		rowsDeleted = manager.callInTransaction(new Callable<Integer>() {
+			public Integer call() throws Exception {
+				return challengeUserDao.deleteById(participantId);
+			}
+		});
+		return rowsDeleted == 1;
+	}
 }

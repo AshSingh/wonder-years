@@ -28,4 +28,9 @@ public interface ParticipantResourceServices {
 	 * @throws SQLException
 	 */
 	boolean update() throws SQLException;
+	
+	/**
+	 * unsubscribe the participant from the challenge
+	 */
+	boolean delete() throws SQLException;
 }

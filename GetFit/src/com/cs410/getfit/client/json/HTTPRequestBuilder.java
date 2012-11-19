@@ -21,6 +21,17 @@ public class HTTPRequestBuilder {
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
+	public static RequestBuilder getDeleteRequest(String url) {
+		String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
+		if(url.indexOf('?') == -1) {
+			url += "?" + query;
+		} else {
+			url += "&" + query;
+		}
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.DELETE, warFileName + url);
+		builder.setHeader(header, headerValue);
+		return builder;
+	}
 
 	/**
 	 * Creates a request builder for an HTTP GET request

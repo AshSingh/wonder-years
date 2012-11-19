@@ -248,7 +248,24 @@ public class ChallengesServlet extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.setStatus(501); // method not implemented
+		String pathURI = request.getRequestURI();
+		parser = new ChallengeUriParser(pathURI);
+
+		resp.setHeader("Content-Type", "application/json");
+		if (parser.isParticipantURI()) {
+			ParticipantServicesFactory factory = new ParticipantServicesFactory(
+					ctx, parser.getResource(), parser.getChallengeId(),
+					parser.getParticipantId());
+			ParticipantResourceServices services = factory.getPaticipantServices();
+			try {
+				services.delete();
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
+
+		} else {
+			resp.setStatus(501); // not implemented
+		}
 	}
 
 }
