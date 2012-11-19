@@ -6,7 +6,11 @@ import java.util.List;
 
 import com.cs410.getfit.server.models.CompletedChallenge;
 import com.j256.ormlite.dao.Dao;
-
+/**
+ * An object which handles specific completed challenge functionality
+ * @author kiramccoan
+ *
+ */
 public class CompletedChallengeIdServices implements CompletedChallengeResourceServices {
 	private long completedChallengeId;
 	private Dao<CompletedChallenge, Long> completedChallengesDao;

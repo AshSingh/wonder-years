@@ -2,7 +2,9 @@ package com.cs410.getfit.server.users;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * An object whose function is to parse URIs coming into the UsersServlet
+ */
 public class UserUriParser {
 	public static final int INVALID_URI = -1;
 	public static final int USERS = 0;
@@ -62,24 +64,39 @@ public class UserUriParser {
 		}
 		resource = INVALID_URI;
 	}
-
+	/**
+	 * 
+	 * @return user id in uri, -1 if none defined
+	 */
 	public long getUserId() {
 		return userId;
 	}
-
+	/**
+	 * 
+	 * @return resource of uri
+	 */
 	public int getResource() {
 		return resource;
 	}
-
+	/**
+	 * 
+	 * @return true if resource is /users(/id), false otherwise
+	 */
 	public boolean isUsersUri() {
 		return resource == UserUriParser.USERS
 				|| resource == UserUriParser.USERSID;
 	}
-
+	/**
+	 * 
+	 * @return true if resource is /users/id/newsfeed(/id), false otherwise
+	 */
 	public boolean isNewsfeedUri() {
 		return resource == UserUriParser.NEWSFEED;
 	}
-	
+	/**
+	 * 
+	 * @return true if resource is /users/id/challenges(/id), false otherwise
+	 */
 	public boolean isChallengesUri() {
 		return resource == UserUriParser.CHALLENGES;
 	}

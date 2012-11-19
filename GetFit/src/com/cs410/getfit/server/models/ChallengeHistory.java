@@ -1,5 +1,9 @@
 package com.cs410.getfit.server.models;
-
+/**
+ * Represents a user based event that occurs to a challenge
+ * @author kiramccoan
+ *
+ */
 public interface ChallengeHistory{
 
 	public long getGuid();

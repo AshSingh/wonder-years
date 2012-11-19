@@ -13,7 +13,11 @@ import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
-
+/**
+ * An object which handles specific challenge functionality
+ * @author kiramccoan
+ *
+ */
 public class ChallengeIdServices implements ChallengeResourceServices {
 
 	private Dao<Challenge, Long> challengeDao;
@@ -31,7 +35,6 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 			Dao<ChallengeHistory, Long> challengeHistoryDao) {
 		this.challengeHistoryDao = challengeHistoryDao;
 	}
-	
 
 	public Dao<Challenge, Long> getChallengeDao() {
 		return challengeDao;

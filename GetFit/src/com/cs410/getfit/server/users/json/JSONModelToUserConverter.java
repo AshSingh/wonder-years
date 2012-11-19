@@ -12,7 +12,11 @@ import com.cs410.getfit.shared.IncomingUserJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 import com.cs410.getfit.shared.UserInfoJsonModel;
-
+/**
+ * Converts json models to user models and vice versa
+ * @author kiramccoan
+ *
+ */
 public class JSONModelToUserConverter {
 	
 	public static List<User> convertToUsers(

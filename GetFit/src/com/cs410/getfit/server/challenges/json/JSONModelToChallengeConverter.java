@@ -19,6 +19,11 @@ import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToChallengeConverter {
 
+	/**
+	 * convert from a json model of challenges to a list of server challenges
+	 * @param jsonModels list of json challenges
+	 * @return list of challenges
+	 */
 	public static List<Challenge> convertToChallenges(
 			List<IncomingChallengeJsonModel> jsonModels) {
 		List<Challenge> challenges = new ArrayList<Challenge>();
@@ -42,7 +47,11 @@ public class JSONModelToChallengeConverter {
 		}
 		return challenges;
 	}
-
+	/**
+	 * convert a list of challenges to outgoing json model containing links to sub  and related resources
+	 * @param challenges
+	 * @return list of json challenges
+	 */
 	public static List<OutgoingChallengeJsonModel> convertToOutgoingChallengeJsonModel(
 			List<Challenge> challenges) {
 		List<OutgoingChallengeJsonModel> outgoingModels = new ArrayList<OutgoingChallengeJsonModel>();

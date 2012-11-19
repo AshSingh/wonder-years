@@ -15,7 +15,11 @@ import com.cs410.getfit.shared.OutgoingCompletedChallengeJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToCompletedChallengeConverter {
-
+	/**
+	 * convert from a json model of completed challenges to a list of server completed challenges
+	 * @param jsonModels list of json completed challenges
+	 * @return list of completed challenges
+	 */
 	public static List<CompletedChallenge> convertToCompletedChallenges(
 			List<IncomingCompletedChallengeJsonModel> jsonModels) {
 		List<CompletedChallenge> c_challenges = new ArrayList<CompletedChallenge>();
@@ -28,7 +32,11 @@ public class JSONModelToCompletedChallengeConverter {
 		}
 		return c_challenges;
 	}
-
+	/**
+	 * convert a list of completed challenges to their outgoing json form
+	 * @param c_challenges challenges to convert to json form
+	 * @return a list of outgoing json models
+	 */
 	public static List<OutgoingCompletedChallengeJsonModel> convertToOutgoingCompletedChallengeJsonModel(
 			List<CompletedChallenge> c_challenges) {
 		List<OutgoingCompletedChallengeJsonModel> models = new ArrayList<OutgoingCompletedChallengeJsonModel>();

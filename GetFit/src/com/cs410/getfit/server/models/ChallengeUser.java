@@ -1,6 +1,10 @@
 package com.cs410.getfit.server.models;
 
-
+/**
+ * Represents the participant of a challenge
+ * @author kiramccoan
+ *
+ */
 public interface ChallengeUser {
 
 	public abstract User getUser();

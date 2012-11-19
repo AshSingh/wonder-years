@@ -11,7 +11,11 @@ import com.cs410.getfit.shared.OutgoingChallengeHistoryJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToChallengeHistoryConverter {
-
+	/**
+	 * convert a list of challenge histories to json body with outgoing links
+	 * @param history a list of challenge histories
+	 * @return a list of the outgoing challenge history models
+	 */
 	public static List<OutgoingChallengeHistoryJsonModel> convertToOutgoingChallengeHistoryJsonModel(
 			List<ChallengeHistory> history) {
 		List<OutgoingChallengeHistoryJsonModel> outgoing = new ArrayList<OutgoingChallengeHistoryJsonModel>();

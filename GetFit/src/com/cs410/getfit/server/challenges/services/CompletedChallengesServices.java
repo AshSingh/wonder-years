@@ -14,7 +14,11 @@ import com.cs410.getfit.server.models.CompletedChallenge;
 import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
-
+/**
+ * An object which handles bulk completed challenge functionality
+ * @author kiramccoan
+ *
+ */
 public class CompletedChallengesServices implements CompletedChallengeResourceServices{
 	private long challengeId;
 	List<CompletedChallenge> c_challenges = new ArrayList<CompletedChallenge>();

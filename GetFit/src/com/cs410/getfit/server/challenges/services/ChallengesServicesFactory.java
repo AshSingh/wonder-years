@@ -8,7 +8,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cs410.getfit.server.challenges.ChallengeUriParser;
 import com.cs410.getfit.server.models.Challenge;
-
+/**
+ * Factory to return challenges service based on resource
+ * @author kiramccoan
+ *
+ */
 public class ChallengesServicesFactory {
 	WebApplicationContext ctx;
 	int resource = -1;
@@ -20,10 +24,18 @@ public class ChallengesServicesFactory {
 		this.challengeId = challengeId;
 	}
 
+	/**
+	 * @param challenges that service will work on
+	 * @return service populated with challenges that are passed in
+	 * @throws ServletException
+	 */
 	public ChallengeResourceServices getChallengeServices(List<Challenge> challenges) throws ServletException {
 		return getService(challenges);
 	}
-
+	/**
+	 * @return services without a list of challenges
+	 * @throws ServletException
+	 */
 	public ChallengeResourceServices getChallengeServices()
 			throws ServletException {
 		return getService(null);

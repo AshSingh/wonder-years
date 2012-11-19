@@ -16,6 +16,11 @@ import com.cs410.getfit.shared.ResourceLink;
 
 public class JSONModelToParticipantConverter {
 
+	/**
+	 * Convert a list of json models to participants
+	 * @param jsonModels to convert to participants
+	 * @return a list of challenge users
+	 */
 	public static List<ChallengeUser> convertToParticipants(
 			List<IncomingParticipantJsonModel> jsonModels) {
 		List<ChallengeUser> participants = new ArrayList<ChallengeUser>();
@@ -29,7 +34,11 @@ public class JSONModelToParticipantConverter {
 		}
 		return participants;
 	}
-
+	/**
+	 * Convert a list of challenge users to their outgoing json form
+	 * @param participants list of challenge users to convert to json form
+	 * @return a list of outgoing json models
+	 */
 	public static List<OutgoingParticipantJsonModel> convertToOutgoingParticipantJsonModel(List<ChallengeUser> participants) {
 		List<OutgoingParticipantJsonModel> models = new ArrayList<OutgoingParticipantJsonModel>();
 		for (ChallengeUser participant : participants) {

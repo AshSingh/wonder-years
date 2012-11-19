@@ -19,6 +19,10 @@ public interface ChallengeResourceServices {
 	 * @throws SQLException 
 	 */
 	List<Challenge> get() throws SQLException;
-
+	
+	/**
+	 * @return true if the challenge is updated
+	 * @throws SQLException
+	 */
 	boolean update() throws SQLException;
 }

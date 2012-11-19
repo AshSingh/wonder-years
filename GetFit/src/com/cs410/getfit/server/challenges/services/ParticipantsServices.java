@@ -14,7 +14,11 @@ import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.shared.NewsfeedItemType;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
-
+/**
+ * An object which handles bulk participant functionality
+ * @author kiramccoan
+ *
+ */
 public class ParticipantsServices implements ParticipantResourceServices {
 
 	private long challengeId;

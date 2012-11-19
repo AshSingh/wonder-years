@@ -8,7 +8,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cs410.getfit.server.challenges.ChallengeUriParser;
 import com.cs410.getfit.server.models.CompletedChallenge;
-
+/**
+ * Factory to create completed challenge service based on resource
+ * @author kiramccoan
+ *
+ */
 public class CompletedChallengesServicesFactory {
 	WebApplicationContext ctx;
 	int resource;
@@ -22,12 +26,19 @@ public class CompletedChallengesServicesFactory {
 		this.challengeId = challengeId;
 		this.completedChallengeId = completedChallengeId;
 	}
-
+	/**
+	 * @param challenges to perform services on
+	 * @return service with a list of completed challenges populated in the service
+	 * @throws ServletException
+	 */
 	public CompletedChallengeResourceServices getCompletedChallengeServices(
 			List<CompletedChallenge> challenges) throws ServletException {
 		return getService(challenges);
 	}
-
+	/**
+	 * @return service that return information to the user
+	 * @throws ServletException
+	 */
 	public CompletedChallengeResourceServices getCompletedChallengeServices()
 			throws ServletException {
 		return getService(null);

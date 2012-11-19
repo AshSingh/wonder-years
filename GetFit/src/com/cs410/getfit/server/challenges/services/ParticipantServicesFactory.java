@@ -8,7 +8,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cs410.getfit.server.challenges.ChallengeUriParser;
 import com.cs410.getfit.server.models.ChallengeUser;
-
+/**
+ * A factory to create the participant service based on resource requested
+ * @author kiramccoan
+ *
+ */
 public class ParticipantServicesFactory {
 	WebApplicationContext ctx;
 	int resource;
@@ -21,11 +25,19 @@ public class ParticipantServicesFactory {
 		this.challengeId = challengeId;
 		this.participantId = participantId;
 	}
+	/**
+	 * @param participants that the service will act on
+	 * @return service with participants
+	 * @throws ServletException
+	 */
 	public ParticipantResourceServices getParticipantServices(
 			List<ChallengeUser> participants) throws ServletException {
 		return getService(participants);
 	}
-
+	/**
+	 * @return service to get information about participants from
+	 * @throws ServletException
+	 */
 	public ParticipantResourceServices getPaticipantServices() throws ServletException {
 		return getService(null);
 	}

@@ -9,7 +9,11 @@ import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
-
+/**
+ * An object which handles specific participant functionality
+ * @author kiramccoan
+ *
+ */
 public class ParticipantIdServices implements ParticipantResourceServices {
 
 	private long participantId;

@@ -6,7 +6,11 @@ import javax.servlet.ServletContextListener;
 import com.cs410.getfit.server.challenges.ChallengeObservable;
 import com.cs410.getfit.server.users.UserNewsfeedObserver;
 import com.cs410.getfit.server.users.UserPrivacySettingsObservable;
-
+/**
+ * Listener to register all of the apps observers
+ * @author kiramccoan
+ *
+ */
 public class ObserverRegistrationListener implements ServletContextListener {
 	ChallengeObservable source = ChallengeObservable.getInstance();
 	UserPrivacySettingsObservable ps_source = UserPrivacySettingsObservable.getInstance();

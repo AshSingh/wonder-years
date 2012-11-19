@@ -4,7 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.cs410.getfit.server.models.CompletedChallenge;
-
+/**
+ * Represents services provided by the completed challenges services
+ * @author kiramccoan
+ *
+ */
 public interface CompletedChallengeResourceServices {
 
 	/**

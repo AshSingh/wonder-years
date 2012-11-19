@@ -9,7 +9,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * Generic resource formatter. All resources formatters should extend this class
+ * @author kiramccoan
+ *
+ */
 public class ResourceFormatter {
 	Type incomingClazzArray;
 	Type outgoingClazz;
@@ -20,7 +24,11 @@ public class ResourceFormatter {
 		this.outgoingClazz = outgoingClazz;
 		this.encompassingString = encompassingString;
 	}
-	
+	/**
+	 * Convert a list of objects(type by outgoing clazz) to their json specific string
+	 * @param objects
+	 * @return
+	 */
 	public String getJSONFormattedStringOfResource(List<? extends Object> objects) {
 		JsonObject jsonFormattedChallenges = new JsonObject();
 
@@ -34,7 +42,11 @@ public class ResourceFormatter {
 		jsonFormattedChallenges.add(encompassingString, challengeObjects);
 		return jsonFormattedChallenges.toString();
 	}
-
+	/**
+	 * Convert a json string to its list of specified objects (type by incomingclazz)
+	 * @param jsonFormattedResourceString
+	 * @return
+	 */
 	public List<? extends Object> getResourcesFromJSONFormattedString(String jsonFormattedResourceString) {
 		JsonObject object = (JsonObject)new JsonParser().parse(jsonFormattedResourceString);
 		Object[] array = new Gson().fromJson(object.get(encompassingString), incomingClazzArray);

@@ -29,7 +29,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * Entry point of /users
+ * @author kiramccoan
+ *
+ */
 public class UsersServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 8032611514671727168L;

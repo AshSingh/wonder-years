@@ -1,5 +1,9 @@
 package com.cs410.getfit.server.models;
-
+/**
+ * Represents a completed challenge
+ * @author kiramccoan
+ *
+ */
 public interface CompletedChallenge {
 	
 	public long getGuid();

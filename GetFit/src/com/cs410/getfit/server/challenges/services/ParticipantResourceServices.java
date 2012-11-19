@@ -4,7 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.cs410.getfit.server.models.ChallengeUser;
-
+/**
+ * Represents all the services that can be done on participants
+ * @author kiramccoan
+ *
+ */
 public interface ParticipantResourceServices {
 	/**
 	 * create the participants set in this service

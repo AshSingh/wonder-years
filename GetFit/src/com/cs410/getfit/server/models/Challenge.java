@@ -2,7 +2,11 @@ package com.cs410.getfit.server.models;
 
 import java.util.List;
 
-
+/**
+ * Represents a Challenge
+ * @author kiramccoan
+ *
+ */
 public interface Challenge {
 	
 	public long getGuid();

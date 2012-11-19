@@ -1,5 +1,9 @@
 package com.cs410.getfit.server.models;
-
+/**
+ * Represents a user of the system
+ * @author kiramccoan
+ *
+ */
 public interface User {
 
 	/**

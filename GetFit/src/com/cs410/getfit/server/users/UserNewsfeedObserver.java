@@ -2,7 +2,11 @@ package com.cs410.getfit.server.users;
 
 import java.util.Observable;
 import java.util.Observer;
-
+/**
+ * An Observer which watches news feed observable agents
+ * @author kiramccoan
+ *
+ */
 public class UserNewsfeedObserver implements Observer {
 		private static UserNewsfeedObserver instance = null;
 		private UserNewsfeedObserver() {
@@ -12,6 +16,9 @@ public class UserNewsfeedObserver implements Observer {
 	    public void update(Observable obj, Object arg) {
 	    	lastModifiedAt = (Long) arg;
 	    }
+	    /**
+	     * @return the time that the newsfeed was last modified
+	     */
 	    public long getLastModified() {
 	    	return lastModifiedAt;
 	    }

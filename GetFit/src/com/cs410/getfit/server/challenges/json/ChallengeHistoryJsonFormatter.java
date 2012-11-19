@@ -7,10 +7,14 @@ import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.Challenge;
 import com.cs410.getfit.server.models.ChallengeHistory;
 import com.cs410.getfit.shared.OutgoingChallengeHistoryJsonModel;
-
+/**
+ * Contains the functionality to parse between json and challenge history objects
+ * @author kiramccoan
+ *
+ */
 public class ChallengeHistoryJsonFormatter extends ResourceFormatter {
 
-	private static Type incomingClazzArray = null; //we will never post to challenge history
+	private static Type incomingClazzArray = null; //cannot post to challenge history
 	private static Type outgoingClazz = OutgoingChallengeHistoryJsonModel.class;
 	private static String encompassingString = "user_newsfeed";
 

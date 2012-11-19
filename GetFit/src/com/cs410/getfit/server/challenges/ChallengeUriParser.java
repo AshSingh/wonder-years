@@ -2,7 +2,9 @@ package com.cs410.getfit.server.challenges;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * An object whose function is to parse URIs coming into the ChallengesServlet
+ */
 public class ChallengeUriParser {
 	public static final int INVALID_URI = -1;
 	public static final int CHALLENGES = 0;
@@ -34,7 +36,7 @@ public class ChallengeUriParser {
 		setResource(pathURI);
 	}
 
-	public void setResource(String pathURI) {
+	private void setResource(String pathURI) {
 		Matcher matcher;
 		matcher = participantsIdPattern.matcher(pathURI);
 		if (matcher.find()) {
@@ -77,33 +79,48 @@ public class ChallengeUriParser {
 		} 
 		resource = INVALID_URI;
 	}
-
+	/**
+	 * @return the id in the uri /challenges/id
+	 */
 	public long getChallengeId() {
 		return challengeId;
 	}
-
+	/**
+	 * @return the participant id in the uri /challenges/ChId/participants/id
+	 */
 	public long getParticipantId() {
 		return participantId;
 	}
-
+	/**
+	 * @return the completed challenge id in the uri /challenges/ChId/completedchallenges/id
+	 */
 	public long getCompletedChallengeId() {
 		return completedChallengeId;
 	}
-	
+	/**
+	 * @return the resource that the uri is requesting
+	 */
 	public int getResource() {
 		return resource;
 	}
 
+	/**
+	 * @return true if the resource is /challenges(/id), false otherwise
+	 */
 	public boolean isChallengeURI() {
 		return resource == ChallengeUriParser.CHALLENGES
 				|| resource == ChallengeUriParser.CHALLENGESID;
 	}
-
+	/**
+	 * @return true if the resource is requesting /challenges/id/participants(/id), false otherwise
+	 */
 	public boolean isParticipantURI() {
 		return resource == ChallengeUriParser.PARTICIPANTS
 				|| resource == ChallengeUriParser.PARTICIPANTSID;
 	}
-
+	/**
+	 * @return true if the resource is requesting /challenges/id/completedchallenges(/id), false otherwise
+	 */
 	public boolean isCompletedChallengeURI() {
 		return resource == ChallengeUriParser.COMPLETEDCHALLENGES
 				|| resource == ChallengeUriParser.COMEPLETEDCHALLENGESSID;

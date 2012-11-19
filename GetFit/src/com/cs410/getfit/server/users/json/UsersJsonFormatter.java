@@ -6,7 +6,11 @@ import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.shared.IncomingUserJsonModel;
 import com.cs410.getfit.shared.OutgoingUserJsonModel;
-
+/**
+ * Format json string and user objects to their respective models
+ * @author kiramccoan
+ *
+ */
 public class UsersJsonFormatter extends ResourceFormatter{
 	
 	public UsersJsonFormatter() {

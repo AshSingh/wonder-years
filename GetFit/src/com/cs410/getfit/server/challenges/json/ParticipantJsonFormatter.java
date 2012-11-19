@@ -7,7 +7,11 @@ import com.cs410.getfit.server.json.ResourceFormatter;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.shared.IncomingParticipantJsonModel;
 import com.cs410.getfit.shared.OutgoingParticipantJsonModel;
-
+/**
+ * Contains the functionality to parse between json and participant objects
+ * @author kiramccoan
+ *
+ */
 public class ParticipantJsonFormatter extends ResourceFormatter {
 
 	private static Type iclazzArray = IncomingParticipantJsonModel[].class;
