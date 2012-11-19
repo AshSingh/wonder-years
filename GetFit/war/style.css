@@ -385,6 +385,12 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	margin-top: 10px;
 }
 
+.leave-btn {
+	margin-left: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
 /*
  * challenges
  */

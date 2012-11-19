@@ -21,6 +21,13 @@ public class HTTPRequestBuilder {
 		builder.setHeader(header, headerValue);
 		return builder;
 	}
+	
+	/**
+	 * Creates a request builder for an HTTP DELETE request
+	 * 
+	 * @param url - url to send HTTP request
+	 * @return a RequestBuidler that can be used to send an HTTP DELETE request
+	 */
 	public static RequestBuilder getDeleteRequest(String url) {
 		String query = "access_token=" + URL.encode(Cookies.getCookie("accessToken"));
 		if(url.indexOf('?') == -1) {

@@ -250,7 +250,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 	 * Scenarios: 
 	 * user is a nonparticipant - display join button
 	 * user is admin - display an edit button
-	 * user is participant - display complete button
+	 * user is participant - display complete button, display leave challenge button
 	 * 
 	 * @param model - the model of the challenge to be displayed
 	 * @param panel - the UI panel to display the buttons in
@@ -272,6 +272,12 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 									for (OutgoingParticipantJsonModel participantModel : models) {
 										if (participantModel.getInfo().getUserId() == currentUser) {
 											participating = true;
+											// user is participant, add leave button
+											Button leaveBtn = new Button("Leave Challenge");
+											leaveBtn.setStyleName("btn btn-primary");
+											leaveBtn.addStyleName("leave-btn");
+											panel.add(leaveBtn);
+											addLeaveBtnFunctionality(leaveBtn, participantModel, model);
 											// user is participant, add complete button
 											Button completeBtn = new Button("Mark Complete");
 											completeBtn.setStyleName("btn btn-primary");
@@ -541,6 +547,48 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		});
 	}
 
+	/**
+	 * Adds functionality to "Leave" button
+	 * When clicked, should send a http delete to delete the participant instance 
+	 * 
+	 * @param leaveBtn - UI button to add functionality to
+	 * @param pModel - the model of the participant
+	 * @param chModel - the model of the challenge to be displayed 
+	 */
+	private void addLeaveBtnFunctionality(final Button leaveBtn, final OutgoingParticipantJsonModel pModel, final OutgoingChallengeJsonModel chModel) {
+		leaveBtn.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				List<ResourceLink> links = pModel.getLinks();
+				for (ResourceLink link : links) {
+					if (link.getType().equals(LinkTypes.PARTICIPANT.toString())) {
+						RequestBuilder builder = HTTPRequestBuilder.getDeleteRequest(link.getUri()); 
+						try {
+							builder.sendRequest(null, new RequestCallback() {
+								@Override
+								public void onResponseReceived(Request request, Response response) {
+									if (response.getStatusCode() == 200) {
+										// update view
+										displayChallenge(chModel);
+									}
+									else {
+										eventBus.fireEvent(new GoToErrorEvent(response.getStatusCode()));
+									}
+								}
+								@Override
+								public void onError(Request request, Throwable exception) {
+									eventBus.fireEvent(new GoToErrorEvent());
+								}
+							});
+						} catch (RequestException e) {
+							eventBus.fireEvent(new GoToErrorEvent());
+						}
+					}
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Adds functionality to "Edit" button
 	 * When clicked, should redirect user to the edit challenge page
