@@ -84,12 +84,20 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 		$wnd.loginRequest = $entry(@com.cs410.getfit.client.presenter.LoginPresenter::loginRequest(Ljava/lang/String;));
 	}-*/;
 	
+	/* Javascript
+	 * Login button clicked
+	 * @see com.cs410.getfit.client.view.LoginView.Presenter#onLoginButtonClicked()
+	 */
 	@Override
 	public native void onLoginButtonClicked() /*-{
 		  $wnd.login();
 	}-*/;
 	
-	//facebook request for auth token
+	/**
+	 * Javascript Method
+	 * facebook request for auth token
+	 * @return access token
+	 */
 	private static native String fb_getAuthResponse() /*-{
 		var authResponse = $wnd.FB.getAuthResponse();
 		return authResponse.accessToken;

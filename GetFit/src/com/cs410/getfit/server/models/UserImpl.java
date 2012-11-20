@@ -69,6 +69,9 @@ public class UserImpl implements Serializable, User {
 		return guid;
 	}
 		
+	/* Print human readable FB Object
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return "FB_ID: " + this.getFB_ID() + " Name: " + this.getFirstName() + "  lastname: " + this.getLastName() + " isPrivate: " + this.getIsPrivate();
 	}

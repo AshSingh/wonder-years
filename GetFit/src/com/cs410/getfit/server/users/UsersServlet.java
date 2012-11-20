@@ -42,6 +42,9 @@ public class UsersServlet extends HttpServlet {
 	private UsersServices usersServices = null;
 	private UsersJsonFormatter formatter;
 
+	/* Initialize the servlet and create the corresponding JSON formatter
+	 * @see javax.servlet.GenericServlet#init()
+	 */
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -51,6 +54,9 @@ public class UsersServlet extends HttpServlet {
 		formatter = new UsersJsonFormatter();
 	}
 
+	/* HTTP GET Method Implementation for Users
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -92,7 +98,6 @@ public class UsersServlet extends HttpServlet {
 				// Set the correct status code
 				resp.setStatus(200);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else if(parser.getResource() == UserUriParser.CHALLENGES) {
@@ -108,20 +113,22 @@ public class UsersServlet extends HttpServlet {
 				// Set the correct status code
 				resp.setStatus(200);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
+	/* HTTP POST method implementation for Users
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String body = request.getParameter("json_body");
 		
 		UserUriParser uriParser = new UserUriParser(request.getRequestURI());
+		//login scenario
 		if(uriParser.getResource() == UserUriParser.LOGIN) {
-			
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(body);
 			JsonObject jObjBody = null;
@@ -135,6 +142,9 @@ public class UsersServlet extends HttpServlet {
 		}
 	}
 	
+	/* HTTP PUT method implementation for users
+	 * @see javax.servlet.http.HttpServlet#doPut(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -163,8 +173,16 @@ public class UsersServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Login function
+	 * @param fb_id
+	 * @param body JSON
+	 * @param resp
+	 * @throws IOException
+	 */
 	private void login(String fb_id, JsonObject body , HttpServletResponse resp) throws IOException {
 		User user = usersServices.getUser(fb_id);
+		//User does not exist
 		if(user == null && body != null) {
 			String firstname = body.get("first_name").getAsString();
 			String lastname = body.get("last_name").getAsString();

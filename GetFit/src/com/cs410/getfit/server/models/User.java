@@ -46,7 +46,14 @@ public interface User {
 	 */
 	public abstract void setLastName(String lastName);
 	
+	/**
+	 * @param User Database GUID
+	 */
 	public abstract void setGuid(Long guid);
+	
+	/**
+	 * @return User Database GUID
+	 */
 	public abstract Long getGuid();
 
 }
