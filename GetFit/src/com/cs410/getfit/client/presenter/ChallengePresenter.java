@@ -164,32 +164,47 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			// Regular expresion for latitude and longitude as stored in DATABASE
 			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 			MatchResult match = regexp.exec(info.getLocation());
-			LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
-			// Get the name of the city on the location of the challenge
-			Geocoder geocoder = Geocoder.newInstance();
-			GeocoderRequest request = GeocoderRequest.newInstance();
-			request.setLocation(challengePoint);
-			geocoder.geocode(request, new GeocoderRequestHandler() {
-
-				@Override
-				public void onCallback(JsArray<GeocoderResult> results,
-						GeocoderStatus status) {
-					// Get the full location
-					String formattedAddress = results.get(0).getFormatted_Address();
-					String cityLocation = (formattedAddress != "" && formattedAddress != null) ? formattedAddress : "Unknown";
-					Label locationLabel = new Label("Location: ");
-					Label locationText = new Label(cityLocation);
-					locationLabel.addStyleName("details-label");
-					locationText.addStyleName("details-text");
-					HorizontalPanel locationPanel = new HorizontalPanel();
-					locationPanel.add(locationLabel);
-					locationPanel.add(locationText);
-					infoPanel.add(locationPanel);
-					// action button (join, complete(d), edit)
-					displayActionButtons(model, infoPanel);
-				}
-				
-			});
+			if(match.getGroupCount() == 4) { 
+				LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
+				// Get the name of the city on the location of the challenge
+				Geocoder geocoder = Geocoder.newInstance();
+				GeocoderRequest request = GeocoderRequest.newInstance();
+				request.setLocation(challengePoint);
+				geocoder.geocode(request, new GeocoderRequestHandler() {
+	
+					@Override
+					public void onCallback(JsArray<GeocoderResult> results,
+							GeocoderStatus status) {
+						// Get the full location
+						String formattedAddress = results.get(0).getFormatted_Address();
+						String cityLocation = (formattedAddress != "" && formattedAddress != null) ? formattedAddress : "N/A";
+						Label locationLabel = new Label("Location: ");
+						Label locationText = new Label(cityLocation);
+						locationLabel.addStyleName("details-label");
+						locationText.addStyleName("details-text");
+						HorizontalPanel locationPanel = new HorizontalPanel();
+						locationPanel.add(locationLabel);
+						locationPanel.add(locationText);
+						infoPanel.add(locationPanel);
+						// action button (join, complete(d), edit)
+						displayActionButtons(model, infoPanel);
+					}
+					
+				});
+			} else {
+				// Location not correctly formated
+				String cityLocation = "N/A";
+				Label locationLabel = new Label("Location: ");
+				Label locationText = new Label(cityLocation);
+				locationLabel.addStyleName("details-label");
+				locationText.addStyleName("details-text");
+				HorizontalPanel locationPanel = new HorizontalPanel();
+				locationPanel.add(locationLabel);
+				locationPanel.add(locationText);
+				infoPanel.add(locationPanel);
+				// action button (join, complete(d), edit)
+				displayActionButtons(model, infoPanel);
+			}
 		}
 		// total participants
 		Label participantsLabel = new Label("Total Participants: ");

@@ -1,5 +1,7 @@
 package com.cs410.getfit.client.view;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -12,6 +14,8 @@ public interface CreateAndEditChallengeView {
 	
 	public interface Presenter {
 		void onSaveChallengeButtonClicked();
+		void onChangeLocationPreference();
+		void onSearchAddressButtonClicked();
 	}
 	
 	void setPresenter(Presenter presenter);
@@ -21,6 +25,7 @@ public interface CreateAndEditChallengeView {
 	String getChallengeName();
 	Label getChallengeNameLabel();
 	String getLocation();
+	String getAddress();
 	String getDescription();
 	Label getDescriptionLabel();
 	boolean getIsPrivate();
@@ -29,6 +34,10 @@ public interface CreateAndEditChallengeView {
 	TextArea getDescriptionBox();
 	RadioButton getPrivacyPrivateRadioButton();
 	RadioButton getPrivacyPublicRadioButton();
+	RadioButton getLocationYesRadioButton();
+	RadioButton getLocationNoRadioButton();
 	void createMap();
+	Element getLocationDiv();
 	public HorizontalPanel getMap();
+	public void setSearchedAddress(LatLng address);
 }

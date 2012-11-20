@@ -24,11 +24,31 @@
 					<h5>
 						<g:Label styleName="spaced-label" ui:field="locationLabel">Location: </g:Label>
 					</h5>
-					<g:Hidden styleName="spaced-label" ui:field="locationBox" />
-					
-					<g:HorizontalPanel ui:field="gMapsPanel" styleName="gMapsPanel">
-    				</g:HorizontalPanel>
+					<g:RadioButton name="locationRadio" formValue="yes"
+						ui:field="locationYes" checked="true" styleName="spaced-radio" />
+					<h5>
+						<g:Label styleName="radio-label">Yes</g:Label>
+					</h5>
+
+					<g:RadioButton name="locationRadio" formValue="no"
+						ui:field="locationNo" styleName="spaced-radio" />
+					<h5>
+						<g:Label styleName="radio-label">No</g:Label>
+					</h5>
 				</form>
+				
+				<div id="location-div">
+					<div class="form-search">
+						<g:TextBox ui:field="addressBox" styleName="input-large search-query"></g:TextBox>
+						<g:Button styleName="btn btn-primary searchAddress" ui:field="searchAddressBtn">Search</g:Button>
+					</div>
+					
+					<g:Hidden styleName="spaced-label" ui:field="locationBox" />
+	
+					<g:HorizontalPanel ui:field="gMapsPanel"
+						styleName="gMapsPanel">
+					</g:HorizontalPanel>
+				</div>
 				<div>
 					<form class="form-inline">
 						<h5>

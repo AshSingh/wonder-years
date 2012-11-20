@@ -2,13 +2,18 @@ package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.geolocation.client.Geolocation;
+import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -21,16 +26,20 @@ import com.google.gwt.user.client.ui.Widget;
 public class CreateAndEditChallengeViewImpl extends Composite implements CreateAndEditChallengeView {
 	@UiField static TextBox challengeNameBox;
 	@UiField static Hidden locationBox;
+	@UiField static TextBox addressBox;
 	@UiField static TextArea descriptionBox;
 	@UiField static RadioButton privacyPrivate;
 	@UiField static RadioButton privacyPublic;
 	@UiField static Label challengeLabel;
 	@UiField static Label descriptionLabel;
 	@UiField static HorizontalPanel gMapsPanel;
+	@UiField static RadioButton locationYes;
+	@UiField static RadioButton locationNo;
 	
 	private Presenter presenter;
 	private MenuBarView menuBar;
 	private MapWidget mapWidget;
+	private PositionCallback posCallback;
 
 	@UiTemplate("CreateAndEditChallenge.ui.xml") 
 	interface Binder extends UiBinder<Widget, CreateAndEditChallengeViewImpl> {}
@@ -80,6 +89,27 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 			presenter.onSaveChallengeButtonClicked();			
 		}
 	}
+	
+	@UiHandler("locationYes")
+	void addValueChangeHandlerYes(ValueChangeEvent<Boolean> event) {
+		if (presenter != null) {
+			presenter.onChangeLocationPreference();
+		}
+	}
+	@UiHandler("locationNo")
+	void addValueChangeHandlerNo(ValueChangeEvent<Boolean> event) {
+		if (presenter != null) {
+			presenter.onChangeLocationPreference();
+		}
+	}
+	
+	@UiHandler("searchAddressBtn")
+	void onSearchAddressClicked(ClickEvent event) {
+		if (presenter != null) {
+			presenter.onSearchAddressButtonClicked();
+		}
+	}
+	
 
 	/**
 	 * Get the input for challenge name
@@ -201,10 +231,20 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 	 * Creates map for location setting
 	 */
 	@Override
+	public RadioButton getLocationYesRadioButton() {
+		return locationYes;
+	}
+	
+	@Override
+	public RadioButton getLocationNoRadioButton() {
+		return locationNo;
+	}
+	
+	@Override
 	public void createMap() {
 		Geolocation userLocation = Geolocation.getIfSupported();
 		if(userLocation != null) {
-			PositionCallback posCallback = new PositionCallback(mapWidget, gMapsPanel, locationBox);
+			posCallback = new PositionCallback(mapWidget, gMapsPanel, locationBox);
 			userLocation.getCurrentPosition((Callback) posCallback);
 		}
 	}
@@ -217,5 +257,21 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 	@Override
 	public HorizontalPanel getMap() {
 		return this.gMapsPanel;
-	} 
+	}
+	
+	@Override
+	public Element getLocationDiv() {
+		return DOM.getElementById("location-div");
+	}
+
+	@Override
+	public String getAddress() {
+		return addressBox.getValue().toString();
+	}
+	
+	@Override
+	public void setSearchedAddress(LatLng address) {
+		this.mapWidget = posCallback.getMapWidget();
+		this.mapWidget.setCenter(address);
+	}
 }

@@ -333,6 +333,11 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	padding: 5px 5px 5px 5px;
 }
 
+.searchAddress {
+	position:relative;
+	bottom: 5px;
+}
+
 /*
  * challenge
  */
@@ -409,7 +414,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	padding-bottom: 10px;
 }
 
-.challenges-participants {
+.challenges-participants .challenges-distance{
 	padding-right: 10px;
 	font-family: inherit;
 	font-weight: normal;
@@ -418,6 +423,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	text-rendering: optimizelegibility;
 	font-size: 12px;
 	line-height: 20px;
+	margin-left: 10px;
 }
 
 .closest {

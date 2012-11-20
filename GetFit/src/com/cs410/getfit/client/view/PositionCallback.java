@@ -10,10 +10,15 @@ import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
+import com.google.gwt.maps.client.events.resize.ResizeMapEvent;
+import com.google.gwt.maps.client.events.resize.ResizeMapHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
+
 
 
 
@@ -25,6 +30,7 @@ public class PositionCallback implements Callback<Object, Object>{
 	
 	public PositionCallback(MapWidget mapWidget, HorizontalPanel gMapsPanel, Hidden locationBox) {
 		this.mapWidget = mapWidget;
+		gMapsPanel.clear();
 		this.gMapsPanel = gMapsPanel;
 		this.locationBox = locationBox;
 	}
@@ -33,6 +39,23 @@ public class PositionCallback implements Callback<Object, Object>{
 	public void onFailure(Object positionErr) {
 		PositionError error = (PositionError) positionErr;
 		System.out.println(error.getMessage());
+		locationBox.setValue("");
+		mapWidget = new MapWidget(null);
+		mapWidget.setSize("500px", "500px");
+		final Marker userPosMarker = Marker.newInstance(null);
+		
+		// Add click handler to let the user change the marker's position
+		mapWidget.addClickHandler(new ClickMapHandler() {
+			public void onEvent(ClickMapEvent event) {
+				LatLng point = event.getMouseEvent().getLatLng();
+				userPosMarker.setPosition(point);
+				locationBox.setValue(point.getToString());
+				// Get distance between two points
+			// LatLng toPoint = LatLng.newInstance(25.792194, -108.996220);
+			// System.out.println("Distance: " + SphericalUtils.computeDistanceBetween(point, toPoint) / 1000 + " km");
+			}
+		});
+		gMapsPanel.add(mapWidget);
 	}
 
 	@Override
@@ -83,4 +106,7 @@ public class PositionCallback implements Callback<Object, Object>{
 	    gMapsPanel.add(mapWidget);
 	}
 	
+	public MapWidget getMapWidget() {
+		return this.mapWidget;
+	}
 }

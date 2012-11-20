@@ -58,13 +58,21 @@ public class PositionSortCallback implements Callback<Object, Object>{
 						if (models.size() > 0) {
 							for (OutgoingChallengeJsonModel model : models) {
 								String modelLocation = model.getInfo().getLocation();
-								// Regular expresion for latitude and longitude as stored in DATABASE
-								RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
-								MatchResult match = regexp.exec(modelLocation);
-								LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
-								// Calculate Distances
-								double distance = SphericalUtils.computeDistanceBetween(userPoint, challengePoint); 
-								model.setDistance(distance);
+								if(modelLocation != null) {
+									// Regular expresion for latitude and longitude as stored in DATABASE
+									RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
+									MatchResult match = regexp.exec(modelLocation);
+									if (match.getGroupCount() == 5) {
+										LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
+										// Calculate Distances
+										double distance = SphericalUtils.computeDistanceBetween(userPoint, challengePoint); 
+										model.setDistance(distance);
+									} else {
+										model.setDistance(Double.MAX_VALUE);
+									}
+								} else {
+									model.setDistance(Double.MAX_VALUE);
+								}
 							}
 						}
 						Collections.sort(models, COMPARATOR);

@@ -87,7 +87,7 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 						List<OutgoingChallengeJsonModel> models = ChallengesJsonFormatter.parseChallengeJsonInfo(response.getText());
 						if (models.size() > 0) {
 							for (OutgoingChallengeJsonModel model : models) {
-								addChallengeToView(model);
+								addChallengeToView(model, false);
 							}
 						}
 						else {
@@ -143,13 +143,15 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 			eventBus.fireEvent(new GoToErrorEvent());
 		}
 	}
+
 	
 	/**
 	 * Helper method - displays a challenge for the public challenges list with its info
 	 * 
 	 * @param model - the model of the challenge to be displayed
 	 */
-	private void addChallengeToView(OutgoingChallengeJsonModel model) {
+
+	private void addChallengeToView(OutgoingChallengeJsonModel model, Boolean showDistance) {
 		// only display public challenges
 		if (!model.getInfo().getIsprivate()) {
 			String challengeUri = null;
@@ -175,15 +177,20 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 			else {
 				name = new Label(infoModel.getTitle());
 			}
-			name.addStyleName("challenges-link");
+			name.addStyleName("challenges-link span4");
 			Label participants = new Label();
 			setParticipantCountLabel(participants, participantsUri);
-			participants.addStyleName("challenges-participants");
+			participants.addStyleName("challenges-participants span2");
 			Label desc = new Label(infoModel.getDescription());
 			desc.addStyleName("challenges-desc");
 			// add widgets to subpanel
 			horizontalPanel.add(name);
 			horizontalPanel.add(participants);
+			if (showDistance) {
+				Label distance = new Label(Math.round(model.getDistance()/1000) + " kms away.");
+				distance.addStyleName("challenges-distance span4");
+				horizontalPanel.add(distance);
+			}
 			challengePanel.add(horizontalPanel);
 			challengePanel.add(desc);
 			// add to main panel
@@ -246,6 +253,6 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	 * @param model - the model of a challenge to be displayed
 	 */
 	public void receiveSortedModels(OutgoingChallengeJsonModel model) {
-		addChallengeToView(model);
+		addChallengeToView(model, true);
 	}
 }

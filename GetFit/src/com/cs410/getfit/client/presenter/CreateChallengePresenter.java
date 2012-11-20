@@ -13,14 +13,24 @@ import com.cs410.getfit.shared.IncomingChallengeJsonModel;
 import com.cs410.getfit.shared.LinkTypes;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.cs410.getfit.shared.ResourceLink;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.maps.client.services.Geocoder;
+import com.google.gwt.maps.client.services.GeocoderRequest;
+import com.google.gwt.maps.client.services.GeocoderRequestHandler;
+import com.google.gwt.maps.client.services.GeocoderResult;
+import com.google.gwt.maps.client.services.GeocoderStatus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 
 public class CreateChallengePresenter implements Presenter, CreateAndEditChallengeView.Presenter{
 	
@@ -127,4 +137,33 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 			}
 		}
 	}
+	
+	@Override
+	public void onChangeLocationPreference() {
+		RadioButton yesLocation = view.getLocationYesRadioButton();
+		// if yes is checked
+		if(yesLocation.getValue()) {
+			view.getLocationDiv().getStyle().setDisplay(Display.BLOCK);
+		} else {
+			view.getLocationDiv().getStyle().setDisplay(Display.NONE);
+			view.getLocationBox().setValue("");
+		}
+	}
+	
+	@Override
+	public void onSearchAddressButtonClicked() {
+		String searchAddress = view.getAddress();
+		Geocoder geocoder = Geocoder.newInstance();
+		GeocoderRequest request = GeocoderRequest.newInstance();
+		request.setAddress(searchAddress);
+		geocoder.geocode(request, new GeocoderRequestHandler() {
+			@Override
+			public void onCallback(JsArray<GeocoderResult> results,
+					GeocoderStatus status) {
+				// Get the LatLng Location
+				view.setSearchedAddress(results.get(0).getGeometry().getLocation());
+			}
+		});
+	}
+	
 }
