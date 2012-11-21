@@ -160,7 +160,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		final VerticalPanel infoPanel = view.getChallengeInfoPanel();
 		infoPanel.addStyleName("text-panel");
 		// only display location if set
-		if (info.getLocation() != null) {
+		if (info.getLocation() != null && !info.getLocation().equals("")) {
 			// Regular expresion for latitude and longitude as stored in DATABASE
 			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 			MatchResult match = regexp.exec(info.getLocation());
@@ -171,7 +171,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 				GeocoderRequest request = GeocoderRequest.newInstance();
 				request.setLocation(challengePoint);
 				geocoder.geocode(request, new GeocoderRequestHandler() {
-	
+
 					@Override
 					public void onCallback(JsArray<GeocoderResult> results,
 							GeocoderStatus status) {
@@ -186,26 +186,13 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						locationPanel.add(locationLabel);
 						locationPanel.add(locationText);
 						infoPanel.add(locationPanel);
-						// action button (join, complete(d), edit)
-						displayActionButtons(model, infoPanel);
 					}
-					
+
 				});
-			} else {
-				// Location not correctly formated
-				String cityLocation = "N/A";
-				Label locationLabel = new Label("Location: ");
-				Label locationText = new Label(cityLocation);
-				locationLabel.addStyleName("details-label");
-				locationText.addStyleName("details-text");
-				HorizontalPanel locationPanel = new HorizontalPanel();
-				locationPanel.add(locationLabel);
-				locationPanel.add(locationText);
-				infoPanel.add(locationPanel);
-				// action button (join, complete(d), edit)
-				displayActionButtons(model, infoPanel);
-			}
+			} 
 		}
+		// action button (join, complete(d), edit)
+		displayActionButtons(model, infoPanel);
 		// total participants
 		Label participantsLabel = new Label("Total Participants: ");
 		Label participantsText = new Label();
@@ -223,7 +210,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		descriptionText.addStyleName("details-text");
 		infoPanel.add(descriptionLabel);
 		infoPanel.add(descriptionText);
-		
+
 	}
 
 	/**
@@ -603,7 +590,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			}
 		});
 	}
-	
+
 	/**
 	 * Adds functionality to "Edit" button
 	 * When clicked, should redirect user to the edit challenge page

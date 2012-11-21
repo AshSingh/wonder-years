@@ -12,8 +12,8 @@ import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.geolocation.client.Position;
-import com.google.gwt.geolocation.client.PositionError;
 import com.google.gwt.geolocation.client.Position.Coordinates;
+import com.google.gwt.geolocation.client.PositionError;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -82,7 +82,7 @@ public class PositionSortCallback implements Callback<Object, Object>{
 						if (models.size() > 0) {
 							for (OutgoingChallengeJsonModel model : models) {
 								String modelLocation = model.getInfo().getLocation();
-								if(modelLocation != null) {
+								if(modelLocation != null && !modelLocation.equals("")) {
 									// Regular expresion for latitude and longitude as stored in DATABASE
 									RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 									MatchResult match = regexp.exec(modelLocation);
