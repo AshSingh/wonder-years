@@ -7,6 +7,7 @@ import java.util.List;
 import com.cs410.getfit.client.event.GoToErrorEvent;
 import com.cs410.getfit.client.json.ChallengesJsonFormatter;
 import com.cs410.getfit.client.json.HTTPRequestBuilder;
+import com.cs410.getfit.client.view.ChallengesView;
 import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.event.shared.HandlerManager;
@@ -29,8 +30,10 @@ public class PositionSortCallback implements Callback<Object, Object>{
 	
 	private HandlerManager eventBus;
 	private ChallengesPresenter presenter;
+	private ChallengesView view;
 
-	public PositionSortCallback(HandlerManager eventBus, ChallengesPresenter presenter) {	
+	public PositionSortCallback(HandlerManager eventBus, ChallengesPresenter presenter, ChallengesView view) {
+		this.view = view;
 		this.eventBus = eventBus;
 		this.presenter = presenter;
 	}
@@ -43,6 +46,7 @@ public class PositionSortCallback implements Callback<Object, Object>{
 
 	@Override
 	public void onSuccess(Object result) {
+		view.getChallengesPanel().clear();
 		Position pos = (Position) result;
 		Coordinates coor = pos.getCoordinates();
 		final LatLng userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());

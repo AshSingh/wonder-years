@@ -239,10 +239,9 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	 * Sorts list of public challenges based on proximity to current user
 	 */
 	public void onSortByLocationButtonClicked() {
-		view.getChallengesPanel().clear();
 		Geolocation userLocation = Geolocation.getIfSupported();
 		if(userLocation != null) {
-			PositionSortCallback posCallback = new PositionSortCallback(eventBus, this);
+			PositionSortCallback posCallback = new PositionSortCallback(eventBus, this, view);
 			userLocation.getCurrentPosition((Callback) posCallback);
 		}
 	}
