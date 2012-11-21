@@ -1,3 +1,7 @@
-Go Pro in NYC!;false;(40.737893,-74.009605);my description
-Be Fit Vancouver;true;(49.301173,-123.147177);yay lets be fit
-Run a marathon in Berlin;false;(52.523206,13.406494);just keep running
+Bike the Seawall;false;(49.302279,-123.142107);Bike around the Stanley Park seawall in Vancouver, BC! Total distance = 22km. Average cycling time = 1 hour.
+Run a Marathon;false;;One for the bucket list. Doesn't matter where, doesn't matter when, let's run a marathon! 26 miles to go!
+Learn to Swim;false;;For all those who dread those invites to the beach due to fear of drowning...Or for those who have been surviving on the trusty doggy-paddle for too long!
+Become a certified rock climber;false;;Get out of the house and climb some rocks!
+Participate in Tough Mudder (Whistler, BC);false;(50.114208,-122.953645);The toughest, muddiest challenge in the world!
+Run for Your Life;false;(30.037501,-97.42425);Participate in the zombie infested 5km obstacle course race! 
+Bench Press Your Weight (or more);false;;Time to hit the gym.

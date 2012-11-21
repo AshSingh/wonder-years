@@ -32,6 +32,15 @@ public class ChallengeHistoryImpl implements ChallengeHistory {
 		this.datemodified = Calendar.getInstance().getTimeInMillis();
 		ChallengeObservable.getInstance().notifyMyObservers(datemodified);
 	}
+	
+	// for population of test data - not for application-usage
+	public ChallengeHistoryImpl(User user, Challenge challenge, String desc, long datemodified) {
+		setUser(user);
+		setChallenge(challenge);
+		this.historyDescription = desc;
+		this.datemodified = datemodified;
+	}
+	
 	public ChallengeHistoryImpl() {
 		//bean impl
 	}

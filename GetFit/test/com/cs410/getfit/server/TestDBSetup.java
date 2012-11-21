@@ -15,6 +15,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.cs410.getfit.server.models.Challenge;
+import com.cs410.getfit.server.models.ChallengeHistory;
+import com.cs410.getfit.server.models.ChallengeHistoryImpl;
 import com.cs410.getfit.server.models.ChallengeImpl;
 import com.cs410.getfit.server.models.ChallengeUser;
 import com.cs410.getfit.server.models.ChallengeUserImpl;
@@ -64,6 +66,7 @@ public class TestDBSetup {
 		createChallenges();
 		addUsersToChallenges();
 		createCompletedChallenges();
+		createChallengeHistory();
 	}
 
 	private void addUsersToChallenges() {
@@ -200,6 +203,46 @@ public class TestDBSetup {
 				
 				CompletedChallenge completedChallenge = new CompletedChallengeImpl(user, challenge, completedDate);
 				completedChallengesDao.create(completedChallenge);
+			}
+			
+
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void createChallengeHistory() {
+		ctx = new ClassPathXmlApplicationContext(configNames);
+		Dao<ChallengeHistory, Long> completedChallengesDao = (Dao<ChallengeHistory, Long>) ctx.getBean("challengeHistoryDao");
+		Dao<Challenge, Long> challengeDao = (Dao<Challenge, Long>) ctx.getBean("challengeDao");
+		Dao<User, String> userDao = (Dao<User, String>) ctx.getBean("userDao");
+		
+		try {
+			Resource resource = new ClassPathResource((String) ctx.getBean("testChallengeHistoryFilePath"));
+			InputStream in = resource.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+
+			while ((strLine = br.readLine()) != null) {
+
+				ArrayList<String> challengeHistoryProperties = new ArrayList<String>();
+				challengeHistoryProperties.addAll(Arrays.asList(strLine.split(",")));
+				long guid = Long.decode(challengeHistoryProperties.get(0));
+				long userid = Long.decode(challengeHistoryProperties.get(1));
+				long challengeid = Long.decode(challengeHistoryProperties.get(2));
+				String desc = challengeHistoryProperties.get(3);
+				long datemodified = Long.decode(challengeHistoryProperties.get(4));
+				UserImpl user = (UserImpl) userDao.queryForEq("guid", userid).get(0);		
+				ChallengeImpl challenge = (ChallengeImpl) challengeDao.queryForEq("guid", challengeid).get(0);
+				
+				ChallengeHistory challengeHistory = new ChallengeHistoryImpl(user, challenge, desc, datemodified);
+				completedChallengesDao.create(challengeHistory);
 			}
 			
 
