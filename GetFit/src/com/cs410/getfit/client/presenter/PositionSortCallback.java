@@ -12,8 +12,8 @@ import com.cs410.getfit.shared.OutgoingChallengeJsonModel;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.geolocation.client.Position;
-import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.geolocation.client.PositionError;
+import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -26,24 +26,44 @@ import com.google.gwt.regexp.shared.RegExp;
 
 
 
+/**
+ * @author syred
+ * PositionSortCallback
+ * Handles the received location from the user
+ */
 public class PositionSortCallback implements Callback<Object, Object>{
 	
 	private HandlerManager eventBus;
 	private ChallengesPresenter presenter;
 	private ChallengesView view;
 
+	/**
+	 * Constructor for POsition Sort Callback
+	 * @param eventBus
+	 * @param presenter
+	 * @param view
+	 */
 	public PositionSortCallback(HandlerManager eventBus, ChallengesPresenter presenter, ChallengesView view) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.presenter = presenter;
 	}
 	
+	/* 
+	 * Get location callback on failure method
+	 * @see com.google.gwt.core.client.Callback#onFailure(java.lang.Object)
+	 */
 	@Override
 	public void onFailure(Object positionErr) {
 		PositionError error = (PositionError) positionErr;
 		System.out.println(error.getMessage());
 	}
 
+	/* 
+	 * Get location callback on success method
+	 * @param result: The location of the user
+	 * @see com.google.gwt.core.client.Callback#onSuccess(java.lang.Object)
+	 */
 	@Override
 	public void onSuccess(Object result) {
 		view.getChallengesPanel().clear();
@@ -72,9 +92,11 @@ public class PositionSortCallback implements Callback<Object, Object>{
 										double distance = SphericalUtils.computeDistanceBetween(userPoint, challengePoint); 
 										model.setDistance(distance);
 									} else {
+										// Set longest distance possible
 										model.setDistance(Double.MAX_VALUE);
 									}
 								} else {
+									// Set longest distance possible
 									model.setDistance(Double.MAX_VALUE);
 								}
 							}
@@ -82,6 +104,7 @@ public class PositionSortCallback implements Callback<Object, Object>{
 						Collections.sort(models, COMPARATOR);
 						if (models.size() > 0) {
 							for (OutgoingChallengeJsonModel model : models) {
+								// send the presenter the already ordered models
 								presenter.receiveSortedModels(model);
 							}
 						}
@@ -101,9 +124,20 @@ public class PositionSortCallback implements Callback<Object, Object>{
 		
 	}
 	
+	/**
+	 * Comparator Object
+	 * Allows the default sort method to compare two distances of OutgoingChalengeJsonModel
+	 */
 	private static Comparator<OutgoingChallengeJsonModel> COMPARATOR = new Comparator<OutgoingChallengeJsonModel>()
     {
 	// This is where the sorting happens.
+        /**
+         * @param o1
+         * @param o2
+         * @return <0 the first object is closer to user. 
+         * 			== 0 the first and second objects are the same distance to user.
+         * 			>0 The second object is closer to user
+         */
         public int compare(OutgoingChallengeJsonModel o1, OutgoingChallengeJsonModel o2)
         {
             return (int)(o1.getDistance() - o2.getDistance());

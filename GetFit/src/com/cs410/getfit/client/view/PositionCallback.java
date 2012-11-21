@@ -3,19 +3,15 @@ package com.cs410.getfit.client.view;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.geolocation.client.Position;
-import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.geolocation.client.PositionError;
+import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
-import com.google.gwt.maps.client.overlays.InfoWindow;
-import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
-import com.google.gwt.maps.client.events.resize.ResizeMapEvent;
-import com.google.gwt.maps.client.events.resize.ResizeMapHandler;
-import com.google.gwt.user.client.Event;
+import com.google.gwt.maps.client.overlays.InfoWindow;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.maps.client.services.Geocoder;
 import com.google.gwt.maps.client.services.GeocoderRequest;
@@ -24,19 +20,27 @@ import com.google.gwt.maps.client.services.GeocoderResult;
 import com.google.gwt.maps.client.services.GeocoderStatus;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 
 
 
 
+/**
+ * @author syred
+ * PositionCallback
+ * Handles the position received from the user
+ */
 public class PositionCallback implements Callback<Object, Object>{
 	
 	private MapWidget mapWidget;
 	private HorizontalPanel gMapsPanel;
 	private Hidden locationBox;
 	
+	/**
+	 * Constructor for PositionCallback
+	 * @param mapWidget
+	 * @param gMapsPanel
+	 * @param locationBox
+	 */
 	public PositionCallback(MapWidget mapWidget, HorizontalPanel gMapsPanel, Hidden locationBox) {
 		this.mapWidget = mapWidget;
 		gMapsPanel.clear();
@@ -44,6 +48,10 @@ public class PositionCallback implements Callback<Object, Object>{
 		this.locationBox = locationBox;
 	}
 	
+	/* 
+	 * Get location callback on failure method
+	 * @see com.google.gwt.core.client.Callback#onFailure(java.lang.Object)
+	 */
 	@Override
 	public void onFailure(Object positionErr) {
 		PositionError error = (PositionError) positionErr;
@@ -67,6 +75,11 @@ public class PositionCallback implements Callback<Object, Object>{
 		gMapsPanel.add(mapWidget);
 	}
 
+	/* 
+	 * Get location callback on success method
+	 * @param result: The location of the user
+	 * @see com.google.gwt.core.client.Callback#onSuccess(java.lang.Object)
+	 */
 	@Override
 	public void onSuccess(Object result) {
 		Position pos = (Position) result;
@@ -120,6 +133,12 @@ public class PositionCallback implements Callback<Object, Object>{
 		return this.mapWidget;
 	}
 	
+	/**
+	 * Uses a LatLng of a point to get the human readable location from the geocoder API. And sets it on a infowindow
+	 * @param locationPoint
+	 * @param infoWindow
+	 * @param mapWidget
+	 */
 	public void setHumanReadableLocation(final LatLng locationPoint, final InfoWindow infoWindow, final MapWidget mapWidget) {
 		Geocoder geocoder = Geocoder.newInstance();
 		GeocoderRequest request = GeocoderRequest.newInstance();
@@ -131,6 +150,7 @@ public class PositionCallback implements Callback<Object, Object>{
 				// Get the full location
 				String formattedAddress = results.get(0).getFormatted_Address();
 				String cityLocation = (formattedAddress != null && formattedAddress != "") ? formattedAddress : "N/A";
+				// Set the full location to the infoWindow
 				infoWindow.setContent(cityLocation);
 				infoWindow.setPosition(locationPoint);
 				infoWindow.open(mapWidget);
