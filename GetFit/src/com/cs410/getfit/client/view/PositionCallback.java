@@ -1,12 +1,15 @@
 package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.Callback;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.geolocation.client.Position;
 import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.geolocation.client.PositionError;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.overlays.InfoWindow;
+import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
@@ -14,8 +17,14 @@ import com.google.gwt.maps.client.events.resize.ResizeMapEvent;
 import com.google.gwt.maps.client.events.resize.ResizeMapHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.maps.client.overlays.Marker;
+import com.google.gwt.maps.client.services.Geocoder;
+import com.google.gwt.maps.client.services.GeocoderRequest;
+import com.google.gwt.maps.client.services.GeocoderRequestHandler;
+import com.google.gwt.maps.client.services.GeocoderResult;
+import com.google.gwt.maps.client.services.GeocoderStatus;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -69,6 +78,8 @@ public class PositionCallback implements Callback<Object, Object>{
 		locationBox.setValue(userPoint.getToString());
 		userPosMarker.setTitle("Your Location");
 		
+		final InfoWindow infoWindow = InfoWindow.newInstance(null);
+		
 		
 		final MapOptions options = MapOptions.newInstance();
 	    // Zoom level. Required
@@ -94,19 +105,36 @@ public class PositionCallback implements Callback<Object, Object>{
 	    		LatLng point = event.getMouseEvent().getLatLng();
 	    		userPosMarker.setPosition(point);
 	    		locationBox.setValue(point.getToString());
-	    		// Get distance between two points
-	    		// LatLng toPoint = LatLng.newInstance(25.792194, -108.996220);
-	    		// System.out.println("Distance: " + SphericalUtils.computeDistanceBetween(point, toPoint) / 1000 + " km");
+	    		setHumanReadableLocation(userPosMarker.getPosition(), infoWindow, mapWidget);
 			}
 	    });
 	    
 	    
 	    // Set the marker to the map
 	    userPosMarker.setMap(mapWidget);
+	    setHumanReadableLocation(userPosMarker.getPosition(), infoWindow, mapWidget);
 	    gMapsPanel.add(mapWidget);
 	}
 	
 	public MapWidget getMapWidget() {
 		return this.mapWidget;
+	}
+	
+	public void setHumanReadableLocation(final LatLng locationPoint, final InfoWindow infoWindow, final MapWidget mapWidget) {
+		Geocoder geocoder = Geocoder.newInstance();
+		GeocoderRequest request = GeocoderRequest.newInstance();
+		request.setLocation(locationPoint);
+		geocoder.geocode(request, new GeocoderRequestHandler() {
+			@Override
+			public void onCallback(JsArray<GeocoderResult> results,
+					GeocoderStatus status) {
+				// Get the full location
+				String formattedAddress = results.get(0).getFormatted_Address();
+				String cityLocation = (formattedAddress != null && formattedAddress != "") ? formattedAddress : "N/A";
+				infoWindow.setContent(cityLocation);
+				infoWindow.setPosition(locationPoint);
+				infoWindow.open(mapWidget);
+			}
+		});
 	}
 }

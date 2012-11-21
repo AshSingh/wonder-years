@@ -164,7 +164,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 			// Regular expresion for latitude and longitude as stored in DATABASE
 			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 			MatchResult match = regexp.exec(info.getLocation());
-			if(match.getGroupCount() == 4) { 
+			if(match.getGroupCount() == 5) { 
 				LatLng challengePoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3)));
 				// Get the name of the city on the location of the challenge
 				Geocoder geocoder = Geocoder.newInstance();
@@ -177,7 +177,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 							GeocoderStatus status) {
 						// Get the full location
 						String formattedAddress = results.get(0).getFormatted_Address();
-						String cityLocation = (formattedAddress != "" && formattedAddress != null) ? formattedAddress : "N/A";
+						String cityLocation = (formattedAddress != null && formattedAddress != "") ? formattedAddress : "N/A";
 						Label locationLabel = new Label("Location: ");
 						Label locationText = new Label(cityLocation);
 						locationLabel.addStyleName("details-label");
