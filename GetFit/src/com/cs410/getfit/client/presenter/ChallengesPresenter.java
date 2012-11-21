@@ -187,7 +187,12 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 			horizontalPanel.add(name);
 			horizontalPanel.add(participants);
 			if (showDistance) {
-				Label distance = new Label(Math.round(model.getDistance()/1000) + " kms away.");
+				Label distance;
+				if(model.getDistance() == Double.MAX_VALUE) {
+					distance = new Label("N/A");
+				} else {
+					distance = new Label(Math.round(model.getDistance()/1000) + " kms away.");
+				}
 				distance.addStyleName("challenges-distance span4");
 				horizontalPanel.add(distance);
 			}
