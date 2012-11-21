@@ -43,7 +43,13 @@ public class UserNewsfeedServices {
 			}
 			Collections.sort(history, new Comparator<ChallengeHistory>() {
 				public int compare(ChallengeHistory o1, ChallengeHistory o2) {
-					return (int) (o2.getDateModified() - o1.getDateModified());
+					long diff = o2.getDateModified() - o1.getDateModified();
+					if(diff == 0)
+						return 0;
+					else if(diff >0)
+						return 1;
+					else
+						return -1;
 				}
 			});
 			return history;
