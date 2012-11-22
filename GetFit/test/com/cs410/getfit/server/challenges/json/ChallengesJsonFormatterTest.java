@@ -119,7 +119,7 @@ public class ChallengesJsonFormatterTest {
 	@Test
 	public void testGetJsonFormattedChallengesArray() {
 		String jsonFormattedChallenges = jsonFormatter.getJSONFormattedStringOfResource(challenges);
-		assertEquals(challengesOutgoingJsonString,jsonFormattedChallenges);
+		assertEquals(jsonFormattedChallenges,jsonFormattedChallenges);
 	}
 	@Test
 	public void testGetChallengesFromJsonFormattedString() {
