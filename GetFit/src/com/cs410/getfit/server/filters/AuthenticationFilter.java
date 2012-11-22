@@ -24,7 +24,7 @@ public class AuthenticationFilter implements Filter{
 
 	private FilterConfig filterConfig = null;
 	
-	/* Delete Filter
+	/** Delete Filter
 	 * @see javax.servlet.Filter#destroy()
 	 */
 	@Override
@@ -33,7 +33,7 @@ public class AuthenticationFilter implements Filter{
 		
 	}
 
-	/*
+	/**
 	 * Initialize Filter
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
@@ -42,7 +42,7 @@ public class AuthenticationFilter implements Filter{
 		this.filterConfig = filterConfig;
 	}
 	
-	/*
+	/**
 	 * Authentication Filter
 	 * @param request: incoming request
 	 * @param response: wrapped response sent to server

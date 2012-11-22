@@ -33,10 +33,10 @@ public class CompletedChallengesJsonTest extends GWTTestCase {
 
 	String outgoingJson = "{\"completedchallenges\":[{\"info\":" +
 			"{\"userId\":"+userId+"" +
-			 "}, \"accessToken\":\"" + accessToken + "\"}," +
+			 "}}," +
 			 "{\"info\":" +
 						"{\"userId\":"+userId2+"" +
-			 "}, \"accessToken\":\"" + accessToken + "\"}]" +
+			 "}}], \"accessToken\":\"" + accessToken + "\"" +
 			 "}";
 
 	

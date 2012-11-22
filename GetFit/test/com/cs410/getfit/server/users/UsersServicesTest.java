@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.cs410.getfit.server.models.User;
 import com.cs410.getfit.server.users.services.UsersServicesImpl;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.misc.TransactionManager;
 
 public class UsersServicesTest {
 	JUnit4Mockery context = new JUnit4Mockery();
@@ -90,5 +91,17 @@ public class UsersServicesTest {
 		});
 		
 		assertEquals("should return correct user", user, services.getUserById(guid));
+	}
+	
+	@Test
+	public void testGetUserDao() {
+		assertEquals(userDao, services.getUserDao());
+	}
+	
+	@Test
+	public void testGetTransactionManager(){
+		TransactionManager transactionManager = new TransactionManager();
+		services.setTransactionManager(transactionManager);
+		assertEquals(transactionManager, services.getTransactionManager());
 	}
 }

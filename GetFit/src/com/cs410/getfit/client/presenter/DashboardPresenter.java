@@ -162,7 +162,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 									actionLabel.setText("created");
 								}
 								else if (itemType.equals(NewsfeedItemType.EDIT.toString())) {
-									actionLabel.setText("editted the details of");	
+									actionLabel.setText("edited the details of");	
 								}							
 								else if (itemType.equals(NewsfeedItemType.JOIN.toString())) {
 									actionLabel.setText("joined");

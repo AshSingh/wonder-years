@@ -3,7 +3,6 @@ package com.cs410.getfit.client;
 import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class GetFit implements EntryPoint{
