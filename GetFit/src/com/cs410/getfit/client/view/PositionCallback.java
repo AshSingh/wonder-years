@@ -66,24 +66,9 @@ public class PositionCallback implements Callback<Object, Object>{
 	@Override
 	public void onFailure(Object positionErr) {
 		PositionError error = (PositionError) positionErr;
+		System.out.println("NOOOOOOOOOOO");
 		System.out.println(error.getMessage());
-		locationBox.setValue("");
-		mapWidget = new MapWidget(null);
-		mapWidget.setSize("500px", "500px");
-		final Marker userPosMarker = Marker.newInstance(null);
-		
-		// Add click handler to let the user change the marker's position
-		mapWidget.addClickHandler(new ClickMapHandler() {
-			public void onEvent(ClickMapEvent event) {
-				LatLng point = event.getMouseEvent().getLatLng();
-				userPosMarker.setPosition(point);
-				locationBox.setValue(point.getToString());
-				// Get distance between two points
-			// LatLng toPoint = LatLng.newInstance(25.792194, -108.996220);
-			// System.out.println("Distance: " + SphericalUtils.computeDistanceBetween(point, toPoint) / 1000 + " km");
-			}
-		});
-		gMapsPanel.add(mapWidget);
+		setUpMap(null);
 	}
 
 	/* 
@@ -95,38 +80,39 @@ public class PositionCallback implements Callback<Object, Object>{
 	public void onSuccess(Object result) {
 		Position pos = (Position) result;
 		Coordinates coor = pos.getCoordinates();
+		setUpMap(coor);
+	}
+	
+	private void setUpMap(Coordinates coor) {
 		LatLng userPoint;
-		if(locationBox.getValue() != null && locationBox.getValue() != "") {
-			// Regular expresion for latitude and longitude as stored in DATABASE
-			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
-			MatchResult match = regexp.exec(locationBox.getValue());
-			if (match.getGroupCount() == 5) {
-				userPoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3))); 
-			} else {
-				// Set the user location
-				userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());
-				locationBox.setValue(userPoint.getToString());
-			}
-		} else {
+		// Regular expresion for latitude and longitude as stored in DATABASE
+		RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
+		MatchResult match = regexp.exec(locationBox.getValue());
+		if (match.getGroupCount() == 5) {
+			userPoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3))); 
+		} else if (coor != null){
 			// Set the user location
 			userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());
+			locationBox.setValue(userPoint.getToString());
+		} else {
+			// No user location and no location sent from database
+			// Set it to center of BC
+			userPoint =  LatLng.newInstance(56.0475,-126.613037);
 			locationBox.setValue(userPoint.getToString());
 		}
 		
 		// Marker overlay to show user's position on map
 		final Marker userPosMarker = Marker.newInstance(null);
 		userPosMarker.setPosition(userPoint);
-		
-		userPosMarker.setTitle("Your Location");
-		
+				
 		final InfoWindow infoWindow = InfoWindow.newInstance(null);
 		
 		
 		final MapOptions options = MapOptions.newInstance();
 	    // Zoom level. Required
 	    options.setZoom(10);
-	    // Open a map centered on Cawker City, KS USA. Required
-	    options.setCenter(LatLng.newInstance(coor.getLatitude(), coor.getLongitude()));
+	    // Open a map centered. Required
+	    options.setCenter(userPoint);
 	    // Map type. Required.
 	    options.setMapTypeId(MapTypeId.ROADMAP);
 	    // Enable maps drag feature. Disabled by default.
