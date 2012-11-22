@@ -74,8 +74,6 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 	public void go(HasWidgets container, String uri) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());
-		// Create map
-		view.createMap();
 		//  hide view until user is verified as admin
 		view.asWidget().setVisible(false);
 		container.add(view.asWidget());
@@ -204,6 +202,8 @@ public class EditChallengePresenter implements Presenter, CreateAndEditChallenge
 								// set current details
 								view.getChallengeNameBox().setText(infoModel.getTitle());
 								view.getLocationBox().setValue(infoModel.getLocation());
+								// Create map
+								view.createMap();
 								view.getDescriptionBox().setText(infoModel.getDescription());
 								view.getPrivacyPrivateRadioButton().setValue(infoModel.getIsprivate());
 								view.getPrivacyPublicRadioButton().setValue(!infoModel.getIsprivate());

@@ -57,27 +57,27 @@
 	<!-- Servlet mappings -->
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/users</url-pattern>
+		<url-pattern>/getfit/users</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/users/*</url-pattern>
+		<url-pattern>/getfit/users/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>UsersServlet</servlet-name>
-		<url-pattern>/login</url-pattern>
+		<url-pattern>/getfit/login</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/challenges</url-pattern>
+		<url-pattern>/getfit/challenges</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>ChallengesServlet</servlet-name>
-		<url-pattern>/challenges/*</url-pattern>
+		<url-pattern>/getfit/challenges/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

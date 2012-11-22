@@ -1,6 +1,7 @@
 package com.cs410.getfit.client.view;
 
 import com.google.gwt.core.client.Callback;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.geolocation.client.Position;
 import com.google.gwt.geolocation.client.PositionError;
@@ -9,8 +10,13 @@ import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.events.MapEventType;
+import com.google.gwt.maps.client.events.MapHandlerRegistration;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
+import com.google.gwt.maps.client.events.resize.ResizeMapEvent;
+import com.google.gwt.maps.client.events.resize.ResizeMapHandler;
+import com.google.gwt.maps.client.geometrylib.SphericalUtils;
 import com.google.gwt.maps.client.overlays.InfoWindow;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.maps.client.services.Geocoder;
@@ -18,8 +24,13 @@ import com.google.gwt.maps.client.services.GeocoderRequest;
 import com.google.gwt.maps.client.services.GeocoderRequestHandler;
 import com.google.gwt.maps.client.services.GeocoderResult;
 import com.google.gwt.maps.client.services.GeocoderStatus;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.GwtEvent;
 
 
 
@@ -84,11 +95,28 @@ public class PositionCallback implements Callback<Object, Object>{
 	public void onSuccess(Object result) {
 		Position pos = (Position) result;
 		Coordinates coor = pos.getCoordinates();
-		LatLng userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());
+		LatLng userPoint;
+		if(locationBox.getValue() != null && locationBox.getValue() != "") {
+			// Regular expresion for latitude and longitude as stored in DATABASE
+			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
+			MatchResult match = regexp.exec(locationBox.getValue());
+			if (match.getGroupCount() == 5) {
+				userPoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3))); 
+			} else {
+				// Set the user location
+				userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());
+				locationBox.setValue(userPoint.getToString());
+			}
+		} else {
+			// Set the user location
+			userPoint =  LatLng.newInstance(coor.getLatitude(), coor.getLongitude());
+			locationBox.setValue(userPoint.getToString());
+		}
+		
 		// Marker overlay to show user's position on map
 		final Marker userPosMarker = Marker.newInstance(null);
 		userPosMarker.setPosition(userPoint);
-		locationBox.setValue(userPoint.getToString());
+		
 		userPosMarker.setTitle("Your Location");
 		
 		final InfoWindow infoWindow = InfoWindow.newInstance(null);
@@ -127,6 +155,15 @@ public class PositionCallback implements Callback<Object, Object>{
 	    userPosMarker.setMap(mapWidget);
 	    setHumanReadableLocation(userPosMarker.getPosition(), infoWindow, mapWidget);
 	    gMapsPanel.add(mapWidget);
+	    
+	    // Set the resizeHandler to have a correct parsed map
+	    mapWidget.addResizeHandler(new ResizeMapHandler() {
+	        @Override
+	        public void onEvent(ResizeMapEvent event) {
+	            GWT.log("Map has been resized!");
+	        }
+	    });
+	    MapHandlerRegistration.trigger(mapWidget, MapEventType.RESIZE);
 	}
 	
 	public MapWidget getMapWidget() {
