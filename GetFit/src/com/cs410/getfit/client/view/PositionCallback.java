@@ -88,7 +88,7 @@ public class PositionCallback implements Callback<Object, Object>{
 		// Regular expresion for latitude and longitude as stored in DATABASE
 		RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 		MatchResult match = regexp.exec(locationBox.getValue());
-		if (match.getGroupCount() == 5) {
+		if (locationBox.getValue() != null && locationBox.getValue() != "" &&  match.getGroupCount() == 5) {
 			userPoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3))); 
 		} else if (coor != null){
 			// Set the user location
