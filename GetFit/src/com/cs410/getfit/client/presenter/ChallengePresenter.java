@@ -81,6 +81,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 	 * @param container - the root container of the app
 	 * @param challengeUri - the uri that provides the info for the specific challenge          
 	 */	
+	@Override
 	public void go(HasWidgets container, String challengeUri) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());

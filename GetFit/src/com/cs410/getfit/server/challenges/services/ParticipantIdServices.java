@@ -83,6 +83,7 @@ public class ParticipantIdServices implements ParticipantResourceServices {
 		}
 		participant.setChallenge(oldChallengeUser.getChallenge());
 		rowsUpdated = manager.callInTransaction(new Callable<Integer>() {
+			@Override
 			public Integer call() throws Exception {
 				return challengeUserDao.update(participant);
 			}
@@ -102,6 +103,7 @@ public class ParticipantIdServices implements ParticipantResourceServices {
 	public boolean delete() throws SQLException {
 		int rowsDeleted = 0;
 		rowsDeleted = manager.callInTransaction(new Callable<Integer>() {
+			@Override
 			public Integer call() throws Exception {
 				return challengeUserDao.deleteById(participantId);
 			}

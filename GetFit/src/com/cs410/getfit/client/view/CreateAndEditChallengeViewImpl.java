@@ -6,7 +6,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.geolocation.client.Geolocation;
-import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -256,7 +255,7 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 	 */		
 	@Override
 	public HorizontalPanel getMap() {
-		return this.gMapsPanel;
+		return CreateAndEditChallengeViewImpl.gMapsPanel;
 	}
 	
 	@Override

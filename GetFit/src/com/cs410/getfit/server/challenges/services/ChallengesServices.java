@@ -66,6 +66,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 		List<Challenge> challengesCreated = new ArrayList<Challenge>();
 		challengesCreated = manager
 				.callInTransaction(new Callable<List<Challenge>>() {
+					@Override
 					public List<Challenge> call() throws Exception {
 						List<Challenge> created = new ArrayList<Challenge>();
 						List<ChallengeUser> participantsCreated = new ArrayList<ChallengeUser>();
@@ -111,6 +112,7 @@ public class ChallengesServices implements ChallengeResourceServices {
 				challenge.setParticipants(participants);
 			}
 			Collections.sort(challenges, new Comparator<Challenge>() {
+				@Override
 				public int compare(Challenge o1, Challenge o2) {
 					return o1.getTitle().compareToIgnoreCase(o2.getTitle());
 				}

@@ -72,6 +72,7 @@ public class ParticipantsServices implements ParticipantResourceServices {
 		List<ChallengeUser> challengeUsersCreated = new ArrayList<ChallengeUser>();
 		challengeUsersCreated = manager
 				.callInTransaction(new Callable<List<ChallengeUser>>() {
+					@Override
 					public List<ChallengeUser> call() throws Exception {
 						List<ChallengeUser> created = new ArrayList<ChallengeUser>();
 						for (ChallengeUser participant : participants) {

@@ -41,7 +41,7 @@ public class UserImplTest {
 	@Test
 	public void setGuidTest() {
 		user.setGuid(guid);
-		assertEquals((long) user.getGuid(), (long) guid);
+		assertEquals((long) user.getGuid(), guid);
 	}
 
 	@Test

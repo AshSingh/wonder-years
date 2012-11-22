@@ -14,6 +14,7 @@ public class DashboardViewImplTest extends GWTTestCase{
 	DashboardPresenter presenter;
 	HandlerManager eventBus;
 
+	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new DashboardViewImpl();

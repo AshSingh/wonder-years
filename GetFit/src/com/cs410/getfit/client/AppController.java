@@ -77,6 +77,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 		eventBus.addHandler(GoToLoginEvent.TYPE,
 				new GoToLoginEventHandler() {
+			@Override
 			public void onGoToLogin(GoToLoginEvent event) {
 				doGoToLogin();
 			}
@@ -84,6 +85,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToCreateChallengeEvent.TYPE,
 				new GoToCreateChallengeEventHandler() {
+			@Override
 			public void onGoToCreateChallenge(GoToCreateChallengeEvent event) {
 				doGoToCreateChallenge();
 			}
@@ -91,6 +93,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 		eventBus.addHandler(GoToDashboardEvent.TYPE,
 				new GoToDashboardEventHandler() {
+			@Override
 			public void onGoToDashboard(GoToDashboardEvent event) {
 				doGoToDashboard();
 			}
@@ -98,6 +101,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToChallengeEvent.TYPE,
 				new GoToChallengeEventHandler() {
+			@Override
 			public void onGoToChallenge(GoToChallengeEvent event) {
 				doGoToChallenge(event.getChallengeUri());
 			}
@@ -105,6 +109,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToErrorEvent.TYPE,
 				new GoToErrorEventHandler() {
+			@Override
 			public void onGoToError(GoToErrorEvent event) {
 				doGoToError(event.getErrorType());
 			}
@@ -112,6 +117,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToEditChallengeEvent.TYPE,
 				new GoToEditChallengeEventHandler() {
+			@Override
 			public void onGoToEditChallenge(GoToEditChallengeEvent event) {
 				doGoToEditChallenge(event.getChallengeUri());
 			}
@@ -119,6 +125,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToChallengesEvent.TYPE,
 				new GoToChallengesEventHandler() {
+			@Override
 			public void onGoToChallenges(GoToChallengesEvent event) {
 				doGoToChallenges();
 			}
@@ -126,6 +133,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(GoToUserSettingsEvent.TYPE,
 				new GoToUserSettingsEventHandler() {
+			@Override
 			public void onGoToUserSettings(GoToUserSettingsEvent event) {
 				doGoToUserSettings();
 			}
@@ -219,10 +227,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    if (token != null) {
 	        if (token.equals(HistoryValues.DASHBOARD.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (dashboardView == null) {
 	        				dashboardView = new DashboardViewImpl();
 	        			}
@@ -237,10 +247,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }    
 	        else if (token.equals(HistoryValues.LOGIN.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (loginView == null) {
 	        				loginView = new LoginViewImpl();
 	        			}
@@ -250,10 +262,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.equals(HistoryValues.CREATECHALLENGE.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (createAndEditChallengeView == null) {
 	        				createAndEditChallengeView = new CreateAndEditChallengeViewImpl();
 	        			}
@@ -268,10 +282,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.contains("/challenges/") && !token.contains(HistoryValues.EDIT.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (challengeView == null) {
 	        				challengeView = new ChallengeViewImpl();
 	        			}
@@ -286,10 +302,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.contains(HistoryValues.ERROR.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (errorView == null) {
 	        				errorView = new ErrorViewImpl();
 	        			}
@@ -304,10 +322,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.contains(HistoryValues.EDIT.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (createAndEditChallengeView == null) {
 	        				createAndEditChallengeView = new CreateAndEditChallengeViewImpl();
 	        			}
@@ -322,10 +342,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.equals(HistoryValues.CHALLENGES.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (challengesView == null) {
 	        				challengesView = new ChallengesViewImpl();
 	        			}
@@ -340,10 +362,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        }
 	        else if (token.equals(HistoryValues.SETTINGS.toString())) {
 	        	GWT.runAsync(new RunAsyncCallback() {
-	        		public void onFailure(Throwable caught) {
+	        		@Override
+					public void onFailure(Throwable caught) {
 	        		}
 
-	        		public void onSuccess() {
+	        		@Override
+					public void onSuccess() {
 	        			if (settingsView == null) {
 	        				settingsView = new UserSettingsViewImpl();
 	        			}

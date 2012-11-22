@@ -124,7 +124,8 @@ public class PositionCallback implements Callback<Object, Object>{
 	    
 	    // Add click handler to let the user change the marker's position
 	    mapWidget.addClickHandler(new ClickMapHandler() {
-	    	public void onEvent(ClickMapEvent event) {
+	    	@Override
+			public void onEvent(ClickMapEvent event) {
 	    		LatLng point = event.getMouseEvent().getLatLng();
 	    		userPosMarker.setPosition(point);
 	    		locationBox.setValue(point.getToString());

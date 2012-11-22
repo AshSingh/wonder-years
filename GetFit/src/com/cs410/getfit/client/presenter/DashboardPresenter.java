@@ -342,6 +342,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter{
 	/**
 	 * Redirects user to create challenge page when corresponding button is clicked
 	 */
+	@Override
 	public void onNewChallengeButtonClicked(){
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}

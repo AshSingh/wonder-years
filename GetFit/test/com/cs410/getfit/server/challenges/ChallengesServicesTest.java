@@ -33,6 +33,7 @@ public class ChallengesServicesTest {
 	final ChallengeUser chUser2 = context.mock(ChallengeUser.class,"chUser2");
 	
 	ChallengesServices service = new ChallengesServices() {
+		@Override
 		protected List<Challenge> getChallengesOrderedByTitle() throws SQLException {
 			return challenges;
 		}

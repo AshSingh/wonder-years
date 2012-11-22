@@ -38,6 +38,7 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 	/* Obtain FB_id parameter from message
 	 * @see javax.servlet.ServletRequestWrapper#getParameter(java.lang.String)
 	 */
+	@Override
 	public String getParameter (String paramName){
 		String value = null;
 		if("FB_id".equals(paramName)) {
@@ -55,6 +56,7 @@ public class FilteredRequest extends HttpServletRequestWrapper {
 	/* Parse access token in message
 	 * @see javax.servlet.ServletRequestWrapper#getParameterValues(java.lang.String)
 	 */
+	@Override
 	public String[] getParameterValues(String paramName){
 		String values[] = super.getParameterValues(paramName);
 		if("FB_id".equals(paramName)){

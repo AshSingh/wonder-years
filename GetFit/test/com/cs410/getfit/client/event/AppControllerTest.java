@@ -13,6 +13,7 @@ public class AppControllerTest extends GWTTestCase{
 	HandlerManager eventBus ;
 	AppController appViewer;
 	
+	@Override
 	@Before
 	public void gwtSetUp(){
 		GetFit getfit = new GetFit();

@@ -3,8 +3,6 @@ package com.cs410.getfit.server.filters;
 import static org.junit.Assert.*;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -12,7 +10,7 @@ public class FilteredRequestTest {
 	
     MockHttpServletRequest request = new MockHttpServletRequest();
 	
-	FilteredRequest filtered =  new FilteredRequest((ServletRequest) request);
+	FilteredRequest filtered =  new FilteredRequest(request);
 	
 	@Test
 	public void sanitizeTest() {

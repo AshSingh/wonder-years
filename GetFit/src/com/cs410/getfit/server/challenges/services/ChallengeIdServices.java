@@ -105,6 +105,7 @@ public class ChallengeIdServices implements ChallengeResourceServices {
 		}
 		final ChallengeHistory historyItem = new ChallengeHistoryImpl(admin, challenge, NewsfeedItemType.EDIT.toString());
 			rowsUpdated = manager.callInTransaction(new Callable<Integer>() {
+				@Override
 				public Integer call() throws Exception {
 					Integer updated = challengeDao.update(challenge);
 					

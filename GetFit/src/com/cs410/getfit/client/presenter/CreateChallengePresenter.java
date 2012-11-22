@@ -28,8 +28,6 @@ import com.google.gwt.maps.client.services.GeocoderResult;
 import com.google.gwt.maps.client.services.GeocoderStatus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 
 public class CreateChallengePresenter implements Presenter, CreateAndEditChallengeView.Presenter{

@@ -58,6 +58,7 @@ public class CompletedChallengesServices implements CompletedChallengeResourceSe
 		List<CompletedChallenge> completedChallengesCreated = new ArrayList<CompletedChallenge>();
 		completedChallengesCreated = manager
 				.callInTransaction(new Callable<List<CompletedChallenge>>() {
+					@Override
 					public List<CompletedChallenge> call() throws Exception {
 						List<CompletedChallenge> created = new ArrayList<CompletedChallenge>();
 						for (CompletedChallenge c_challenge : c_challenges) {

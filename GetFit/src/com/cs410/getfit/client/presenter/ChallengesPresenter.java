@@ -236,6 +236,7 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	/**
 	 * Redirects user to create challenge page when corresponding button is clicked
 	 */
+	@Override
 	public void onNewChallengeButtonClicked(){
 		eventBus.fireEvent(new GoToCreateChallengeEvent());
 	}
@@ -243,6 +244,7 @@ public class ChallengesPresenter implements Presenter, ChallengesView.Presenter{
 	/**
 	 * Sorts list of public challenges based on proximity to current user
 	 */
+	@Override
 	public void onSortByLocationButtonClicked() {
 		Geolocation userLocation = Geolocation.getIfSupported();
 		if(userLocation != null) {

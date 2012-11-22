@@ -49,6 +49,7 @@ public class ChallengesJsonTest extends GWTTestCase{
 	final long CHALLENGEGUID = new Long(456);
 	final long CHALLENGE2GUID = new Long(1234);
 	
+	@Override
 	@Before
 	public void gwtSetUp() throws Exception {
 		ChallengeInfoJsonModel challenge1 = new ChallengeInfoJsonModel();

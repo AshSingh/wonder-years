@@ -17,6 +17,7 @@ public class UsersJsonFormatter extends ResourceFormatter{
 		super(IncomingUserJsonModel[].class, OutgoingUserJsonModel.class, "users");
 	}
 	
+	@Override
 	public List<User> getResourcesFromJSONFormattedString(String jsonFormattedResourceString) {
 		List<IncomingUserJsonModel> models= (List<IncomingUserJsonModel>)super.getResourcesFromJSONFormattedString(jsonFormattedResourceString);
 		return JSONModelToUserConverter.convertToUsers(models);

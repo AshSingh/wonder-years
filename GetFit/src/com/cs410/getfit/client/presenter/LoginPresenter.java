@@ -29,7 +29,7 @@ public class LoginPresenter implements Presenter, LoginView.Presenter{
 	 * @param view - the view to display
 	 */
 	public LoginPresenter(HandlerManager eventBus, LoginView view){
-		this.eventBus = eventBus;
+		LoginPresenter.eventBus = eventBus;
 		this.view = view;
 		this.view.setPresenter(this);
 	}

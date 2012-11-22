@@ -42,6 +42,7 @@ public class UserNewsfeedServices {
 				}
 			}
 			Collections.sort(history, new Comparator<ChallengeHistory>() {
+				@Override
 				public int compare(ChallengeHistory o1, ChallengeHistory o2) {
 					long diff = o2.getDateModified() - o1.getDateModified();
 					if(diff == 0)

@@ -23,6 +23,7 @@ public class UsersServicesImpl implements UsersServices {
 		this.userDao = userDao;
 	}
 
+	@Override
 	public List<User> queryForAllUsers() {
 		try {
 			return userDao.queryForAll();
@@ -33,6 +34,7 @@ public class UsersServicesImpl implements UsersServices {
 		return new ArrayList<User>();
 	}
 
+	@Override
 	public void createUser(User user) {
 		if (user.getFB_ID() != null && !user.getFB_ID().equals("")) {
 			try {
@@ -46,6 +48,7 @@ public class UsersServicesImpl implements UsersServices {
 		}
 	}
 	
+	@Override
 	public User getUser(String fb_id) {
 		User user = null;
 		try {
@@ -58,6 +61,7 @@ public class UsersServicesImpl implements UsersServices {
 		}
 		return user;
 	}
+	@Override
 	public User getUserById(String guid) {
 		User user = null;
 		try {
@@ -67,6 +71,7 @@ public class UsersServicesImpl implements UsersServices {
 		}
 		return user;
 	}
+	@Override
 	public boolean updateUser(final User user) throws SQLException {
 		int rowsUpdated = 0;
 		User oldUser = null;
@@ -76,6 +81,7 @@ public class UsersServicesImpl implements UsersServices {
 			user.setFirstName(oldUser.getFirstName());
 			user.setLastName(oldUser.getLastName());
 			rowsUpdated = transactionManager.callInTransaction(new Callable<Integer>() {
+					@Override
 					public Integer call() throws Exception {
 						Integer updated = userDao.update(user);
 						UserPrivacySettingsObservable.getInstance().notifyMyObservers(Calendar.getInstance().getTimeInMillis());

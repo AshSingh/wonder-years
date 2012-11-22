@@ -13,7 +13,8 @@ public class UserNewsfeedObserver implements Observer {
 			//singleton
 		}
 	    private long lastModifiedAt = 0;
-	    public void update(Observable obj, Object arg) {
+	    @Override
+		public void update(Observable obj, Object arg) {
 	    	lastModifiedAt = (Long) arg;
 	    }
 	    /**

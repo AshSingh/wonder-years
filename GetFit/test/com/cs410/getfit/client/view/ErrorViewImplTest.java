@@ -16,6 +16,7 @@ public class ErrorViewImplTest extends GWTTestCase{
 	HandlerManager eventBus;
 	MenuBarPresenter menuPresenter;
 	
+	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new ErrorViewImpl();

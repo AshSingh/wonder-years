@@ -29,6 +29,7 @@ public class UserChallengesServices {
 				challenges.add(challengeUser.getChallenge());
 			}
 			Collections.sort(challenges, new Comparator<Challenge>() {
+				@Override
 				public int compare(Challenge o1, Challenge o2) {
 					return o1.getTitle().compareToIgnoreCase(o2.getTitle());
 				}

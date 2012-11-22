@@ -14,6 +14,7 @@ public class CreateAndEditChallengeViewImplTest extends GWTTestCase{
 	CreateChallengePresenter presenter;
 	HandlerManager eventBus;
 
+	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new CreateAndEditChallengeViewImpl();

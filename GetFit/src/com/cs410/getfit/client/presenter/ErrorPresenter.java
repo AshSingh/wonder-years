@@ -47,6 +47,7 @@ public class ErrorPresenter implements Presenter, ErrorView.Presenter{
 	 * 
 	 * @param container - the root container of the app         
 	 */	
+	@Override
 	public void go(HasWidgets container, String errorType) {
 		container.clear();
 		container.add(view.getMenuBar().asWidget());

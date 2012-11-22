@@ -3,8 +3,6 @@ package com.cs410.getfit.client.view;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.client.presenter.ErrorPresenter;
-import com.cs410.getfit.client.presenter.LoginPresenter;
 import com.cs410.getfit.client.presenter.UserSettingsPresenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.junit.client.GWTTestCase;
@@ -16,6 +14,7 @@ public class UserSettingsViewImplTest extends GWTTestCase{
 	UserSettingsPresenter presenter;
 	HandlerManager eventBus;
 
+	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new UserSettingsViewImpl();

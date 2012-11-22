@@ -138,7 +138,8 @@ public class PositionSortCallback implements Callback<Object, Object>{
          * 			== 0 the first and second objects are the same distance to user.
          * 			>0 The second object is closer to user
          */
-        public int compare(OutgoingChallengeJsonModel o1, OutgoingChallengeJsonModel o2)
+        @Override
+		public int compare(OutgoingChallengeJsonModel o1, OutgoingChallengeJsonModel o2)
         {
             return (int)(o1.getDistance() - o2.getDistance());
         }

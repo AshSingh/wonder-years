@@ -10,6 +10,7 @@ public class ChallengesViewImplTest extends GWTTestCase{
 	ChallengesView view; 
 	MenuBarView menubar;
 
+	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new ChallengesViewImpl();
