@@ -162,6 +162,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 		infoPanel.addStyleName("text-panel");
 		// only display location if set
 		if (info.getLocation() != null && !info.getLocation().equals("")) {
+			final HorizontalPanel locationPanel = new HorizontalPanel();
+			infoPanel.add(locationPanel);
 			// Regular expresion for latitude and longitude as stored in DATABASE
 			RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 			MatchResult match = regexp.exec(info.getLocation());
@@ -183,10 +185,8 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 						Label locationText = new Label(cityLocation);
 						locationLabel.addStyleName("details-label");
 						locationText.addStyleName("details-text");
-						HorizontalPanel locationPanel = new HorizontalPanel();
 						locationPanel.add(locationLabel);
 						locationPanel.add(locationText);
-						infoPanel.add(locationPanel);
 					}
 
 				});
