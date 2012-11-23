@@ -3,8 +3,6 @@ package com.cs410.getfit.client.view;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.client.presenter.ErrorPresenter;
-import com.cs410.getfit.client.presenter.MenuBarPresenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -12,17 +10,13 @@ public class ErrorViewImplTest extends GWTTestCase{
 
 	ErrorView view; 
 	MenuBarView menubar;
-	ErrorPresenter presenter;
 	HandlerManager eventBus;
-	MenuBarPresenter menuPresenter;
 	
 	@Override
 	@Before
 	public void gwtSetUp(){
 		view = new ErrorViewImpl();
 		menubar = new MenuBarViewImpl();
-		presenter = new ErrorPresenter(eventBus, view);
-		menuPresenter = new MenuBarPresenter(eventBus, menubar);
 	}
 
 	@Test

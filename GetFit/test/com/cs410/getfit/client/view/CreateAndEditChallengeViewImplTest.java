@@ -3,7 +3,6 @@ package com.cs410.getfit.client.view;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.client.presenter.CreateChallengePresenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -11,7 +10,6 @@ public class CreateAndEditChallengeViewImplTest extends GWTTestCase{
 
 	CreateAndEditChallengeView view; 
 	MenuBarView menubar;
-	CreateChallengePresenter presenter;
 	HandlerManager eventBus;
 
 	@Override
@@ -19,7 +17,6 @@ public class CreateAndEditChallengeViewImplTest extends GWTTestCase{
 	public void gwtSetUp(){
 		view = new CreateAndEditChallengeViewImpl();
 		menubar = new MenuBarViewImpl();
-		presenter = new CreateChallengePresenter(eventBus, view);
 	}
 
 	@Test

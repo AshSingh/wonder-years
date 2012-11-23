@@ -84,7 +84,7 @@ public class PositionCallback implements Callback<Object, Object>{
 		// Regular expresion for latitude and longitude as stored in DATABASE
 		RegExp regexp = RegExp.compile("\\((\\-?\\d+(\\.\\d+)?),\\s*(\\-?\\d+(\\.\\d+)?)\\)");
 		MatchResult match = regexp.exec(locationBox.getValue());
-		if (locationBox.getValue() != null && locationBox.getValue() != "" &&  match.getGroupCount() == 5) {
+		if (locationBox.getValue() != null && !locationBox.getValue().equals("") &&  match.getGroupCount() == 5) {
 			userPoint = LatLng.newInstance(Double.parseDouble(match.getGroup(1)), Double.parseDouble(match.getGroup(3))); 
 		} else if (coor != null){
 			// Set the user location
@@ -169,7 +169,7 @@ public class PositionCallback implements Callback<Object, Object>{
 					GeocoderStatus status) {
 				// Get the full location
 				String formattedAddress = results.get(0).getFormatted_Address();
-				String cityLocation = (formattedAddress != null && formattedAddress != "") ? formattedAddress : "N/A";
+				String cityLocation = (formattedAddress != null && !formattedAddress.equals("")) ? formattedAddress : "N/A";
 				// Set the full location to the infoWindow
 				infoWindow.setContent(cityLocation);
 				infoWindow.setPosition(locationPoint);

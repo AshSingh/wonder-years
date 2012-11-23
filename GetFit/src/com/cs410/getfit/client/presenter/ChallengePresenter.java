@@ -180,7 +180,7 @@ public class ChallengePresenter implements Presenter, ChallengeView.Presenter{
 							GeocoderStatus status) {
 						// Get the full location
 						String formattedAddress = results.get(0).getFormatted_Address();
-						String cityLocation = (formattedAddress != null && formattedAddress != "") ? formattedAddress : "N/A";
+						String cityLocation = (formattedAddress != null && !formattedAddress.equals("")) ? formattedAddress : "N/A";
 						Label locationLabel = new Label("Location: ");
 						Label locationText = new Label(cityLocation);
 						locationLabel.addStyleName("details-label");

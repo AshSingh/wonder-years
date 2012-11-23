@@ -3,7 +3,6 @@ package com.cs410.getfit.client.view;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.client.presenter.UserSettingsPresenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -11,7 +10,6 @@ public class UserSettingsViewImplTest extends GWTTestCase{
 
 	UserSettingsView view; 
 	MenuBarView menubar;
-	UserSettingsPresenter presenter;
 	HandlerManager eventBus;
 
 	@Override
@@ -19,7 +17,6 @@ public class UserSettingsViewImplTest extends GWTTestCase{
 	public void gwtSetUp(){
 		view = new UserSettingsViewImpl();
 		menubar = new MenuBarViewImpl();
-		presenter = new UserSettingsPresenter(eventBus, view);
 	}
 
 	@Test

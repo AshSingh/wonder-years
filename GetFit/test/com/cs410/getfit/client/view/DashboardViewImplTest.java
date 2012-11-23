@@ -3,7 +3,6 @@ package com.cs410.getfit.client.view;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cs410.getfit.client.presenter.DashboardPresenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -11,7 +10,6 @@ public class DashboardViewImplTest extends GWTTestCase{
 
 	DashboardView view; 
 	MenuBarView menubar;
-	DashboardPresenter presenter;
 	HandlerManager eventBus;
 
 	@Override
@@ -19,7 +17,6 @@ public class DashboardViewImplTest extends GWTTestCase{
 	public void gwtSetUp(){
 		view = new DashboardViewImpl();
 		menubar = new MenuBarViewImpl();
-		presenter = new DashboardPresenter(eventBus, view);
 	}
 
 	@Test
