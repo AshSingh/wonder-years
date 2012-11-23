@@ -269,6 +269,11 @@ public class CreateAndEditChallengeViewImpl extends Composite implements CreateA
 	}
 	
 	@Override
+	public TextBox getSearchTextBox(){
+		return addressBox;
+	}
+	
+	@Override
 	public void setSearchedAddress(LatLng address) {
 		this.mapWidget = posCallback.getMapWidget();
 		this.mapWidget.setCenter(address);

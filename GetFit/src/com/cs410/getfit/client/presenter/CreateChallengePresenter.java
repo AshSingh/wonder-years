@@ -71,6 +71,7 @@ public class CreateChallengePresenter implements Presenter, CreateAndEditChallen
 		view.getDescriptionBox().setText("");
 		view.getPrivacyPrivateRadioButton().setValue(false);
 		view.getPrivacyPublicRadioButton().setValue(true);
+		view.getSearchTextBox().setValue("");
 	}
 	
 	/**

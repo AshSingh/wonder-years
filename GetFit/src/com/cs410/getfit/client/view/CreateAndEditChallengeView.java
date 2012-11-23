@@ -40,4 +40,5 @@ public interface CreateAndEditChallengeView {
 	Element getLocationDiv();
 	public HorizontalPanel getMap();
 	public void setSearchedAddress(LatLng address);
+	TextBox getSearchTextBox();
 }
